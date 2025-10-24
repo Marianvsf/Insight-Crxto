@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import LoginView from "./views/login";
 import RegisterView from "./views/register";
+import Home from "./views/home";
+import Navbar from "./views/navbar";
 
 function App() {
   return (
@@ -15,11 +17,12 @@ function App() {
       </div> 
       */}
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/login" element={<LoginView />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<RegisterView />} />
         </Routes>
-        <RegisterView />
       </BrowserRouter>
     </>
   );
