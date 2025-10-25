@@ -31,15 +31,26 @@ export default function Dashboard() {
   return (
     <main>
       <h1>Bienvenido de nuevo, </h1>;
-      <ul>
-        {coins.map((coin) => (
-          <li key={coin.id}>
-            <h3>{coin.name}</h3>
-            <img src={coin.image} alt={coin.name} width="25" />
-            <p>Precio: ${coin.current_price}</p>
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Símbolo</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {coins.map((coin) => (
+            <tr key={coin.id}>
+              <td>{coin.name}</td>
+              <td>
+                <img src={coin.image} alt={coin.name} width="25" />
+              </td>
+              <td>{coin.current_price}$</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </main>
   );
 }
