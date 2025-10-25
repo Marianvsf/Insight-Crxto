@@ -15,9 +15,9 @@ function App() {
           alt="logo Insight Crxto"
         />
         </div> 
-        <Navbar />
-      */}
+        */}
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/login" element={<LoginView />} />
           <Route path="/" element={<Home />} />
