@@ -54,7 +54,7 @@ const Navbar = () => {
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             <li>
               <Link
-                to="/home"
+                to="/"
                 className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
               >
                 Home

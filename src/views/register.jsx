@@ -59,7 +59,7 @@ export default function RegisterView() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 md:container space-y-6">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 w-full space-y-6">
       <h4 className="text-sm font-semibold text-center mb-2">Insight Crxto</h4>
       <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2">
         Registro de Usuario
