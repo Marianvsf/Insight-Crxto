@@ -12,7 +12,11 @@ const Navbar = () => {
     <nav className="border-gray-200 bg-blue-700 ">
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="" className="h-8" alt="Globetrotter Logo" />
+          <img
+            src="chinchin-logo.png"
+            className="h-8"
+            alt="Globetrotter Logo"
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
             Globetrotter
           </span>
