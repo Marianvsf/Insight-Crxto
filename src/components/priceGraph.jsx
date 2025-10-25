@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from "react";
 import "chartjs-adapter-date-fns";
 import { Line } from "react-chartjs-2";
 import {
@@ -11,7 +12,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useEffect, useMemo, useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -44,12 +44,10 @@ export default function PriceGraph({ coin }) {
         }
       );
       if (!response.ok) {
-        console.error("Error searching coun graph data", response.statusText);
         setPricesData([]);
         return;
       }
       const data = await response.json();
-      console.log(data);
       if (data && data.prices) {
         setPricesData(data.prices);
       } else {
