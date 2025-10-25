@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginView() {
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ export default function LoginView() {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +44,7 @@ export default function LoginView() {
     ) {
       setMessage("¡Inicio de sesión exitoso! Serás redirigido.");
       setIsSuccess(true);
+      navigate("/dashboard");
     } else {
       setMessage("Credenciales incorrectas. Verifica tu email y contraseña.");
       setIsSuccess(false);
@@ -55,7 +57,7 @@ export default function LoginView() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 md:container">
-      <h4 className="text-sm font-semibold text-blue-600 text-center mb-2">
+      <h4 className="text-sm font-bold text-blue-600 text-center mb-2">
         Insight Crxto
       </h4>
       <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-6">
