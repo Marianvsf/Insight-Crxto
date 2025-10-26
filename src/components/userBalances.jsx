@@ -79,7 +79,7 @@ const UserBalances = ({ userId }) => {
   );
 
   if (!currentUser) {
-    return <p>Error: Usuario con {currentUser.username} no encontrado.</p>;
+    return <p>Error: Usuario con {userId} no encontrado.</p>;
   }
 
   if (isLoading) {

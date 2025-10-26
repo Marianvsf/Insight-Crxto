@@ -16,6 +16,8 @@ export default function Dashboard() {
 
   const { user } = useAuthStore();
   const username = user?.username || "Usuario";
+  const currentUserId = user?.id;
+  const [showBalances, setShowBalances] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   {
@@ -74,9 +76,36 @@ export default function Dashboard() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleShowBalances = () => {
+    console.log(currentUserId);
+    setShowBalances(true);
+  };
+
+  // Función para volver al dashboard
+  const handleBackToDashboard = () => {
+    setShowBalances(false);
+  };
+  if (showBalances) {
+    return (
+      <div>
+        {/* Botón para volver al Dashboard */}
+        <button onClick={handleBackToDashboard}>← Volver al Dashboard</button>
+
+        {/* 💡 AQUI ES DONDE PASAS EL userId AL COMPONENTE UserBalances */}
+        <UserBalances userId={currentUserId} />
+      </div>
+    );
+  }
+
   return (
     <main>
       <h1>Bienvenido de nuevo, {username} </h1>
+      <button
+        onClick={handleShowBalances}
+        style={{ marginBottom: "20px", padding: "10px 15px" }}
+      >
+        Ver Mi Balance 💰
+      </button>
       <h1>Criptomonedas disponibles, actualización cada 30 segundos.</h1>
       <p style={{ fontSize: "0.9em", color: "#666" }}>
         Última actualización: {lastUpdated.toLocaleTimeString()} 🔄

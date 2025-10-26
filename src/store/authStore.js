@@ -24,6 +24,7 @@ export const useAuthStore = create((set) => ({
           email: foundUser.email,
           username: foundUser.username,
           role: foundUser.role,
+          id: foundUser.id,
         },
       });
 
