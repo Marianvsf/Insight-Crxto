@@ -6,7 +6,9 @@ const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
 export default function Dashboard() {
   const [search, setSearch] = useState("");
+  const [error, setError] = useState(null);
   const [coins, setCoins] = useState([]);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -25,38 +27,55 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchCoins = async () => {
-      const response = await fetch(
-        `${URL_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false${API_KEY}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${localStorage.getItem('token')}`
-          },
+      try {
+        const response = await fetch(
+          `${URL_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false${API_KEY}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // 'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Error fetching coins:", response.statusText);
         }
-      );
-      if (!response.ok) {
-        throw new Error("Error fetching coins:", response.statusText);
+        const data = await response.json();
+        setCoins(data);
+        setLastUpdated(new Date());
+      } catch (error) {
+        console.error("Fallo al obtener datos de las monedas:", error);
+        setError();
       }
-      const data = await response.json();
-      setCoins(data);
     };
+
     fetchCoins();
+
+    const intervalId = setInterval(fetchCoins, 30000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
     <main>
       <h1>Bienvenido de nuevo, </h1>;
-      {/*<PriceGraph coin={{ name: "Figure Heloc", id: "figure-heloc" }} />
+      <p style={{ fontSize: "0.9em", color: "#666" }}>
+        Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
+      </p>
+      {coins.length === 0 ? (
+        <p>Cargando datos de monedas...</p>
+      ) : (
+        <>
+          {/*<PriceGraph coin={{ name: "Figure Heloc", id: "figure-heloc" }} />
       <PriceGraph coin={{ name: "USDT0", id: "usdt0" }} />*/}
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Símbolo</th>
-            <th>Precio actual</th>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Símbolo</th>
+                <th>Precio actual</th>
 
-            {/* -------Details of bitcoins--------
+                {/* -------Details of bitcoins--------
             <th>Capitalización de Mercado</th>
             <th>Ranking por Capitalización de Mercado</th>
             <th>Volumen Total de Negociación en 24 horas</th>
@@ -65,18 +84,18 @@ export default function Dashboard() {
             <th>Cambio Porcentual de Precio en 24 horas</th>
             <th>Suministro Circulante</th>
             <th>Suministro Total</th>*/}
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((coin) => (
-            <tr key={coin.id}>
-              <td>{coin.name}</td>
-              <td>
-                <img src={coin.image} alt={coin.name} width="25" />
-              </td>
-              <td>{coin.current_price}$</td>
-              {/*
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map((coin) => (
+                <tr key={coin.id}>
+                  <td>{coin.name}</td>
+                  <td>
+                    <img src={coin.image} alt={coin.name} width="25" />
+                  </td>
+                  <td>{coin.current_price}$</td>
+                  {/*
               <td>{coin.market_cap}</td>
               <td>{coin.market_cap_rank}</td>
               
@@ -86,49 +105,52 @@ export default function Dashboard() {
               <td>{coin.price_change_percentage_24h}</td>
               <td>{coin.circulating_supply}</td>
               <td>{coin.total_supply}</td>*/}
-              <td></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <nav>
-        <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
-          {/* Botón de retroceso */}
-          <li>
-            <button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Anterior
-            </button>
-          </li>
+                  <td></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <nav>
+            <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
+              {/* Botón de retroceso */}
+              <li>
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Anterior
+                </button>
+              </li>
 
-          {/* Números de página */}
-          {pageNumbers.map((number) => (
-            <li key={number} style={{ margin: "0 5px" }}>
-              <button
-                onClick={() => paginate(number)}
-                style={{
-                  fontWeight: currentPage === number ? "bold" : "normal",
-                  backgroundColor: currentPage === number ? "#ccc" : "white",
-                }}
-              >
-                {number}
-              </button>
-            </li>
-          ))}
+              {/* Números de página */}
+              {pageNumbers.map((number) => (
+                <li key={number} style={{ margin: "0 5px" }}>
+                  <button
+                    onClick={() => paginate(number)}
+                    style={{
+                      fontWeight: currentPage === number ? "bold" : "normal",
+                      backgroundColor:
+                        currentPage === number ? "#ccc" : "white",
+                    }}
+                  >
+                    {number}
+                  </button>
+                </li>
+              ))}
 
-          {/* Botón de avance */}
-          <li>
-            <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Siguiente
-            </button>
-          </li>
-        </ul>
-      </nav>
+              {/* Botón de avance */}
+              <li>
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Siguiente
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </>
+      )}
     </main>
   );
 }
