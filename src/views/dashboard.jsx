@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import PriceGraph from "../components/PriceGraph";
 import FilterSort from "../components/FilterSort";
 import { ConversionRate } from "../components/conversionRate";
 import UserBalances from "../components/userBalances";
 import { useAuthStore } from "../store/authStore";
+import CoinDetailsTable from "../components/coinDetails";
+import { useNavigate } from "react-router-dom";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [coins, setCoins] = useState([]);
+  const [selectedCoin, setSelectedCoin] = useState(null);
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
 
@@ -18,7 +21,6 @@ export default function Dashboard() {
   const username = user?.username || "Usuario";
   const currentUserId = user?.id;
   const [showBalances, setShowBalances] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(1);
   {
     /*const itemsPerPage = 10;
@@ -37,10 +39,6 @@ export default function Dashboard() {
   }*/
   }
 
-  const handleFilterSortChange = () => {
-    setCurrentPage(1);
-  };
-
   useEffect(() => {
     const fetchCoins = async () => {
       try {
@@ -50,7 +48,6 @@ export default function Dashboard() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              // 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
           }
         );
@@ -74,8 +71,18 @@ export default function Dashboard() {
 
     const intervalId = setInterval(fetchCoins, 30000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [selectedCoin]);
 
+  const handleFilterSortChange = () => {
+    setCurrentPage(1);
+  };
+  const handleCoinClick = (coin) => {
+    setSelectedCoin(coin);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedCoin(null);
+  };
   const handleShowBalances = () => {
     console.log(currentUserId);
     setShowBalances(true);
@@ -115,58 +122,62 @@ export default function Dashboard() {
         <p>Cargando datos de monedas...</p>
       ) : (
         <>
-          <FilterSort
-            coins={coins}
-            setFilteredCoins={setFilteredCoins}
-            onFilterSortChange={handleFilterSortChange}
-          />
-          {/*<PriceGraph coin={{ name: "Figure Heloc", id: "figure-heloc" }} />
-      <PriceGraph coin={{ name: "USDT0", id: "usdt0" }} />
-      <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" />
-      <UserBalances userId={1} />;
-       */}
-          <table>
-            <thead>
-              <tr>
-                <th>Ranking por Capitalización de Mercado</th>
-                <th>Nombre</th>
-                <th>Símbolo</th>
-                <th>Precio actual</th>
-                <th>Capitalización de Mercado</th>
-                <th>Cambio Porcentual de Precio en 24 horas</th>
-                {/* -------Details of bitcoins--------
-            <th>Volumen Total de Negociación en 24 horas</th>
-            <th>Precios máximo</th>
-            <th>Precios mínimo</th>
-            <th>Suministro Circulante</th>
-            <th>Suministro Total</th>*/}
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredCoins.map((coin) => (
-                <tr key={coin.id}>
-                  <td>{coin.market_cap_rank}</td>
-                  <td>{coin.name}</td>
-                  <td>
-                    <img src={coin.image} alt={coin.name} width="25" />
-                  </td>
-                  <td>{coin.current_price}$</td>
-                  <td>{coin.market_cap}</td>
-                  <td>{coin.price_change_percentage_24h}</td>
-                  {/*
-              
-              <td>{coin.total_volume}</td>
-              <td>{coin.high_24h}</td>
-              <td>{coin.low_24h}</td>
-              <td>{coin.circulating_supply}</td>
-              <td>{coin.total_supply}</td>*/}
-                  <td></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {/*<nav>
+          <CoinDetailsTable coin={selectedCoin} onClose={handleCloseDetails} />
+          {selectedCoin ? (
+            <></>
+          ) : (
+            <>
+              <FilterSort
+                coins={coins}
+                setFilteredCoins={setFilteredCoins}
+                onFilterSortChange={handleFilterSortChange}
+              />
+              {/*
+                <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" />
+                <UserBalances userId={1} />;
+              */}
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ranking</th>
+                    <th>Nombre</th>
+                    <th>Símbolo</th>
+                    <th>Precio actual</th>
+                    <th>Capitalización de Mercado</th>
+                    <th>Cambio % (24h)</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCoins.map((coin) => (
+                    <tr key={coin.id}>
+                      <td>{coin.market_cap_rank}</td>
+                      <td>{coin.name}</td>
+                      <td>
+                        <img src={coin.image} alt={coin.name} width="25" />
+                      </td>
+                      <td>
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 4,
+                        }).format(coin.current_price)}
+                        $
+                      </td>
+                      <td>{coin.market_cap}$</td>
+                      <td>{coin.price_change_percentage_24h}</td>
+                      <td>
+                        <button onClick={() => handleCoinClick(coin)}>
+                          Ver Detalles
+                        </button>
+                      </td>
+                      <td></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {/*<nav>
             <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
               {/* Botón de retroceso *
               <li>
@@ -205,8 +216,10 @@ export default function Dashboard() {
               </li>
             </ul>
           </nav>*/}
-          {filteredCoins.length === 0 && (
-            <p>No se encontraron resultados con el filtro aplicado.</p>
+              {filteredCoins.length === 0 && (
+                <p>No se encontraron resultados con el filtro aplicado.</p>
+              )}
+            </>
           )}
         </>
       )}
