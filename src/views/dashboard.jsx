@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import PriceGraph from "../components/PriceGraph";
+import { ConversionRate } from "../components/conversionRate";
+//import ConversionRate from "../components/conversionRate";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -59,6 +61,7 @@ export default function Dashboard() {
   return (
     <main>
       <h1>Bienvenido de nuevo, </h1>;
+      <h1>Criptomonedas disponibles, actualización cada 30 segundos.</h1>
       <p style={{ fontSize: "0.9em", color: "#666" }}>
         Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
       </p>
@@ -67,7 +70,9 @@ export default function Dashboard() {
       ) : (
         <>
           {/*<PriceGraph coin={{ name: "Figure Heloc", id: "figure-heloc" }} />
-      <PriceGraph coin={{ name: "USDT0", id: "usdt0" }} />*/}
+      <PriceGraph coin={{ name: "USDT0", id: "usdt0" }} />
+          <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" /> */}
+
           <table>
             <thead>
               <tr>
