@@ -3,10 +3,15 @@ import React, { useState, useEffect } from "react";
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
-export const ConversionRate = ({ ids, vs_currencies }) => {
+export const ConversionRate = ({
+  ids,
+  vs_currencies,
+  refreshIntervalSeconds = 60,
+}) => {
   const [rates, setRates] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
 
   useEffect(() => {
     let mounted = true;
@@ -34,27 +39,30 @@ export const ConversionRate = ({ ids, vs_currencies }) => {
 
         if (mounted) {
           setRates(data);
-          console.log("Tasas de conversión recibidas:", data);
+          setError(null);
+          setLoading(false);
         }
       } catch (e) {
         console.error("Error fetching conversion rate:", e);
         if (mounted) {
           setError("No se pudieron cargar las tasas de cambio.");
           setRates(null);
-        }
-      } finally {
-        if (mounted) {
           setLoading(false);
         }
       }
     };
 
     fetchConversionRate();
-
+    const intervalId = setInterval(
+      fetchConversionRate,
+      refreshIntervalSeconds * 1000
+    );
     return () => {
       mounted = false;
+      clearInterval(intervalId);
+      console.log(`Polling detenido (intervalo ID: ${intervalId}).`);
     };
-  }, [ids, vs_currencies]);
+  }, [ids, vs_currencies, refreshIntervalSeconds]);
 
   if (loading) {
     return <span>Cargando tasas de {ids.split(",").join(" y ")}...</span>;
@@ -75,8 +83,12 @@ export const ConversionRate = ({ ids, vs_currencies }) => {
 
   return (
     <div>
-      <h1>Tasas de Cambio Actuales:</h1>
-
+      <h1>
+        Tasas de Cambio: actualización cada {refreshIntervalSeconds} segundos.
+      </h1>
+      <p style={{ fontSize: "0.9em", color: "#666" }}>
+        Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
+      </p>
       {Object.entries(rates).map(([cryptoId, cryptoRates]) => (
         <div
           key={cryptoId}
