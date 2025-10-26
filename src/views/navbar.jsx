@@ -1,11 +1,26 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 const Navbar = () => {
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = async (e) => {
+    const success = await logout();
+    if (success) {
+      setMessage("¡Inicio de sesión exitoso! Serás redirigido al Home.");
+      setIsSuccess(true);
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -61,25 +76,22 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <div className="block py-2 px-3 text-white rounded-sm md:bg-transparent md:p-0">
-                About
-              </div>
+              <Link
+                to="/login"
+                className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+              >
+                Login
+              </Link>
             </li>
-            <li>
-              <div className="block py-2 px-3 text-white rounded-sm md:bg-transparent md:p-0">
-                Services
-              </div>
-            </li>
-            <li>
-              <div className="block py-2 px-3 text-white rounded-sm md:bg-transparent md:p-0">
-                Pricing
-              </div>
-            </li>
-            <li>
-              <div className="block py-2 px-3 text-white rounded-sm md:bg-transparent md:p-0">
-                Contact
-              </div>
-            </li>
+            <button>
+              <Link
+                onClick={handleLogout}
+                to="/"
+                className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+              >
+                Logout
+              </Link>
+            </button>
           </ul>
         </div>
       </div>
