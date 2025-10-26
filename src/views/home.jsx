@@ -15,6 +15,11 @@ function Home() {
             Registrarse
           </Link>
         </button>
+        <button className="mt-2 w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-blue-700 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+          <Link to="/login" className="nav-link">
+            Iniciar Sesión
+          </Link>
+        </button>
       </div>
     </div>
   );

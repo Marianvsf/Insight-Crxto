@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PriceGraph from "../components/PriceGraph";
 import FilterSort from "../components/FilterSort";
 import { ConversionRate } from "../components/conversionRate";
+import UserBalances from "../components/userBalances";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -87,8 +88,9 @@ export default function Dashboard() {
           />
           {/*<PriceGraph coin={{ name: "Figure Heloc", id: "figure-heloc" }} />
       <PriceGraph coin={{ name: "USDT0", id: "usdt0" }} />
-          <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" /> */}
-
+      <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" />
+      <UserBalances userId={1} />;
+       */}
           <table>
             <thead>
               <tr>
