@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useAuthStore } from "../store/authStore";
 
 export default function RegisterView() {
+  const register = useAuthStore((state) => state.register);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -14,7 +17,6 @@ export default function RegisterView() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,13 +36,25 @@ export default function RegisterView() {
       setIsSuccess(false);
       return;
     }
-
-    // Lógica de registro simulada
-    console.log("Datos a enviar:", formData);
-    setMessage("Registro exitoso. ¡Serás redirigido pronto!");
-    setIsSuccess(true);
-    navigate("/login");
-    // Opcional: limpiar el formulario
+    const username = `${formData.firstName} ${formData.lastName}`.trim();
+    try {
+      await register({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        username: username,
+      });
+      setMessage("¡Registro exitoso! Serás redirigido al Home.");
+      setIsSuccess(true);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error durante el registro:", error);
+      setMessage(
+        error.message || "Error al completar el registro. Inténtalo de nuevo."
+      );
+      setIsSuccess(false);
+    }
     setFormData({
       firstName: "",
       lastName: "",

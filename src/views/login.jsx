@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export default function LoginView() {
+  const login = useAuthStore((state) => state.login);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,28 +27,26 @@ export default function LoginView() {
     setMessage("");
     setIsSuccess(false);
 
-    // Validación simple de campos (puedes añadir más lógica aquí)
     if (!formData.email || !formData.password) {
       setMessage("Por favor, ingresa tu correo y contraseña.");
       setIsSuccess(false);
       return;
     }
+    try {
+      const success = await login(formData.email, formData.password);
 
-    // Lógica de inicio de sesión simulada
+      if (success) {
+        setMessage("¡Inicio de sesión exitoso! Serás redirigido al Home.");
+        setIsSuccess(true);
 
-    console.log("Credenciales a enviar:", formData);
-
-    // Simulación de respuesta de la API:
-    // Credenciales de prueba: test@example.com / password123
-    if (
-      formData.email === "test@example.com" &&
-      formData.password === "password123"
-    ) {
-      setMessage("¡Inicio de sesión exitoso! Serás redirigido.");
-      setIsSuccess(true);
-      navigate("/dashboard");
-    } else {
-      setMessage("Credenciales incorrectas. Verifica tu email y contraseña.");
+        navigate("/dashboard");
+      } else {
+        setMessage("Credenciales incorrectas. Verifica tu email y contraseña.");
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      console.error("Error de Login:", error);
+      setMessage("Error al iniciar sesión. Inténtalo de nuevo más tarde.");
       setIsSuccess(false);
     }
   };
