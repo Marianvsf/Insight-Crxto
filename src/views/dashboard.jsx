@@ -12,7 +12,8 @@ export default function Dashboard() {
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  {
+    /*const itemsPerPage = 10;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOffirstItem = indexOfLastItem - itemsPerPage;
@@ -25,6 +26,7 @@ export default function Dashboard() {
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
+  }*/
   }
 
   const handleFilterSortChange = () => {
@@ -106,7 +108,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((coin) => (
+              {filteredCoins.map((coin) => (
                 <tr key={coin.id}>
                   <td>{coin.market_cap_rank}</td>
                   <td>{coin.name}</td>
@@ -128,9 +130,9 @@ export default function Dashboard() {
               ))}
             </tbody>
           </table>
-          <nav>
+          {/*<nav>
             <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
-              {/* Botón de retroceso */}
+              {/* Botón de retroceso *
               <li>
                 <button
                   onClick={() => paginate(currentPage - 1)}
@@ -140,7 +142,7 @@ export default function Dashboard() {
                 </button>
               </li>
 
-              {/* Números de página */}
+              {/* Números de página *
               {pageNumbers.map((number) => (
                 <li key={number} style={{ margin: "0 5px" }}>
                   <button
@@ -156,7 +158,7 @@ export default function Dashboard() {
                 </li>
               ))}
 
-              {/* Botón de avance */}
+              {/* Botón de avance 
               <li>
                 <button
                   onClick={() => paginate(currentPage + 1)}
@@ -166,7 +168,10 @@ export default function Dashboard() {
                 </button>
               </li>
             </ul>
-          </nav>
+          </nav>*/}
+          {filteredCoins.length === 0 && (
+            <p>No se encontraron resultados con el filtro aplicado.</p>
+          )}
         </>
       )}
     </main>
