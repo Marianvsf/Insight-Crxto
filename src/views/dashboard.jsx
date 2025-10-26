@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import FilterSort from "../components/FilterSort";
-import { ConversionRate } from "../components/conversionRate";
 import UserBalances from "../components/userBalances";
 import { useAuthStore } from "../store/authStore";
 import CoinDetailsTable from "../components/coinDetails";
-import { useNavigate } from "react-router-dom";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [coins, setCoins] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState(null);
@@ -88,17 +85,13 @@ export default function Dashboard() {
     setShowBalances(true);
   };
 
-  // Función para volver al dashboard
   const handleBackToDashboard = () => {
     setShowBalances(false);
   };
   if (showBalances) {
     return (
       <div>
-        {/* Botón para volver al Dashboard */}
         <button onClick={handleBackToDashboard}>← Volver al Dashboard</button>
-
-        {/* 💡 AQUI ES DONDE PASAS EL userId AL COMPONENTE UserBalances */}
         <UserBalances userId={currentUserId} />
       </div>
     );
@@ -132,10 +125,6 @@ export default function Dashboard() {
                 setFilteredCoins={setFilteredCoins}
                 onFilterSortChange={handleFilterSortChange}
               />
-              {/*
-                <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" />
-                <UserBalances userId={1} />;
-              */}
               <table>
                 <thead>
                   <tr>
