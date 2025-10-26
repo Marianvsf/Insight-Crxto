@@ -3,6 +3,7 @@ import PriceGraph from "../components/PriceGraph";
 import FilterSort from "../components/FilterSort";
 import { ConversionRate } from "../components/conversionRate";
 import UserBalances from "../components/userBalances";
+import { useAuthStore } from "../store/authStore";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -12,6 +13,10 @@ export default function Dashboard() {
   const [coins, setCoins] = useState([]);
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
+
+  const { user } = useAuthStore();
+  const username = user?.username || "Usuario";
+
   const [currentPage, setCurrentPage] = useState(1);
   {
     /*const itemsPerPage = 10;
@@ -71,7 +76,7 @@ export default function Dashboard() {
 
   return (
     <main>
-      <h1>Bienvenido de nuevo, </h1>;
+      <h1>Bienvenido de nuevo, {username} </h1>
       <h1>Criptomonedas disponibles, actualización cada 30 segundos.</h1>
       <p style={{ fontSize: "0.9em", color: "#666" }}>
         Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
