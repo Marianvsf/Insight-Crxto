@@ -29,13 +29,13 @@ const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
 export default function PriceGraph({ coin }) {
   const [pricesData, setPricesData] = useState([]);
+  const [days, setDays] = useState("1");
 
   useEffect(() => {
     const dataGraphs = async () => {
       const coinId = coin.id || coin.name.toLowerCase();
       const response = await fetch(
-        //id del coin para traer datos del gráfico
-        `${URL_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=7${API_KEY}`,
+        `${URL_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}${API_KEY}`,
         {
           method: "GET",
           headers: {
@@ -55,7 +55,8 @@ export default function PriceGraph({ coin }) {
       }
     };
     dataGraphs();
-  }, [coin.name, coin.id]);
+  }, [coin.name, coin.id, days]);
+
   const data = useMemo(() => {
     const chartData = pricesData.map(([timestamp, price]) => ({
       x: timestamp,
@@ -79,7 +80,7 @@ export default function PriceGraph({ coin }) {
     plugins: {
       title: {
         display: true,
-        text: `Historial de Precios de ${coin.name} - Últimos 7 Días`,
+        text: `${coin.name}- Últimos ${days} Días`,
       },
     },
     scales: {
@@ -98,8 +99,23 @@ export default function PriceGraph({ coin }) {
     },
   };
 
+  const handleDays = (e) => {
+    setDays(parseInt(e.target.value));
+  };
+
   return (
     <div style={{ maxWidth: "800px", height: "400px", margin: "20px" }}>
+      <h3>
+        Historial de Precios - Últimos{" "}
+        <input
+          type="number"
+          onChange={handleDays}
+          value={days}
+          min="1"
+          max="30"
+        ></input>
+        Días
+      </h3>
       <Line data={data} options={options} />
     </div>
   );
