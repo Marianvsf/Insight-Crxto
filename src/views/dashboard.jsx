@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import PriceGraph from "../components/PriceGraph";
+import FilterSort from "../components/FilterSort";
 import { ConversionRate } from "../components/conversionRate";
-//import ConversionRate from "../components/conversionRate";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
 export default function Dashboard() {
-  const [search, setSearch] = useState("");
   const [error, setError] = useState(null);
   const [coins, setCoins] = useState([]);
+  const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOffirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = coins.slice(indexOffirstItem, indexOfLastItem);
+  const currentItems = filteredCoins.slice(indexOffirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(coins.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -26,6 +26,10 @@ export default function Dashboard() {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
+
+  const handleFilterSortChange = () => {
+    setCurrentPage(1);
+  };
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -46,9 +50,13 @@ export default function Dashboard() {
         const data = await response.json();
         setCoins(data);
         setLastUpdated(new Date());
+
+        if (filteredCoins.length === 0 || coins.length === 0) {
+          setFilteredCoins(data);
+        }
       } catch (error) {
         console.error("Fallo al obtener datos de las monedas:", error);
-        setError();
+        setError("Fallo al cargar los datos.");
       }
     };
 
@@ -65,10 +73,16 @@ export default function Dashboard() {
       <p style={{ fontSize: "0.9em", color: "#666" }}>
         Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
       </p>
+      {error && <p style={{ color: "red" }}>⚠️ {error}</p>}
       {coins.length === 0 ? (
         <p>Cargando datos de monedas...</p>
       ) : (
         <>
+          <FilterSort
+            coins={coins}
+            setFilteredCoins={setFilteredCoins}
+            onFilterSortChange={handleFilterSortChange}
+          />
           {/*<PriceGraph coin={{ name: "Figure Heloc", id: "figure-heloc" }} />
       <PriceGraph coin={{ name: "USDT0", id: "usdt0" }} />
           <ConversionRate ids="bitcoin,ethereum" vs_currencies="usd,eur,eth" /> */}
@@ -76,17 +90,16 @@ export default function Dashboard() {
           <table>
             <thead>
               <tr>
+                <th>Ranking por Capitalización de Mercado</th>
                 <th>Nombre</th>
                 <th>Símbolo</th>
                 <th>Precio actual</th>
-
+                <th>Capitalización de Mercado</th>
+                <th>Cambio Porcentual de Precio en 24 horas</th>
                 {/* -------Details of bitcoins--------
-            <th>Capitalización de Mercado</th>
-            <th>Ranking por Capitalización de Mercado</th>
             <th>Volumen Total de Negociación en 24 horas</th>
             <th>Precios máximo</th>
             <th>Precios mínimo</th>
-            <th>Cambio Porcentual de Precio en 24 horas</th>
             <th>Suministro Circulante</th>
             <th>Suministro Total</th>*/}
                 <th></th>
@@ -95,19 +108,19 @@ export default function Dashboard() {
             <tbody>
               {currentItems.map((coin) => (
                 <tr key={coin.id}>
+                  <td>{coin.market_cap_rank}</td>
                   <td>{coin.name}</td>
                   <td>
                     <img src={coin.image} alt={coin.name} width="25" />
                   </td>
                   <td>{coin.current_price}$</td>
+                  <td>{coin.market_cap}</td>
+                  <td>{coin.price_change_percentage_24h}</td>
                   {/*
-              <td>{coin.market_cap}</td>
-              <td>{coin.market_cap_rank}</td>
               
               <td>{coin.total_volume}</td>
               <td>{coin.high_24h}</td>
               <td>{coin.low_24h}</td>
-              <td>{coin.price_change_percentage_24h}</td>
               <td>{coin.circulating_supply}</td>
               <td>{coin.total_supply}</td>*/}
                   <td></td>
