@@ -46,7 +46,6 @@ export const ConversionRate = ({
           setLastUpdated(new Date());
         }
       } catch (e) {
-        console.error("Error fetching conversion rate:", e);
         if (mounted) {
           setError("No se pudieron cargar las tasas de cambio.");
           setRates(null);
@@ -70,7 +69,6 @@ export const ConversionRate = ({
       return () => {
         mounted = false;
         clearInterval(intervalId);
-        console.log(`Polling detenido (intervalo ID: ${intervalId}).`);
       };
     } else {
       setLoading(false);

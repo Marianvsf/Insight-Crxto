@@ -95,7 +95,4 @@ export const addMockUser = ({ firstName, lastName, email, password }) => {
   };
 
   users.push(newUser);
-  console.log(
-    `Nuevo usuario registrado: ${newUser.username} (${newUser.email})`
-  );
 };

@@ -41,6 +41,7 @@ export default function RegisterView() {
     try {
       await register({
         email: formData.email,
+
         password: formData.password,
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -50,7 +51,6 @@ export default function RegisterView() {
       setIsSuccess(true);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Error durante el registro:", error);
       setMessage(
         error.message || "Error al completar el registro. Inténtalo de nuevo."
       );

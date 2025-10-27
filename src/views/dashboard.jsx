@@ -57,7 +57,6 @@ export default function Dashboard() {
           setFilteredCoins(data);
         }
       } catch (error) {
-        console.error("Fallo al obtener datos de las monedas:", error);
         setError("Fallo al cargar los datos.");
       }
     };

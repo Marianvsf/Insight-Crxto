@@ -9,7 +9,6 @@ export const useAuthStore = create((set) => ({
   user: null,
 
   login: async (email, password) => {
-    console.log(`Login con: ${email}`);
     const foundUser = getMockUsers().find(
       (user) => user.email === email && user.password === password
     );
@@ -27,11 +26,8 @@ export const useAuthStore = create((set) => ({
           id: foundUser.id,
         },
       });
-
-      console.log(`Login exitoso para: ${foundUser.username}`);
       return true;
     } else {
-      console.error("Intento de login fallido: Credenciales no válidas.");
       throw new Error("Credenciales inválidas");
     }
   },

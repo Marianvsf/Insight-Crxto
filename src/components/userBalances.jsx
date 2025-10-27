@@ -16,7 +16,6 @@ const fetchCryptoPrices = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Fallo la llamada a la API de CoinGecko:", error);
     return [];
   }
 };

@@ -46,7 +46,6 @@ export default function LoginView() {
         setIsSuccess(false);
       }
     } catch (error) {
-      console.error("Error de Login:", error);
       setMessage("Error al iniciar sesión. Inténtalo de nuevo más tarde.");
       setIsSuccess(false);
     }
