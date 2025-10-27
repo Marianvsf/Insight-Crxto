@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/chinchin-logo.png";
 
 const Navbar = () => {

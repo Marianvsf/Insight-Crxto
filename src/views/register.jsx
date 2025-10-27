@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/chinchin-logo.png";
 
 export default function RegisterView() {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { getMockUsers } from "../mocks/mockUsers";
-import { CryptoSwapForm } from "./cryptoSwap";
+import { getMockUsers } from "../mocks/mockUsers.js";
+import { CryptoSwapForm } from "./cryptoSwap.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";

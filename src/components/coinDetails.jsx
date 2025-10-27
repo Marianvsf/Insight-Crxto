@@ -1,4 +1,4 @@
-import PriceGraph from "./PriceGraph";
+import PriceGraph from "./priceGraph.jsx";
 
 export default function CoinDetailsTable({ coin, onClose }) {
   if (!coin) {

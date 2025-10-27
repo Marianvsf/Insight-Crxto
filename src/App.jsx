@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import LoginView from "./views/login";
-import RegisterView from "./views/register";
-import Home from "./views/home";
-import Navbar from "./views/navbar";
-import Dashboard from "./views/dashboard";
+import LoginView from "./views/login.jsx";
+import RegisterView from "./views/register.jsx";
+import Home from "./views/home.jsx";
+import Navbar from "./views/navbar.jsx";
+import Dashboard from "./views/dashboard.jsx";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { ConversionRate } from "./ConversionRate";
-import { getMockUsers } from "../mocks/mockUsers";
+import { ConversionRate } from "./conversionRate.jsx";
+import { getMockUsers } from "../mocks/mockUsers.js";
 
 const findUserAndBalances = (userId) => {
   const currentUser = getMockUsers().find((u) => u.id === userId);

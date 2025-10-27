@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import FilterSort from "../components/filterSort.jsx";
-import UserBalances from "../components/userBalances";
-import { useAuthStore } from "../store/authStore";
-import CoinDetailsTable from "../components/coinDetails";
+import UserBalances from "../components/userBalances.jsx";
+import { useAuthStore } from "../store/authStore.js";
+import CoinDetailsTable from "../components/coinDetails.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getMockUsers, addMockUser } from "../mocks/mockUsers";
+import { getMockUsers, addMockUser } from "../mocks/mockUsers.js";
 
 const getInitialToken = () => localStorage.getItem("authToken");
 
