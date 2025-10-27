@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import modelo from "../assets/chinchin-modelo-presentation.webp";
-import movil from "../assets/chinchin-movile.webp";
-import remesas from "../assets/chinchin-remesas.webp";
-import telefono from "../assets/chinchin-telefono.webp";
-import banner from "../assets/chinchin-banner-op.png";
+import banner from "../assets/banner.jpg";
+import foto2 from "../assets/FB_IMG_1 (2).jpg";
+import foto3 from "../assets/FB_IMG_1 (3).jpg";
 
 const HeaderContent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [telefono, modelo, movil, remesas, banner];
+  const images = [modelo, banner, foto2, foto3];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -153,7 +152,7 @@ const HeaderContent = () => {
           </span>
         </button>
       </div>
-      <h1 className="m-auto p-10 text-3xl font-extrabold text-black mb-7">
+      <h1 className="m-auto p-10 text-3xl font-extrabold text-black mb-5">
         ¡Te damos la Bienvenida a Nuestra Aplicación!
         <small className="ms-2 font-semibold text-gray-500 dark:text-gray-400"></small>
       </h1>
