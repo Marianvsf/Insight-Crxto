@@ -60,11 +60,24 @@ export const CryptoSwapForm = ({
   }, [userId]);
 
   const currentRate = useMemo(() => {
+    // Prefer conversion data from the ConversionRate component when available
     if (conversionRateData && cryptoFromId && cryptoToId) {
-      return conversionRateData[cryptoFromId]?.[cryptoToId] || 0;
+      const direct = conversionRateData[cryptoFromId]?.[cryptoToId];
+      if (typeof direct === "number" && direct > 0) return direct;
     }
+
+    // Fallback: compute rate using marketData (USD prices) if available.
+    // 1 unit of cryptoFrom equals (priceFromUSD / priceToUSD) units of cryptoTo.
+    const fromPrice = marketData.find(
+      (c) => c.id === cryptoFromId
+    )?.current_price;
+    const toPrice = marketData.find((c) => c.id === cryptoToId)?.current_price;
+    if (fromPrice != null && toPrice != null && toPrice > 0) {
+      return fromPrice / toPrice;
+    }
+
     return 0;
-  }, [conversionRateData, cryptoFromId, cryptoToId]);
+  }, [conversionRateData, cryptoFromId, cryptoToId, marketData]);
 
   const balanceFrom = balances.find((b) => b.id === cryptoFromId)?.balance || 0;
   const balanceTo = balances.find((b) => b.id === cryptoToId)?.balance || 0;
