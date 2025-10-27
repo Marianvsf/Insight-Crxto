@@ -7,6 +7,7 @@ export const ConversionRate = ({
   ids,
   vs_currencies,
   refreshIntervalSeconds = 60,
+  onDataFetched = () => {},
 }) => {
   const [rates, setRates] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,33 +40,48 @@ export const ConversionRate = ({
 
         if (mounted) {
           setRates(data);
+          onDataFetched(data);
           setError(null);
           setLoading(false);
+          setLastUpdated(new Date());
         }
       } catch (e) {
         console.error("Error fetching conversion rate:", e);
         if (mounted) {
           setError("No se pudieron cargar las tasas de cambio.");
           setRates(null);
+          onDataFetched(null);
           setLoading(false);
         }
       }
     };
+    const isValidPair =
+      ids &&
+      vs_currencies &&
+      ids.split(",").length > 0 &&
+      vs_currencies.split(",").length > 0;
 
-    fetchConversionRate();
-    const intervalId = setInterval(
-      fetchConversionRate,
-      refreshIntervalSeconds * 1000
-    );
-    return () => {
-      mounted = false;
-      clearInterval(intervalId);
-      console.log(`Polling detenido (intervalo ID: ${intervalId}).`);
-    };
-  }, [ids, vs_currencies, refreshIntervalSeconds]);
+    if (isValidPair) {
+      fetchConversionRate();
+      const intervalId = setInterval(
+        fetchConversionRate,
+        refreshIntervalSeconds * 1000
+      );
+      return () => {
+        mounted = false;
+        clearInterval(intervalId);
+        console.log(`Polling detenido (intervalo ID: ${intervalId}).`);
+      };
+    } else {
+      setLoading(false);
+      setRates(null);
+      onDataFetched(null);
+    }
+  }, [ids, vs_currencies, refreshIntervalSeconds, onDataFetched]);
 
   if (loading) {
-    return <span>Cargando tasas de {ids.split(",").join(" y ")}...</span>;
+    const displayIds = ids ? ids.split(",").join(" y ") : "criptomonedas";
+    return <span>Cargando tasa de {displayIds}...</span>;
   }
 
   if (error) {
@@ -75,46 +91,17 @@ export const ConversionRate = ({
   if (!rates || Object.keys(rates).length === 0) {
     return (
       <span>
-        No se encontraron tasas de conversión para las criptomonedas
-        seleccionadas.
+        Tasa no disponible para el par {ids?.toUpperCase()} /{" "}
+        {vs_currencies?.toUpperCase()}.
       </span>
     );
   }
-
   return (
     <div>
-      <h1>
-        Tasas de Cambio: actualización cada {refreshIntervalSeconds} segundos.
-      </h1>
       <p style={{ fontSize: "0.9em", color: "#666" }}>
-        Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
+        Tasa se actualiza cada **{refreshIntervalSeconds}** segundos. (Última
+        actualización: {lastUpdated.toLocaleTimeString()} 🔄)
       </p>
-      {Object.entries(rates).map(([cryptoId, cryptoRates]) => (
-        <div
-          key={cryptoId}
-          style={{
-            marginBottom: "20px",
-            padding: "10px",
-            border: "1px solid #ccc",
-          }}
-        >
-          <h2>
-            {cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} (
-            {cryptoId.toUpperCase()})
-          </h2>
-
-          {Object.entries(cryptoRates).map(([currency, rateValue]) => (
-            <p key={currency} style={{ margin: "5px 0" }}>
-              1 **{cryptoId.toUpperCase()}** = **
-              {rateValue.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 8,
-              })}
-              ** {currency.toUpperCase()}
-            </p>
-          ))}
-        </div>
-      ))}
     </div>
   );
 };
