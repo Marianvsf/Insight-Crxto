@@ -5,12 +5,9 @@ import logo from "../assets/chinchin-logo.png";
 
 const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
-  const navigate = useNavigate("");
+  const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,8 +16,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     const success = await logout();
     if (success) {
-      setMessage("¡Inicio de sesión exitoso! Serás redirigido al Home.");
-      setIsSuccess(true);
+      // logout successful — navigate to home
       navigate("/");
     }
   };
@@ -38,9 +34,9 @@ const Navbar = () => {
           onClick={toggleMenu}
           data-collapse-toggle="navbar-default"
           type="button"
-          className="inline-flex items-centerp-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
           aria-controls="navbar-default"
-          aria-expanded="true"
+          aria-expanded={isMenuOpen}
         >
           <span className="sr-only">Menu</span>
           <svg
@@ -64,21 +60,21 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             {location.pathname === "/" && (
               <>
-                <li>
+                <li className="mb-0 md:mb-0">
                   <Link
                     to="/register"
-                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     REGISTRARSE
                   </Link>
                 </li>
-                <li>
+                <li className="mb-0 md:mb-0">
                   <Link
                     to="/login"
-                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     INICIAR SESIÓN
                   </Link>
@@ -86,11 +82,11 @@ const Navbar = () => {
               </>
             )}
             {location.pathname === "/dashboard" && (
-              <li>
+              <li className="mb-0 md:mb-0">
                 <Link
                   onClick={handleLogout}
                   to="/"
-                  className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                 >
                   CERRAR SESIÓN
                 </Link>
@@ -98,18 +94,18 @@ const Navbar = () => {
             )}
             {location.pathname === "/register" && (
               <>
-                <li>
+                <li className="mb-0 md:mb-0">
                   <Link
                     to="/"
-                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     INICIO
                   </Link>
                 </li>
-                <li>
+                <li className="mb-0 md:mb-0">
                   <Link
                     to="/login"
-                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     INICIAR SESIÓN
                   </Link>
@@ -118,18 +114,18 @@ const Navbar = () => {
             )}
             {location.pathname === "/login" && (
               <>
-                <li>
+                <li className="mb-0 md:mb-0">
                   <Link
                     to="/register"
-                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     REGISTRARSE
                   </Link>
                 </li>
-                <li>
+                <li className="mb-0 md:mb-0">
                   <Link
                     to="/"
-                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     INICIO
                   </Link>
