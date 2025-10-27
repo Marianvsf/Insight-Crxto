@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import HeaderContent from "../components/headerContent";
+import HeaderContent from "../components/headerContent.jsx";
 
 function Home() {
   return (
