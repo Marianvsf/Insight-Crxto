@@ -1,5 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { getMockUsers } from "../mocks/mockUsers";
+import { ConversionRate } from "./conversionRate";
+import { CryptoSwapForm } from "./cryptoSwap";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -24,11 +26,12 @@ const UserBalances = ({ userId }) => {
   const [cryptoMarketData, setCryptoMarketData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSwapping, setIsSwapping] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const currentUser = getMockUsers().find((u) => u.id === userId);
   const userBalances = currentUser ? currentUser.cryptoBalances : [];
 
-  // Efecto para cargar los precios de CoinGecko
   useEffect(() => {
     const loadPrices = async () => {
       try {
@@ -44,7 +47,7 @@ const UserBalances = ({ userId }) => {
     };
 
     loadPrices();
-  }, []);
+  }, [refreshKey]);
 
   const dataForTable = useMemo(() => {
     if (cryptoMarketData.length === 0 || userBalances.length === 0) {
@@ -78,6 +81,20 @@ const UserBalances = ({ userId }) => {
     0
   );
 
+  const handleSwapClick = () => {
+    if (userBalances.length < 1) {
+      alert("Necesitas tener al menos un saldo para iniciar un intercambio.");
+      return;
+    }
+    setIsSwapping(true);
+  };
+  const handleCloseSwap = useCallback(() => {
+    setIsSwapping(false);
+  }, []);
+  const handleSwapComplete = useCallback(() => {
+    setRefreshKey((prev) => prev + 1);
+  }, []);
+
   if (!currentUser) {
     return <p>Error: Usuario con {userId} no encontrado.</p>;
   }
@@ -99,6 +116,19 @@ const UserBalances = ({ userId }) => {
   return (
     <div className="crypto-balances-widget">
       <h2>Portafolio de {currentUser.firstName} 💰</h2>
+
+      <button onClick={handleSwapClick} disabled={isSwapping}>
+        {isSwapping ? "Intercambio Abierto" : "Realizar Intercambio 🔄"}
+      </button>
+
+      {isSwapping && (
+        <CryptoSwapForm
+          userId={userId}
+          onSwapComplete={handleSwapComplete}
+          onClose={handleCloseSwap}
+          marketData={cryptoMarketData}
+        />
+      )}
 
       <p className="total-value">
         Valor Total Estimado:{" "}
