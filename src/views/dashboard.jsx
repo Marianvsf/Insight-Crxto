@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import FilterSort from "../components/FilterSort";
+import FilterSort from "../components/filterSort";
 import UserBalances from "../components/userBalances";
 import { useAuthStore } from "../store/authStore";
 import CoinDetailsTable from "../components/coinDetails";
