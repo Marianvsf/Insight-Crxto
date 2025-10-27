@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import FilterSort from "../components/FilterSort";
 import UserBalances from "../components/userBalances";
 import { useAuthStore } from "../store/authStore";
@@ -19,22 +19,20 @@ export default function Dashboard() {
   const currentUserId = user?.id;
   const [showBalances, setShowBalances] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  {
-    /*const itemsPerPage = 10;
+  const itemsPerPage = 10;
 
-	const indexOfLastItem = currentPage * itemsPerPage;
-	const indexOffirstItem = indexOfLastItem - itemsPerPage;
-	const currentItems = filteredCoins.slice(indexOffirstItem, indexOfLastItem);
+  // Calculate currentItems based on pagination
+  const currentItems = filteredCoins.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
 
-	const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
-
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-	const pageNumbers = [];
-	for (let i = 1; i <= totalPages; i++) {
-		pageNumbers.push(i);
-	}*/
-  }
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
   useEffect(() => {
     const fetchCoins = async () => {
@@ -55,7 +53,7 @@ export default function Dashboard() {
         setCoins(data);
         setLastUpdated(new Date());
 
-        if (filteredCoins.length === 0 || coins.length === 0) {
+        if (filteredCoins.length === 0) {
           setFilteredCoins(data);
         }
       } catch (error) {
@@ -68,11 +66,17 @@ export default function Dashboard() {
 
     const intervalId = setInterval(fetchCoins, 30000);
     return () => clearInterval(intervalId);
-  }, [selectedCoin, filteredCoins.length, coins.length]); // Agregué dependencias para evitar warnings
+  }, [filteredCoins.length]);
 
-  const handleFilterSortChange = () => {
+  useEffect(() => {
+    // Reset currentPage when filteredCoins changes
     setCurrentPage(1);
-  };
+  }, [filteredCoins]);
+
+  const handleFilterSortChange = useCallback(() => {
+    setCurrentPage(1);
+  }, []);
+
   const handleCoinClick = (coin) => {
     setSelectedCoin(coin);
   };
@@ -80,8 +84,8 @@ export default function Dashboard() {
   const handleCloseDetails = () => {
     setSelectedCoin(null);
   };
+
   const handleShowBalances = () => {
-    console.log(currentUserId);
     setShowBalances(true);
   };
 
@@ -107,7 +111,6 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Contenedor centralizado para evitar que el contenido toque los bordes */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-6 border-b pb-4">
           <h1 className="text-3xl font-bold text-gray-900">
@@ -180,7 +183,7 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {filteredCoins.map((coin) => (
+                      {currentItems.map((coin) => (
                         <tr
                           key={coin.id}
                           className="hover:bg-gray-50 transition duration-150"
@@ -235,51 +238,70 @@ export default function Dashboard() {
                               Ver Detalles
                             </button>
                           </td>
-                          <td></td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-                {/*<nav>
-              <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
-                {/* Botón de retroceso *}
-                <li>
-                  <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                  >
-                    Anterior
-                  </button>
-                </li>
-
-                {/* Números de página *}
-                {pageNumbers.map((number) => (
-                  <li key={number} style={{ margin: "0 5px" }}>
-                    <button
-                      onClick={() => paginate(number)}
-                      style={{
-                        fontWeight: currentPage === number ? "bold" : "normal",
-                        backgroundColor:
-                          currentPage === number ? "#ccc" : "white",
-                      }}
-                    >
-                      {number}
-                    </button>
-                  </li>
-                ))}
-
-                {/* Botón de avance 
-                <li>
-                  <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                  >
-                    Siguiente
-                  </button>
-                </li>
-              </ul>
-            </nav>*/}
+                <nav
+                  className="flex justify-center items-center mt-6"
+                  aria-label="Pagination"
+                >
+                  <ul className="flex items-center space-x-2">
+                    <li>
+                      <button
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`
+                          px-4 py-2 text-sm font-medium rounded-lg border
+                          transition duration-150 ease-in-out
+                          ${
+                            currentPage === 1
+                              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+                              : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
+                          }
+                        `}
+                      >
+                        ← Anterior
+                      </button>
+                    </li>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                      <li key={index + 1}>
+                        <button
+                          onClick={() => paginate(index + 1)}
+                          className={`
+                            px-4 py-2 text-sm font-semibold rounded-lg
+                            transition duration-150 ease-in-out
+                            ${
+                              currentPage === index + 1
+                                ? "bg-teal-600 text-white shadow-md"
+                                : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
+                            }
+                          `}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    ))}
+                    <li>
+                      <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className={`
+                          px-4 py-2 text-sm font-medium rounded-lg border
+                          transition duration-150 ease-in-out
+                          ${
+                            currentPage === totalPages
+                              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+                              : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
+                          }
+                        `}
+                      >
+                        Siguiente →
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
                 {filteredCoins.length === 0 && (
                   <p className="mt-4 text-center text-gray-600">
                     No se encontraron resultados con el filtro aplicado.
