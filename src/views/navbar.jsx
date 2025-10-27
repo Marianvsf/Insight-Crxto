@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import logo from "../assets/chinchin-logo.png";
 
 const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
@@ -14,28 +15,24 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLogout = async (e) => {
+  const handleLogout = async () => {
     const success = await logout();
     if (success) {
       setMessage("¡Inicio de sesión exitoso! Serás redirigido al Home.");
       setIsSuccess(true);
-      navigate("/dashboard");
+      navigate("/");
     }
   };
 
   return (
-    <nav className="border-gray-200 bg-blue-700 ">
+    <nav className="border-gray-200 ">
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img
-            src="chinchin-logo.png"
-            className="h-8"
-            alt="Globetrotter Logo"
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            Globetrotter
-          </span>
-        </a>
+        <Link
+          to="/"
+          className="flex items-center space-x-3 rtl:space-x-reverse"
+        >
+          <img src={logo} className="h-8" alt="Chinchin Logo" />
+        </Link>
         <button
           onClick={toggleMenu}
           data-collapse-toggle="navbar-default"
@@ -44,7 +41,7 @@ const Navbar = () => {
           aria-controls="navbar-default"
           aria-expanded="true"
         >
-          <span className="sr-only">Open main menu</span>
+          <span className="sr-only">Menu</span>
           <svg
             className="w-5 h-5"
             aria-hidden="false"
@@ -69,27 +66,27 @@ const Navbar = () => {
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             <li>
               <Link
-                to="/"
-                className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+                to="/register"
+                className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
               >
-                Home
+                REGISTRARSE
               </Link>
             </li>
             <li>
               <Link
                 to="/login"
-                className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+                className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
               >
-                Login
+                INICIAR SESIÓN
               </Link>
             </li>
             <button>
               <Link
                 onClick={handleLogout}
                 to="/"
-                className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+                className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
               >
-                Logout
+                CERRAR SESIÓN
               </Link>
             </button>
           </ul>

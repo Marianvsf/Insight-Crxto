@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuthStore } from "../store/authStore";
+import logo from "../assets/chinchin-logo.png";
 
 export default function RegisterView() {
   const register = useAuthStore((state) => state.register);
@@ -73,9 +74,9 @@ export default function RegisterView() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 w-full space-y-6">
-      <h4 className="text-sm font-semibold text-center mb-2">Insight Crxto</h4>
-      <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 w-full space-y-6">
+      <img src={logo} className="h-8" alt="Chinchin Logo" />
+      <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
         Registro de Usuario
       </h2>
       <div className="max-w-lg bg-white p-8 rounded-xl shadow-2xl z-10">
@@ -212,7 +213,7 @@ export default function RegisterView() {
 
           <button
             type="submit"
-            className="mt-2 w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-blue-700 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+            className="mt-2 w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase  bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
           >
             Registrarme
           </button>
@@ -237,14 +238,14 @@ export default function RegisterView() {
           Al registrarme, acepto las{" "}
           <Link
             to="#"
-            className="text-indigo-600 hover:text-indigo-800 hover:underline font-semibold"
+            className="text-teal-600 hover:text-teal-800 hover:underline font-semibold"
           >
             Condiciones del servicio
           </Link>{" "}
           y la{" "}
           <Link
             to="#"
-            className="text-indigo-600 hover:text-indigo-800 hover:underline font-semibold"
+            className="text-teal-600 hover:text-teal-800 hover:underline font-semibold"
           >
             Política de privacidad
           </Link>
@@ -254,7 +255,7 @@ export default function RegisterView() {
           ¿Ya tienes cuenta?{" "}
           <Link
             to="/login"
-            className="text-indigo-600 hover:text-indigo-800 hover:underline font-bold"
+            className="text-teal-600 hover:text-teal-800 hover:underline font-bold"
           >
             Inicia sesión
           </Link>
