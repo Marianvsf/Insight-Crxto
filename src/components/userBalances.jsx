@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { getMockUsers } from "../mocks/mockUsers";
-import { ConversionRate } from "./conversionRate";
 import { CryptoSwapForm } from "./cryptoSwap";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
@@ -38,7 +37,7 @@ const UserBalances = ({ userId }) => {
         const data = await fetchCryptoPrices();
         setCryptoMarketData(data);
         setError(null);
-      } catch (err) {
+      } catch (error) {
         setError("No se pudieron cargar los precios de las criptomonedas.");
         setCryptoMarketData([]);
       } finally {
@@ -96,81 +95,147 @@ const UserBalances = ({ userId }) => {
   }, []);
 
   if (!currentUser) {
-    return <p>Error: Usuario con {userId} no encontrado.</p>;
+    return (
+      <p className="text-red-600 font-semibold p-4 bg-red-100 rounded-lg">
+        Error: Usuario con {userId} no encontrado.
+      </p>
+    );
   }
 
   if (isLoading) {
-    return <p>Cargando precios de mercado...</p>;
+    return <p className="text-gray-600 p-4">Cargando precios de mercado...</p>;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <p className="text-red-600 font-semibold p-4 bg-red-100 rounded-lg">
+        Error: {error}
+      </p>
+    );
   }
 
   if (userBalances.length === 0) {
     return (
-      <p>El usuario {currentUser.firstName} no tiene balances registrados.</p>
+      <p className="text-gray-600 p-4 bg-gray-100 rounded-lg">
+        El usuario {currentUser.firstName} no tiene balances registrados.
+      </p>
     );
   }
 
   return (
-    <div className="crypto-balances-widget">
-      <h2>Portafolio de {currentUser.firstName} 💰</h2>
+    <div className="bg-white p-6 shadow-2xl rounded-xl">
+      <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b pb-3">
+        Portafolio de {currentUser.firstName} 💰
+      </h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <button
+          onClick={handleSwapClick}
+          disabled={isSwapping}
+          className={`
+            py-2 px-4 rounded-lg shadow-md text-sm font-bold uppercase
+            transition duration-150 ease-in-out
+            ${
+              isSwapping
+                ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                : "bg-teal-500 hover:bg-teal-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+            }
+          `}
+        >
+          {isSwapping ? "Intercambio Abierto" : "Realizar Intercambio 🔄"}
+        </button>
 
-      <button onClick={handleSwapClick} disabled={isSwapping}>
-        {isSwapping ? "Intercambio Abierto" : "Realizar Intercambio 🔄"}
-      </button>
+        <p className="total-value text-xl font-medium text-gray-800">
+          Valor Total Estimado:{" "}
+          <strong className="text-teal-600 font-extrabold text-2xl">
+            $
+            {new Intl.NumberFormat("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(totalPortfolioValue)}{" "}
+            USD
+          </strong>
+        </p>
+      </div>
 
       {isSwapping && (
-        <CryptoSwapForm
-          userId={userId}
-          onSwapComplete={handleSwapComplete}
-          onClose={handleCloseSwap}
-          marketData={cryptoMarketData}
-        />
+        <div className="mb-8 border border-teal-300 p-4 rounded-lg bg-teal-50/50 shadow-inner">
+          <CryptoSwapForm
+            userId={userId}
+            onSwapComplete={handleSwapComplete}
+            onClose={handleCloseSwap}
+            marketData={cryptoMarketData}
+          />
+        </div>
       )}
-
-      <p className="total-value">
-        Valor Total Estimado:{" "}
-        <strong>
-          ${totalPortfolioValue.toFixed(2).toLocaleString("en-US")} USD
-        </strong>
-      </p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Criptomoneda</th>
-            <th>Saldo</th>
-            <th>Precio (USD)</th>
-            <th>Variación 24h</th>
-            <th>Valor Total (USD)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dataForTable.map((item) => (
-            <tr key={item.id}>
-              <td>
-                <img src={item.image} alt={item.name} width="20" height="20" />
-                {item.name} ({item.symbol.toUpperCase()})
-              </td>
-              <td>{item.balance.toFixed(8)}</td>
-              <td>
-                $
-                {item.currentPrice.toLocaleString("en-US", {
-                  minimumFractionDigits: 2,
-                })}
-              </td>
-              <td>
-                {item.priceChange24h !== null
-                  ? `${item.priceChange24h.toFixed(2)}%`
-                  : "N/A"}
-              </td>
-              <td>${item.totalValueUSD.toFixed(2).toLocaleString("en-US")}</td>
+      <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Criptomoneda
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Saldo
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Precio (USD)
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Variación 24h
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Valor Total (USD)
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-100">
+            {dataForTable.map((item) => (
+              <tr key={item.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    width="20"
+                    height="20"
+                    className="mr-3 h-5 w-5"
+                  />
+                  {item.name} (
+                  <span className="uppercase ml-1 font-bold text-teal-600">
+                    {item.symbol}
+                  </span>
+                  )
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-700 font-mono">
+                  {item.balance.toFixed(8)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-700 font-mono">
+                  $
+                  {new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 8,
+                  }).format(item.currentPrice)}
+                </td>
+                <td
+                  className={`px-6 py-4 whitespace-nowrap text-right text-sm font-semibold ${
+                    item.priceChange24h > 0 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {item.priceChange24h !== null
+                    ? `${item.priceChange24h.toFixed(2)}%`
+                    : "N/A"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-bold text-gray-900 font-mono">
+                  $
+                  {new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(item.totalValueUSD)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

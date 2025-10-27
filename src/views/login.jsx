@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
+import logo from "../assets/chinchin-logo.png";
 
 export default function LoginView() {
   const login = useAuthStore((state) => state.login);
@@ -58,10 +59,8 @@ export default function LoginView() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-6">
       <div className="sm:container sm:max-h-0 sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col items-center justify-center space-y-6">
-        <h4 className="text-sm font-bold text-blue-600 text-center mb-2">
-          Insight Crxto
-        </h4>
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-6">
+        <img src={logo} className="h-8" alt="Chinchin Logo" />
+        <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
           Inicio de Sesión
         </h2>
         <div className="max-w-md w-full bg-white p-8 md:container rounded-xl shadow-2xl z-10">
@@ -80,7 +79,7 @@ export default function LoginView() {
                 placeholder="email@example.com"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
                 required
               />
             </div>
@@ -99,7 +98,7 @@ export default function LoginView() {
                 placeholder="Tu contraseña"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
                 required
               />
               <button
@@ -119,14 +118,14 @@ export default function LoginView() {
             </div>
 
             <div className="text-right text-sm">
-              {/* <Link to="/forgot-password" className="text-blue-600 hover:underline font-medium">
+              {/* <Link to="/forgot-password" className="text-teal-600 hover:underline font-medium">
               ¿Olvidaste tu contraseña?
             </Link> */}
             </div>
 
             <button
               type="submit"
-              className="w-full py-2 mt-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+              className="w-full py-2 mt-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-teal-400 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
             >
               Iniciar Sesión
             </button>
@@ -151,7 +150,7 @@ export default function LoginView() {
             ¿No tienes cuenta?{" "}
             <Link
               to="/register"
-              className="text-blue-600 hover:text-blue-800 hover:underline font-bold"
+              className="text-teal-600 hover:text-teal-800 hover:underline font-bold"
             >
               Regístrate aquí
             </Link>

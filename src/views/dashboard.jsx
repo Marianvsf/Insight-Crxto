@@ -22,18 +22,18 @@ export default function Dashboard() {
   {
     /*const itemsPerPage = 10;
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOffirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredCoins.slice(indexOffirstItem, indexOfLastItem);
+	const indexOfLastItem = currentPage * itemsPerPage;
+	const indexOffirstItem = indexOfLastItem - itemsPerPage;
+	const currentItems = filteredCoins.slice(indexOffirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
+	const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }*/
+	const pageNumbers = [];
+	for (let i = 1; i <= totalPages; i++) {
+		pageNumbers.push(i);
+	}*/
   }
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function Dashboard() {
 
     const intervalId = setInterval(fetchCoins, 30000);
     return () => clearInterval(intervalId);
-  }, [selectedCoin]);
+  }, [selectedCoin, filteredCoins.length, coins.length]); // Agregué dependencias para evitar warnings
 
   const handleFilterSortChange = () => {
     setCurrentPage(1);
@@ -88,130 +88,208 @@ export default function Dashboard() {
   const handleBackToDashboard = () => {
     setShowBalances(false);
   };
+
   if (showBalances) {
     return (
-      <div>
-        <button onClick={handleBackToDashboard}>← Volver al Dashboard</button>
-        <UserBalances userId={currentUserId} />
+      <div className="min-h-screen bg-white p-4">
+        <div className="max-w-7xl mx-auto py-6">
+          <button
+            onClick={handleBackToDashboard}
+            className="mb-6 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out font-medium"
+          >
+            ← Volver al Tablero
+          </button>
+          <UserBalances userId={currentUserId} />
+        </div>
       </div>
     );
   }
 
   return (
-    <main>
-      <h1>Bienvenido de nuevo, {username} </h1>
-      <button
-        onClick={handleShowBalances}
-        style={{ marginBottom: "20px", padding: "10px 15px" }}
-      >
-        Ver Mi Balance 💰
-      </button>
-      <h1>Criptomonedas disponibles, actualización cada 30 segundos.</h1>
-      <p style={{ fontSize: "0.9em", color: "#666" }}>
-        Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
-      </p>
-      {error && <p style={{ color: "red" }}>⚠️ {error}</p>}
-      {coins.length === 0 ? (
-        <p>Cargando datos de monedas...</p>
-      ) : (
-        <>
-          <CoinDetailsTable coin={selectedCoin} onClose={handleCloseDetails} />
-          {selectedCoin ? (
-            <></>
-          ) : (
-            <>
-              <FilterSort
-                coins={coins}
-                setFilteredCoins={setFilteredCoins}
-                onFilterSortChange={handleFilterSortChange}
-              />
-              <table>
-                <thead>
-                  <tr>
-                    <th>Ranking</th>
-                    <th>Nombre</th>
-                    <th>Símbolo</th>
-                    <th>Precio actual</th>
-                    <th>Capitalización de Mercado</th>
-                    <th>Cambio % (24h)</th>
-                    <th>Acción</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredCoins.map((coin) => (
-                    <tr key={coin.id}>
-                      <td>{coin.market_cap_rank}</td>
-                      <td>{coin.name}</td>
-                      <td>
-                        <img src={coin.image} alt={coin.name} width="25" />
-                      </td>
-                      <td>
-                        {new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 4,
-                        }).format(coin.current_price)}
-                        $
-                      </td>
-                      <td>{coin.market_cap}$</td>
-                      <td>{coin.price_change_percentage_24h}</td>
-                      <td>
-                        <button onClick={() => handleCoinClick(coin)}>
-                          Ver Detalles
-                        </button>
-                      </td>
-                      <td></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {/*<nav>
-            <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
-              {/* Botón de retroceso *
-              <li>
-                <button
-                  onClick={() => paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Anterior
-                </button>
-              </li>
+    <main className="min-h-screen bg-white">
+      {/* Contenedor centralizado para evitar que el contenido toque los bordes */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-between items-center mb-6 border-b pb-4">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Bienvenido de nuevo,{" "}
+            <span className="text-teal-600">{username}</span>
+          </h1>
+          <button
+            onClick={handleShowBalances}
+            className="py-2 px-4 rounded-lg shadow-lg text-sm font-bold text-white uppercase bg-teal-500 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+          >
+            Ver Mi Balance 💰
+          </button>
+        </div>
 
-              {/* Números de página *
-              {pageNumbers.map((number) => (
-                <li key={number} style={{ margin: "0 5px" }}>
+        {selectedCoin ? (
+          <CoinDetailsTable coin={selectedCoin} onClose={handleCloseDetails} />
+        ) : (
+          <>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              Criptomonedas disponibles
+            </h2>
+            <p className="text-sm text-gray-500 mb-6">
+              Última actualización: {lastUpdated.toLocaleTimeString()} 🔄 (Cada
+              30 segundos)
+            </p>
+
+            {error && (
+              <div className="text-sm text-red-800 bg-red-100 border border-red-200 p-3 rounded-lg font-medium mb-4">
+                ⚠️ {error}
+              </div>
+            )}
+
+            {coins.length === 0 ? (
+              <p className="text-gray-600">Cargando datos de monedas...</p>
+            ) : (
+              <>
+                <div className="mb-6">
+                  <FilterSort
+                    coins={coins}
+                    setFilteredCoins={setFilteredCoins}
+                    onFilterSortChange={handleFilterSortChange}
+                  />
+                </div>
+
+                <div className="overflow-x-auto shadow-xl rounded-lg border border-gray-200">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Ranking
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Símbolo
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Nombre
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Precio actual
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Capitalización de Mercado
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Cambio % (24h)
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Acción
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {filteredCoins.map((coin) => (
+                        <tr
+                          key={coin.id}
+                          className="hover:bg-gray-50 transition duration-150"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {coin.market_cap_rank}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 flex items-center">
+                            <img
+                              src={coin.image}
+                              alt={coin.name}
+                              width="25"
+                              className="mr-2"
+                            />
+                            <span className="uppercase font-semibold">
+                              {coin.symbol}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            {coin.name}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
+                            {new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 4,
+                            }).format(coin.current_price)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
+                            {new Intl.NumberFormat("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                              minimumFractionDigits: 0,
+                              maximumFractionDigits: 0,
+                            }).format(coin.market_cap)}
+                          </td>
+                          <td
+                            className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
+                              coin.price_change_percentage_24h > 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {coin.price_change_percentage_24h.toFixed(2)}%
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              onClick={() => handleCoinClick(coin)}
+                              className="text-teal-600 hover:text-teal-800 transition duration-150 font-medium"
+                            >
+                              Ver Detalles
+                            </button>
+                          </td>
+                          <td></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {/*<nav>
+              <ul style={{ display: "flex", listStyle: "none", padding: 0 }}>
+                {/* Botón de retroceso *}
+                <li>
                   <button
-                    onClick={() => paginate(number)}
-                    style={{
-                      fontWeight: currentPage === number ? "bold" : "normal",
-                      backgroundColor:
-                        currentPage === number ? "#ccc" : "white",
-                    }}
+                    onClick={() => paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
                   >
-                    {number}
+                    Anterior
                   </button>
                 </li>
-              ))}
 
-              {/* Botón de avance 
-              <li>
-                <button
-                  onClick={() => paginate(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Siguiente
-                </button>
-              </li>
-            </ul>
-          </nav>*/}
-              {filteredCoins.length === 0 && (
-                <p>No se encontraron resultados con el filtro aplicado.</p>
-              )}
-            </>
-          )}
-        </>
-      )}
+                {/* Números de página *}
+                {pageNumbers.map((number) => (
+                  <li key={number} style={{ margin: "0 5px" }}>
+                    <button
+                      onClick={() => paginate(number)}
+                      style={{
+                        fontWeight: currentPage === number ? "bold" : "normal",
+                        backgroundColor:
+                          currentPage === number ? "#ccc" : "white",
+                      }}
+                    >
+                      {number}
+                    </button>
+                  </li>
+                ))}
+
+                {/* Botón de avance 
+                <li>
+                  <button
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >
+                    Siguiente
+                  </button>
+                </li>
+              </ul>
+            </nav>*/}
+                {filteredCoins.length === 0 && (
+                  <p className="mt-4 text-center text-gray-600">
+                    No se encontraron resultados con el filtro aplicado.
+                  </p>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </div>
     </main>
   );
 }

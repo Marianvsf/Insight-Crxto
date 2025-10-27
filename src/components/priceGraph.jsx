@@ -100,23 +100,35 @@ export default function PriceGraph({ coin }) {
   };
 
   const handleDays = (e) => {
-    setDays(parseInt(e.target.value));
+    let value = parseInt(e.target.value);
+    if (isNaN(value) || value < 1) value = 1;
+    if (value > 365) value = 365;
+    setDays(value.toString());
   };
 
   return (
-    <div style={{ maxWidth: "800px", height: "400px", margin: "20px" }}>
-      <h3>
+    <div className="w-full h-full p-4 bg-gray-50 rounded-lg shadow-inner">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">
         Historial de Precios - Últimos{" "}
         <input
           type="number"
           onChange={handleDays}
           value={days}
           min="1"
-          max="30"
-        ></input>
+          max="365"
+          className="
+            w-16 px-2 py-1
+            border border-gray-300 rounded-md
+            text-sm text-center font-bold text-gray-700
+            focus:ring-teal-500 focus:border-teal-500 focus:outline-none
+            transition duration-150
+          "
+        />
         Días
       </h3>
-      <Line data={data} options={options} />
+      <div className="h-80 w-full">
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 }

@@ -67,44 +67,51 @@ export default function FilterSort({
 
   return (
     <div
-      style={{
-        display: "flex",
-        gap: "20px",
-        marginBottom: "20px",
-        alignItems: "center",
-        padding: "10px",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-      }}
+      className="
+        flex flex-col sm:flex-row gap-4 sm:gap-6
+        mb-6 p-4
+        border border-gray-200 rounded-xl shadow-lg
+        bg-white
+      "
     >
-      <div>
-        <label htmlFor="search">Buscar Criptomoneda:</label>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center w-full sm:w-auto">
+        <label
+          htmlFor="search"
+          className="text-sm font-medium text-gray-700 mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap"
+        >
+          Buscar Criptomoneda:
+        </label>
         <input
           id="search"
           type="text"
           placeholder="Ej: Bitcoin, ETH"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            marginLeft: "10px",
-            padding: "5px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
+          className="
+            w-full sm:w-48 px-3 py-2
+            border border-gray-300 rounded-lg shadow-sm
+            focus:ring-teal-500 focus:border-teal-500
+            text-sm text-gray-800
+          "
         />
       </div>
-      <div>
-        <label htmlFor="sortBy">Ordenar por:</label>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center w-full sm:w-auto">
+        <label
+          htmlFor="sortBy"
+          className="text-sm font-medium text-gray-700 mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap"
+        >
+          Ordenar por:
+        </label>
         <select
           id="sortBy"
           value={sortBy}
           onChange={handleSortByChange}
-          style={{
-            marginLeft: "10px",
-            padding: "5px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
+          className="
+            w-full sm:w-40 px-3 py-2
+            border border-gray-300 rounded-lg shadow-sm
+            focus:ring-teal-500 focus:border-teal-500
+            bg-white text-sm text-gray-800
+          "
         >
           {sortCriteria.map((criteria) => (
             <option key={criteria.value} value={criteria.value}>
@@ -115,20 +122,27 @@ export default function FilterSort({
       </div>
       <button
         onClick={toggleSortOrder}
-        style={{
-          padding: "5px 10px",
-          cursor: "pointer",
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-          backgroundColor: "#f0f0f0",
-        }}
+        className="
+          flex-shrink-0
+          px-4 py-2
+          border border-gray-300 rounded-lg shadow-sm
+          text-sm font-medium text-gray-700
+          bg-gray-50 hover:bg-gray-100
+          transition duration-150 ease-in-out
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500
+        "
         title={`Cambiar a orden ${
           sortOrder === "asc" ? "descendente" : "ascendente"
         }`}
       >
         {sortIcon} {sortOrder === "asc" ? "Ascendente" : "Descendente"}
       </button>
-      <p>Monedas encontradas: **{calculatedCoins.length}**</p>
+      <p className="text-sm text-gray-600 self-center mt-2 sm:mt-0">
+        Monedas encontradas:{" "}
+        <span className="font-bold text-teal-600">
+          {calculatedCoins.length}
+        </span>
+      </p>
     </div>
   );
 }

@@ -158,9 +158,9 @@ export const CryptoSwapForm = ({
     userId,
     onSwapComplete,
     marketData,
+    symbolTo,
   ]);
 
-  // Manejadores de cambio para los selectores
   const handleFromChange = (e) => {
     setCryptoFromId(e.target.value);
     setAmountToSwap(0);
@@ -184,37 +184,32 @@ export const CryptoSwapForm = ({
   }, [marketData]);
 
   if (!currentUser) {
-    return <p>Error: Usuario no encontrado para realizar el intercambio.</p>;
+    return (
+      <p className="text-red-600 font-semibold p-4 bg-red-100 rounded-lg">
+        Error: Usuario no encontrado para realizar el intercambio.
+      </p>
+    );
   }
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        border: "1px solid #ddd",
-        margin: "20px 0",
-        backgroundColor: "#f9f9f9",
-      }}
-    >
-      <h2>Realizar Intercambio de Criptomonedas 🔄</h2>
-
+    <div className="p-6 bg-white rounded-xl shadow-lg relative max-w-lg mx-auto">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        Realizar Intercambio de Criptomonedas
+      </h2>
       <button
         onClick={onClose}
-        style={{
-          float: "right",
-          backgroundColor: "red",
-          color: "white",
-          border: "none",
-          padding: "5px 10px",
-          cursor: "pointer",
-        }}
+        className="
+          absolute top-0 right-3 text-gray-500 hover:text-red-500 transition duration-150
+          p-2 text-lg font-semibold
+        "
+        aria-label="Cerrar formulario de intercambio"
       >
-        Cerrar X
+        &times;
       </button>
-      <div>
+      <div className="mb-4">
         <label
           htmlFor="cryptoFrom"
-          style={{ display: "block", marginBottom: "5px" }}
+          className="block text-sm font-medium text-gray-700 mb-1"
         >
           Quiero Intercambiar:
         </label>
@@ -222,7 +217,10 @@ export const CryptoSwapForm = ({
           id="cryptoFrom"
           value={cryptoFromId}
           onChange={handleFromChange}
-          style={{ padding: "8px", marginBottom: "10px", width: "100%" }}
+          className="
+            w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm
+            focus:ring-teal-500 focus:border-teal-500 bg-white text-gray-900
+          "
         >
           {userCryptos.map((crypto) => (
             <option key={crypto.id} value={crypto.id}>
@@ -231,14 +229,17 @@ export const CryptoSwapForm = ({
             </option>
           ))}
         </select>
-        <p style={{ margin: "5px 0", fontSize: "0.9em" }}>
-          **Saldo de {symbolFrom}:** **{balanceFrom.toFixed(8)}**
+        <p className="mt-1 text-xs text-gray-500">
+          **Saldo de {symbolFrom}:**{" "}
+          <span className="font-bold text-gray-800">
+            {balanceFrom.toFixed(8)}
+          </span>
         </p>
       </div>
-      <div>
+      <div className="mb-6">
         <label
           htmlFor="cryptoTo"
-          style={{ display: "block", marginBottom: "5px" }}
+          className="block text-sm font-medium text-gray-700 mb-1"
         >
           Por (Recibir):
         </label>
@@ -246,7 +247,10 @@ export const CryptoSwapForm = ({
           id="cryptoTo"
           value={cryptoToId}
           onChange={handleToChange}
-          style={{ padding: "8px", marginBottom: "10px", width: "100%" }}
+          className="
+            w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm
+            focus:ring-teal-500 focus:border-teal-500 bg-white text-gray-900
+          "
         >
           {allAvailableCryptos
             .filter((crypto) => crypto.id !== cryptoFromId)
@@ -260,17 +264,14 @@ export const CryptoSwapForm = ({
               </option>
             ))}
         </select>
-        <p style={{ margin: "5px 0", fontSize: "0.9em" }}>
-          **Saldo de {symbolTo}:** **{balanceTo.toFixed(8)}**
+        <p className="mt-1 text-xs text-gray-500">
+          **Saldo de {symbolTo}:**{" "}
+          <span className="font-bold text-gray-800">
+            {balanceTo.toFixed(8)}
+          </span>
         </p>
       </div>
-      <div
-        style={{
-          margin: "15px 0",
-          padding: "10px",
-          border: "1px dashed #007bff",
-        }}
-      >
+      <div className="mb-6 p-3 border border-dashed border-teal-400 bg-teal-50/50 rounded-lg">
         <ConversionRate
           ids={rateIds}
           vs_currencies={rateVsCurrencies}
@@ -278,21 +279,25 @@ export const CryptoSwapForm = ({
           onDataFetched={setConversionRateData}
         />
         {currentRate > 0 ? (
-          <p style={{ fontWeight: "bold" }}>
-            Tasa Actual: 1 **{symbolFrom}** = **
-            {currentRate.toLocaleString(undefined, {
-              maximumFractionDigits: 8,
-            })}
-            ** **{symbolTo}**
+          <p className="font-bold text-sm text-gray-700 mt-2">
+            Tasa Actual: 1 <span className="text-teal-600">{symbolFrom}</span> ={" "}
+            <span className="text-teal-600">
+              {currentRate.toLocaleString(undefined, {
+                maximumFractionDigits: 8,
+              })}
+            </span>{" "}
+            {symbolTo}
           </p>
         ) : (
-          <p>Cargando o Tasa de Cambio no disponible...</p>
+          <p className="text-sm text-yellow-600 mt-2">
+            Cargando o Tasa de Cambio no disponible...
+          </p>
         )}
       </div>
-      <div>
+      <div className="mb-4">
         <label
           htmlFor="amountToSwap"
-          style={{ display: "block", marginBottom: "5px" }}
+          className="block text-sm font-medium text-gray-700 mb-1"
         >
           Cantidad de {symbolFrom} a intercambiar:
         </label>
@@ -307,52 +312,39 @@ export const CryptoSwapForm = ({
             setAmountToSwap(value >= 0 ? value : 0);
             setSwapSuccess(false);
           }}
-          style={{
-            padding: "8px",
-            marginBottom: "10px",
-            width: "100%",
-            boxSizing: "border-box",
-          }}
+          className="
+            w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm
+            focus:ring-teal-500 focus:border-teal-500 text-gray-900
+          "
         />
         <button
           onClick={() => setAmountToSwap(balanceFrom)}
-          style={{
-            padding: "5px 10px",
-            cursor: "pointer",
-            backgroundColor: "#e0e0e0",
-            border: "none",
-            marginBottom: "10px",
-          }}
+          className="
+            mt-2 py-1 px-3 text-xs font-semibold rounded-md
+            bg-gray-100 text-gray-700 hover:bg-gray-200 transition
+          "
         >
           Máximo ({balanceFrom.toFixed(8)})
         </button>
       </div>
-      <div
-        style={{
-          margin: "10px 0",
-          padding: "10px",
-          backgroundColor: "#e9ffe9",
-          border: "1px solid #4CAF50",
-        }}
-      >
-        <p style={{ fontWeight: "bold" }}>
+      <div className="mb-6 p-3 bg-green-50 border border-green-300 rounded-lg">
+        <p className="font-bold text-green-700 text-sm">
           Cantidad Recibida Estimada de {symbolTo}:
         </p>
-        <p style={{ fontSize: "1.2em", color: "#4CAF50" }}>
-          **{calculatedAmount.toFixed(8)}** **{symbolTo}**
+        <p className="text-xl font-extrabold text-green-600">
+          {calculatedAmount.toFixed(8)} {symbolTo}
         </p>
       </div>
       {swapError && (
-        <p style={{ color: "red", fontWeight: "bold" }}>
+        <p className="text-red-600 font-bold mb-4 p-2 bg-red-50 border border-red-300 rounded-lg">
           ⚠️ Error: {swapError}
         </p>
       )}
       {swapSuccess && (
-        <p style={{ color: "green", fontWeight: "bold" }}>
+        <p className="text-green-600 font-bold mb-4 p-2 bg-green-50 border border-green-300 rounded-lg">
           ✅ ¡Intercambio completado con éxito!
         </p>
       )}
-
       <button
         onClick={handleSwap}
         disabled={
@@ -361,15 +353,17 @@ export const CryptoSwapForm = ({
           currentRate === 0 ||
           swapSuccess
         }
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-          marginTop: "10px",
-          width: "100%",
-        }}
+        className={`
+          w-full py-3 rounded-lg text-white font-bold uppercase transition duration-150
+          ${
+            amountToSwap <= 0 ||
+            amountToSwap > balanceFrom ||
+            currentRate === 0 ||
+            swapSuccess
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-teal-600 hover:bg-teal-700 shadow-md focus:outline-none focus:ring-4 focus:ring-teal-300"
+          }
+        `}
       >
         Ejecutar Intercambio
       </button>

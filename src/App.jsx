@@ -8,24 +8,15 @@ import Dashboard from "./views/dashboard";
 
 function App() {
   return (
-    <>
-      {/* <div>
-        <img
-          src="./public/InsightCrypto.png"
-          alt="logo Insight Crxto"
-        />
-        </div> 
-        */}
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<RegisterView />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<LoginView />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<RegisterView />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

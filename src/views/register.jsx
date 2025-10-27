@@ -96,7 +96,7 @@ export default function RegisterView() {
                 placeholder="Juan"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
                 required
               />
             </div>
@@ -113,7 +113,7 @@ export default function RegisterView() {
                 placeholder="Pérez"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
                 required
               />
             </div>
@@ -133,7 +133,7 @@ export default function RegisterView() {
               placeholder="email@example.com"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
               required
             />
           </div>
@@ -154,7 +154,7 @@ export default function RegisterView() {
                 placeholder="Mínimo 8 caracteres"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
                 required
                 minLength={8}
               />
@@ -188,7 +188,7 @@ export default function RegisterView() {
                 placeholder="Repite la contraseña"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
                 required
                 minLength={8}
               />

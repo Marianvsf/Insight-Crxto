@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import logo from "../assets/chinchin-logo.png";
 
 const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate("");
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const [message, setMessage] = useState("");
@@ -64,31 +65,77 @@ const Navbar = () => {
           }`}
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-            <li>
-              <Link
-                to="/register"
-                className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
-              >
-                REGISTRARSE
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/login"
-                className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
-              >
-                INICIAR SESIÓN
-              </Link>
-            </li>
-            <button>
-              <Link
-                onClick={handleLogout}
-                to="/"
-                className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
-              >
-                CERRAR SESIÓN
-              </Link>
-            </button>
+            {location.pathname === "/" && (
+              <>
+                <li>
+                  <Link
+                    to="/register"
+                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  >
+                    REGISTRARSE
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  >
+                    INICIAR SESIÓN
+                  </Link>
+                </li>
+              </>
+            )}
+            {location.pathname === "/dashboard" && (
+              <li>
+                <Link
+                  onClick={handleLogout}
+                  to="/"
+                  className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                >
+                  CERRAR SESIÓN
+                </Link>
+              </li>
+            )}
+            {location.pathname === "/register" && (
+              <>
+                <li>
+                  <Link
+                    to="/"
+                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  >
+                    INICIO
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  >
+                    INICIAR SESIÓN
+                  </Link>
+                </li>
+              </>
+            )}
+            {location.pathname === "/login" && (
+              <>
+                <li>
+                  <Link
+                    to="/register"
+                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  >
+                    REGISTRARSE
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  >
+                    INICIO
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
