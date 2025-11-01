@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuthStore } from "../store/authStore.js";
-import logo from "../assets/chinchin-logo.png";
+// import logo from "../assets/chinchin-logo.png";
 
 export default function RegisterView() {
   const register = useAuthStore((state) => state.register);
@@ -75,7 +75,7 @@ export default function RegisterView() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 w-full space-y-6">
-      <img src={logo} className="h-8" alt="Chinchin Logo" />
+      {/*<img src={} className="h-8" alt="Chinchin Logo" />*/}
       <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
         Registro de Usuario
       </h2>

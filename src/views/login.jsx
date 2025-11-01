@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
-import logo from "../assets/chinchin-logo.png";
+//import logo from "../assets/chinchin-logo.png";
 
 export default function LoginView() {
   const login = useAuthStore((state) => state.login);
@@ -58,7 +58,7 @@ export default function LoginView() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-6">
       <div className="sm:container sm:max-h-0 sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col items-center justify-center space-y-6">
-        <img src={logo} className="h-8" alt="Chinchin Logo" />
+        {/* <img src={logo} className="h-8" alt="Chinchin Logo" />*/}
         <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
           Inicio de Sesión
         </h2>

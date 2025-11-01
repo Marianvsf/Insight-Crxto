@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import modelo from "../assets/chinchin-modelo-presentation.webp";
-import banner from "../assets/banner.jpg";
-import foto2 from "../assets/FB_IMG_1 (2).jpg";
-import foto3 from "../assets/FB_IMG_1 (3).jpg";
+import foto from "../assets/photo.avif";
+import foto2 from "../assets/photo (2).jpg";
+import foto3 from "../assets/photo (3).jpg";
+import foto4 from "../assets/photo.jpg";
+import foto5 from "../assets/photo (3).avif";
 
 const HeaderContent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [modelo, banner, foto2, foto3];
+  const images = [foto, foto2, foto3, foto4, foto5 ];
 
   useEffect(() => {
     const interval = setInterval(() => {

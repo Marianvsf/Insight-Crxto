@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
-import logo from "../assets/chinchin-logo.png";
+// import logo from "../assets/chinchin-logo.png";
 
 const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
@@ -28,7 +28,7 @@ const Navbar = () => {
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src={logo} className="h-8" alt="Chinchin Logo" />
+          {/*<img src={logo} className="h-8" alt="Chinchin Logo" />*/}
         </Link>
         <button
           onClick={toggleMenu}
