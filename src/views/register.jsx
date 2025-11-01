@@ -75,7 +75,7 @@ export default function RegisterView() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4 w-full space-y-6">
-      <img src={logo} className="h-8" alt="Chinchin Logo" />
+      <img src={logo} className="h-20" alt=" Logo" />
       <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
         Registro de Usuario
       </h2>
