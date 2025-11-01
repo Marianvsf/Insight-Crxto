@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 
 export default function LoginView() {
   const login = useAuthStore((state) => state.login);

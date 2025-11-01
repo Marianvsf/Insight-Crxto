@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
@@ -26,9 +26,10 @@ const Navbar = () => {
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <img src={logo} className="h-8" alt="Chinchin Logo" />
+          className="flex items-center space-x-3 rtl:space-x-reversetext-center text-2xl text-teal-400 hover:text-teal-600 hover:underline font-semibold"
+        > 
+          <img src={logo} className="h-20" alt="Logo" />
+          INSIGHT CRXTO
         </Link>
         <button
           onClick={toggleMenu}
