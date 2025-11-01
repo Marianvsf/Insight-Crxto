@@ -84,9 +84,9 @@ Usando npm:
 <ul align="left"><h5>Correo Electrónico:</h5></ul>
 >test@exchange.com
 <ul align="left"><h5>Contraseña:</h5></ul>
-- password123Bitcoin (BTC)
+- password123
 <ul align="left"><h5>Criptomonedas de Muestra:</h5></ul>
-- Ethereum (ETH), Tether (USDT)
+- Bitcoin (BTC), Ethereum (ETH), Tether (USDT)
 
 ###
 ###
