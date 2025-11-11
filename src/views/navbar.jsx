@@ -96,14 +96,6 @@ const Navbar = () => {
               <>
                 <li className="mb-0 md:mb-0">
                   <Link
-                    to="/"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
-                  >
-                    INICIO
-                  </Link>
-                </li>
-                <li className="mb-0 md:mb-0">
-                  <Link
                     to="/login"
                     className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
@@ -120,14 +112,6 @@ const Navbar = () => {
                     className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
                   >
                     REGISTRARSE
-                  </Link>
-                </li>
-                <li className="mb-0 md:mb-0">
-                  <Link
-                    to="/"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
-                  >
-                    INICIO
                   </Link>
                 </li>
               </>
