@@ -5,6 +5,7 @@ import RegisterView from "./views/register.jsx";
 import Home from "./views/home.jsx";
 import Navbar from "./views/navbar.jsx";
 import Dashboard from "./views/dashboard.jsx";
+import { Footer } from "./views/Footer.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<RegisterView />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   );
 }
