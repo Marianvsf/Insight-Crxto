@@ -16,14 +16,13 @@ const Navbar = () => {
   const handleLogout = async () => {
     const success = await logout();
     if (success) {
-      // logout successful — navigate to home
       navigate("/");
     }
   };
 
   return (
-    <nav className="border-gray-200 ">
-      <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-gradient-to-b from-teal-100 to-white shadow-md">
+      <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto px-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reversetext-center text-2xl text-teal-400 hover:text-teal-600 hover:underline font-semibold"
