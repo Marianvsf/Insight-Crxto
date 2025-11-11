@@ -1,6 +1,6 @@
 export const Footer = () => { 
 return (
-<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center text-white p-4 bg-gray-900 font-mono">
+<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center text-teal-500 p-4 font-mono border-gray-50 bg-gradient-to-t from-teal-200 to-white shadow-md">
   <a
     className="flex items-center gap-2 hover:underline hover:underline-offset-4"
     href="https://github.com/Marianvsf"
