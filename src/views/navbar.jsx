@@ -21,12 +21,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="border-b-gray-50 bg-gradient-to-b from-teal-100 to-white shadow-md">
+    <nav className="border-b-gray-50 bg-gradient-to-b from-teal-100 to-white">
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto px-4">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reversetext-center text-2xl text-teal-400 hover:text-teal-600 hover:underline font-semibold"
-        > 
+        >
           <img src={logo} className="h-20" alt="Logo" />
           INSIGHT CRXTO
         </Link>
@@ -60,7 +60,7 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
             {location.pathname === "/" && (
               <>
                 <li className="mb-0 md:mb-0">
