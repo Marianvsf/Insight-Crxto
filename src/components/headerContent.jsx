@@ -145,10 +145,6 @@ const HeaderContent = () => {
           <span className="sr-only">Next</span>
         </span>
       </button>
-      <h1 className="m-auto p-10 text-3xl text-center font-extrabold text-black mb-5">
-        ¡Te damos la Bienvenida a Nuestra Aplicación!
-        <small className="ms-2 font-semibold text-gray-500 dark:text-gray-400"></small>
-      </h1>
     </header>
   );
 };
