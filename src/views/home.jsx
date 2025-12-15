@@ -5,12 +5,14 @@ function Home() {
   return (
     <>
       <HeaderContent />
-      <h1 className="m-auto p-10 text-3xl text-center font-extrabold text-black mb-5">
-        ¡Te damos la Bienvenida a Nuestra Aplicación!
-        <small className="ms-2 font-semibold text-gray-500 dark:text-gray-400"></small>
+      <h1 className="m-auto p-10 text-3xl text-center font-extrabold text-black">
+        ¡Te damos la Bienvenida a Nuestra Aplicación! <br />
+        <small className="ms-2 font-semibold text-gray-500 dark:text-gray-400">
+          ¿¿Listo para comenzar??
+        </small>
       </h1>
       <div className="sm:container sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col text-center items-center justify-center space-y-6 pb-10">
-        <p className="mt-7">
+        <p className="text-2xl">
           Por favor, selecciona una de las siguientes opciones para continuar.
         </p>
         <div className="flex w-full gap-4 px-6">
