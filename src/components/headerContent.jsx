@@ -41,6 +41,7 @@ const HeaderContent = () => {
             className="absolute block w-full h-full object-cover"
             alt={`Slide ${index + 1}`}
           />
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
         </div>
       ))}
 
