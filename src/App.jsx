@@ -10,14 +10,18 @@ import { Footer } from "./views/Footer.jsx";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/login" element={<LoginView />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<RegisterView />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-      <Footer/>
+      <div className="flex flex-col min-h-screen w-full">
+        <Navbar />
+        <main className="flex-1 w-full">
+          <Routes>
+            <Route path="/login" element={<LoginView />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<RegisterView />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }
