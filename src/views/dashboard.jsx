@@ -13,6 +13,12 @@ export default function Dashboard() {
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const galleryImages = [
+    "/assets/fot1.jpg",
+    "/assets/fot2.jpg",
+    "/assets/fot3.jpg",
+  ];
 
   const { user } = useAuthStore();
   const username = user?.username || "Usuario";
@@ -310,6 +316,77 @@ export default function Dashboard() {
             )}
           </>
         )}
+      </div>
+      <div className="lg:col-span-1">
+        <div className="sticky top-28 space-y-6">
+          {/* WIDGET 1: GALERÍA */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="p-4 border-b border-gray-100 flex justify-between items-center">
+              <h3 className="font-bold text-blue-950">Inspiración</h3>
+              <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">
+                Nuevo
+              </span>
+            </div>
+
+            <div className="relative h-[400px] w-full bg-slate-900 group">
+              {galleryImages.map((img, index) => (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                    index === currentSlide ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <img
+                    src={img}
+                    alt={`Arte ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                </div>
+              ))}
+
+              <div className="absolute bottom-0 left-0 w-full p-5 text-white">
+                <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">
+                  Colección 2024
+                </p>
+                <h4 className="text-lg font-bold leading-tight">
+                  Arte Digital & Creatividad
+                </h4>
+              </div>
+
+              <div className="absolute top-4 right-4 flex gap-1.5">
+                {galleryImages.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1.5 w-1.5 rounded-full transition-all ${
+                      idx === currentSlide
+                        ? "bg-orange-500 scale-125"
+                        : "bg-white/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="p-4 bg-gray-50">
+              <p className="text-xs text-slate-500 text-center">
+                "La creatividad es la inteligencia divirtiéndose."
+              </p>
+            </div>
+          </div>
+
+          {/* WIDGET 2: SOPORTE */}
+          <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
+            <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
+            <p className="text-blue-200 text-sm mb-4">
+              Contacta con soporte técnico si tienes dudas con tu panel.
+            </p>
+            <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
+              Contactar Soporte
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   );
