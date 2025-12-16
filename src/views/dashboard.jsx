@@ -15,9 +15,9 @@ export default function Dashboard() {
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentSlide, setCurrentSlide] = useState(0);
   const galleryImages = [
-    "/assets/fot1.jpg",
-    "/assets/fot2.jpg",
-    "/assets/fot3.jpg",
+    "/assets/img1.jpg",
+    "/assets/img2.jpg",
+    "/assets/img3.jpg",
   ];
 
   const { user } = useAuthStore();
