@@ -43,10 +43,10 @@ const HeaderContent = () => {
           />
           <div className="absolute w-full text-center m-auto inset-0 bg-black/50 backdrop-blur-[2px]" />
           <div className="relative z-10 w-full max-w-[980px] px-6 items-center text-white">
-            <h1 className="text-center m-auto relative text-3xl md:text-7xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
+            <h1 className="text-center m-auto relative text-3xl md:text-6xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
               ¡Te damos la Bienvenida a Nuestra Aplicación! <br />
               <small className="ms-2 font-semibold text-gray-500 dark:text-gray-400">
-                ¿¿Listo para comenzar??
+                ¿Listo para comenzar?
               </small>
             </h1>
           </div>
