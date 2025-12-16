@@ -115,149 +115,153 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-6 border-b pb-4">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Bienvenido de nuevo,{" "}
-            <span className="text-teal-600">{username}</span>
-          </h1>
-          <button
-            onClick={handleShowBalances}
-            className="py-2 px-4 rounded-lg shadow-lg text-sm font-bold text-white uppercase bg-teal-500 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
-          >
-            Ver Mi Balance 💰
-          </button>
-        </div>
+    <div className="min-h-screen bg-white">
+      <main className="container mx-auto px-4 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="mx-auto px-4 lg:px-8 py-8 lg:col-span-3 space-y-8">
+          <div className="flex justify-between items-center mb-6 border-b pb-4 grid-cols-1">
+            <h1 className="text-3xl font-bold text-gray-900">
+              Bienvenido de nuevo,{" "}
+              <span className="text-teal-600">{username}</span>
+            </h1>
+            <button
+              onClick={handleShowBalances}
+              className="py-2 px-4 rounded-lg shadow-lg text-sm font-bold text-white uppercase bg-teal-500 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+            >
+              Ver Mi Balance 💰
+            </button>
+          </div>
 
-        {selectedCoin ? (
-          <CoinDetailsTable coin={selectedCoin} onClose={handleCloseDetails} />
-        ) : (
-          <>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              Criptomonedas disponibles
-            </h2>
-            <p className="text-sm text-gray-500 mb-6">
-              Última actualización: {lastUpdated.toLocaleTimeString()} 🔄 (Cada
-              30 segundos)
-            </p>
+          {selectedCoin ? (
+            <CoinDetailsTable
+              coin={selectedCoin}
+              onClose={handleCloseDetails}
+            />
+          ) : (
+            <>
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                Criptomonedas disponibles
+              </h2>
+              <p className="text-sm text-gray-500 mb-6">
+                Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
+                (Cada 30 segundos)
+              </p>
 
-            {error && (
-              <div className="text-sm text-red-800 bg-red-100 border border-red-200 p-3 rounded-lg font-medium mb-4">
-                ⚠️ {error}
-              </div>
-            )}
-
-            {coins.length === 0 ? (
-              <p className="text-gray-600">Cargando datos de monedas...</p>
-            ) : (
-              <>
-                <div className="mb-6">
-                  <FilterSort
-                    coins={coins}
-                    setFilteredCoins={setFilteredCoins}
-                    onFilterSortChange={handleFilterSortChange}
-                  />
+              {error && (
+                <div className="text-sm text-red-800 bg-red-100 border border-red-200 p-3 rounded-lg font-medium mb-4">
+                  ⚠️ {error}
                 </div>
+              )}
 
-                <div className="overflow-x-auto shadow-xl rounded-lg border border-gray-200">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Ranking
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Símbolo
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Nombre
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Precio actual
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Capitalización de Mercado
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Cambio % (24h)
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Acción
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {currentItems.map((coin) => (
-                        <tr
-                          key={coin.id}
-                          className="hover:bg-gray-50 transition duration-150"
-                        >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {coin.market_cap_rank}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 flex items-center">
-                            <img
-                              src={coin.image}
-                              alt={coin.name}
-                              width="25"
-                              className="mr-2"
-                            />
-                            <span className="uppercase font-semibold">
-                              {coin.symbol}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                            {coin.name}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
-                            {new Intl.NumberFormat("en-US", {
-                              style: "currency",
-                              currency: "USD",
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 4,
-                            }).format(coin.current_price)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
-                            {new Intl.NumberFormat("en-US", {
-                              style: "currency",
-                              currency: "USD",
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            }).format(coin.market_cap)}
-                          </td>
-                          <td
-                            className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
-                              coin.price_change_percentage_24h > 0
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }`}
-                          >
-                            {coin.price_change_percentage_24h.toFixed(2)}%
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              onClick={() => handleCoinClick(coin)}
-                              className="text-teal-600 hover:text-teal-800 transition duration-150 font-medium"
-                            >
-                              Ver Detalles
-                            </button>
-                          </td>
+              {coins.length === 0 ? (
+                <p className="text-gray-600">Cargando datos de monedas...</p>
+              ) : (
+                <>
+                  <div className="mb-6">
+                    <FilterSort
+                      coins={coins}
+                      setFilteredCoins={setFilteredCoins}
+                      onFilterSortChange={handleFilterSortChange}
+                    />
+                  </div>
+
+                  <div className="overflow-x-auto shadow-xl rounded-lg border border-gray-200">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Ranking
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Símbolo
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Nombre
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Precio actual
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Capitalización de Mercado
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Cambio % (24h)
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Acción
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <nav
-                  className="flex justify-center items-center mt-6"
-                  aria-label="Pagination"
-                >
-                  <ul className="flex items-center space-x-2">
-                    <li>
-                      <button
-                        onClick={() => paginate(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className={`
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {currentItems.map((coin) => (
+                          <tr
+                            key={coin.id}
+                            className="hover:bg-gray-50 transition duration-150"
+                          >
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {coin.market_cap_rank}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 flex items-center">
+                              <img
+                                src={coin.image}
+                                alt={coin.name}
+                                width="25"
+                                className="mr-2"
+                              />
+                              <span className="uppercase font-semibold">
+                                {coin.symbol}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                              {coin.name}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
+                              {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 4,
+                              }).format(coin.current_price)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
+                              {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                              }).format(coin.market_cap)}
+                            </td>
+                            <td
+                              className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
+                                coin.price_change_percentage_24h > 0
+                                  ? "text-green-600"
+                                  : "text-red-600"
+                              }`}
+                            >
+                              {coin.price_change_percentage_24h.toFixed(2)}%
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button
+                                onClick={() => handleCoinClick(coin)}
+                                className="text-teal-600 hover:text-teal-800 transition duration-150 font-medium"
+                              >
+                                Ver Detalles
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <nav
+                    className="flex justify-center items-center mt-6"
+                    aria-label="Pagination"
+                  >
+                    <ul className="flex items-center space-x-2">
+                      <li>
+                        <button
+                          onClick={() => paginate(currentPage - 1)}
+                          disabled={currentPage === 1}
+                          className={`
                           px-4 py-2 text-sm font-medium rounded-lg border
                           transition duration-150 ease-in-out
                           ${
@@ -266,15 +270,15 @@ export default function Dashboard() {
                               : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
                           }
                         `}
-                      >
-                        ← Anterior
-                      </button>
-                    </li>
-                    {Array.from({ length: totalPages }, (_, index) => (
-                      <li key={index + 1}>
-                        <button
-                          onClick={() => paginate(index + 1)}
-                          className={`
+                        >
+                          ← Anterior
+                        </button>
+                      </li>
+                      {Array.from({ length: totalPages }, (_, index) => (
+                        <li key={index + 1}>
+                          <button
+                            onClick={() => paginate(index + 1)}
+                            className={`
                             px-4 py-2 text-sm font-semibold rounded-lg
                             transition duration-150 ease-in-out
                             ${
@@ -283,16 +287,16 @@ export default function Dashboard() {
                                 : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
                             }
                           `}
-                        >
-                          {index + 1}
-                        </button>
-                      </li>
-                    ))}
-                    <li>
-                      <button
-                        onClick={() => paginate(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className={`
+                          >
+                            {index + 1}
+                          </button>
+                        </li>
+                      ))}
+                      <li>
+                        <button
+                          onClick={() => paginate(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                          className={`
                           px-4 py-2 text-sm font-medium rounded-lg border
                           transition duration-150 ease-in-out
                           ${
@@ -301,93 +305,95 @@ export default function Dashboard() {
                               : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
                           }
                         `}
-                      >
-                        Siguiente →
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
-                {filteredCoins.length === 0 && (
-                  <p className="mt-4 text-center text-gray-600">
-                    No se encontraron resultados con el filtro aplicado.
-                  </p>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </div>
-      <div className="lg:col-span-1">
-        <div className="sticky top-28 space-y-6">
-          {/* WIDGET 1: GALERÍA */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-              <h3 className="font-bold text-blue-950">Inspiración</h3>
-              <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">
-                Nuevo
-              </span>
-            </div>
-
-            <div className="relative h-[400px] w-full bg-slate-900 group">
-              {galleryImages.map((img, index) => (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                    index === currentSlide ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <img
-                    src={img}
-                    alt={`Arte ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                </div>
-              ))}
-
-              <div className="absolute bottom-0 left-0 w-full p-5 text-white">
-                <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">
-                  Colección 2024
-                </p>
-                <h4 className="text-lg font-bold leading-tight">
-                  Arte Digital & Creatividad
-                </h4>
+                        >
+                          Siguiente →
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                  {filteredCoins.length === 0 && (
+                    <p className="mt-4 text-center text-gray-600">
+                      No se encontraron resultados con el filtro aplicado.
+                    </p>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </div>
+        {/* WIDGETS */}
+        <div className="lg:col-span-1">
+          <div className="sticky top-28 space-y-6">
+            {/* WIDGET 1: GALERÍA */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="p-4 border-b border-gray-100 flex justify-between items-center">
+                <h3 className="font-bold text-blue-950">Inspiración</h3>
+                <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">
+                  Nuevo
+                </span>
               </div>
 
-              <div className="absolute top-4 right-4 flex gap-1.5">
-                {galleryImages.map((_, idx) => (
+              <div className="relative h-[400px] w-full bg-slate-900 group">
+                {galleryImages.map((img, index) => (
                   <div
-                    key={idx}
-                    className={`h-1.5 w-1.5 rounded-full transition-all ${
-                      idx === currentSlide
-                        ? "bg-orange-500 scale-125"
-                        : "bg-white/50"
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentSlide ? "opacity-100" : "opacity-0"
                     }`}
-                  />
+                  >
+                    <img
+                      src={img}
+                      alt={`Arte ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  </div>
                 ))}
+
+                <div className="absolute bottom-0 left-0 w-full p-5 text-white">
+                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">
+                    Colección 2024
+                  </p>
+                  <h4 className="text-lg font-bold leading-tight">
+                    Arte Digital & Creatividad
+                  </h4>
+                </div>
+
+                <div className="absolute top-4 right-4 flex gap-1.5">
+                  {galleryImages.map((_, idx) => (
+                    <div
+                      key={idx}
+                      className={`h-1.5 w-1.5 rounded-full transition-all ${
+                        idx === currentSlide
+                          ? "bg-orange-500 scale-125"
+                          : "bg-white/50"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 bg-gray-50">
+                <p className="text-xs text-slate-500 text-center">
+                  "La creatividad es la inteligencia divirtiéndose."
+                </p>
               </div>
             </div>
 
-            <div className="p-4 bg-gray-50">
-              <p className="text-xs text-slate-500 text-center">
-                "La creatividad es la inteligencia divirtiéndose."
+            {/* WIDGET 2: SOPORTE */}
+            <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
+              <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
+              <p className="text-blue-200 text-sm mb-4">
+                Contacta con soporte técnico si tienes dudas con tu panel.
               </p>
+              <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
+                Contactar Soporte
+              </button>
             </div>
-          </div>
-
-          {/* WIDGET 2: SOPORTE */}
-          <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
-            <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
-            <p className="text-blue-200 text-sm mb-4">
-              Contacta con soporte técnico si tienes dudas con tu panel.
-            </p>
-            <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
-              Contactar Soporte
-            </button>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
