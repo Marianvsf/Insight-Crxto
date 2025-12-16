@@ -324,12 +324,12 @@ export default function Dashboard() {
         {/* WIDGETS */}
         <div className="lg:col-span-1">
           <div className="sticky top-28 space-y-6">
-            {/* WIDGET 1: GALERÍA */}
+            {/* WIDGET 1: NFT SPOTLIGHT (Antes Galería de Arte) */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
               <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-                <h3 className="font-bold text-blue-950">Inspiración</h3>
-                <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">
-                  Nuevo
+                <h3 className="font-bold text-gray-900">Mercado NFT</h3>
+                <span className="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded-full font-medium">
+                  Trending 🔥
                 </span>
               </div>
 
@@ -343,20 +343,20 @@ export default function Dashboard() {
                   >
                     <img
                       src={img}
-                      alt={`Arte ${index + 1}`}
-                      fill
-                      className="object-cover"
+                      alt={`NFT Collection ${index + 1}`}
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    {/* Gradiente más oscuro para que el texto resalte más (estilo crypto dark mode) */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                   </div>
                 ))}
 
                 <div className="absolute bottom-0 left-0 w-full p-5 text-white">
-                  <p className="text-xs text-orange-400 font-bold uppercase tracking-wider mb-1">
-                    Colección 2024
+                  <p className="text-xs text-teal-400 font-bold uppercase tracking-wider mb-1">
+                    Floor Price: 2.5 ETH
                   </p>
                   <h4 className="text-lg font-bold leading-tight">
-                    Arte Digital & Creatividad
+                    Colección "Genesis" <br /> & Metaverso
                   </h4>
                 </div>
 
@@ -366,7 +366,7 @@ export default function Dashboard() {
                       key={idx}
                       className={`h-1.5 w-1.5 rounded-full transition-all ${
                         idx === currentSlide
-                          ? "bg-orange-500 scale-125"
+                          ? "bg-teal-500 scale-125"
                           : "bg-white/50"
                       }`}
                     />
@@ -374,21 +374,30 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="p-4 bg-gray-50">
-                <p className="text-xs text-slate-500 text-center">
-                  "La creatividad es la inteligencia divirtiéndose."
+              <div className="p-4 bg-gray-50 border-t border-gray-100">
+                <p className="text-xs text-slate-500 text-center italic">
+                  "Not your keys, not your coins. Mantén tus activos seguros."
                 </p>
               </div>
             </div>
 
-            {/* WIDGET 2: SOPORTE */}
-            <div className="bg-blue-950 rounded-2xl p-6 text-white shadow-lg">
-              <h3 className="font-bold text-lg mb-2">¿Necesitas ayuda?</h3>
-              <p className="text-blue-200 text-sm mb-4">
-                Contacta con soporte técnico si tienes dudas con tu panel.
+            {/* WIDGET 2: SOPORTE PREMIUM / SEGURIDAD (Antes Soporte genérico) */}
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white shadow-lg border border-slate-700">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="p-2 bg-teal-500/20 rounded-lg">
+                  {/* Icono de escudo simple */}
+                  <span className="text-xl">🛡️</span>
+                </div>
+                <h3 className="font-bold text-lg">Centro de Seguridad</h3>
+              </div>
+
+              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
+                ¿Problemas con una transacción o tu billetera? Nuestros expertos
+                en Blockchain están disponibles 24/7.
               </p>
-              <button className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors border border-white/10">
-                Contactar Soporte
+
+              <button className="w-full py-2.5 bg-teal-600 hover:bg-teal-500 rounded-lg text-sm font-bold text-white transition-all shadow-lg shadow-teal-900/50">
+                Contactar Soporte Crypto
               </button>
             </div>
           </div>
