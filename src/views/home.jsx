@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import HeaderContent from "../components/headerContent.jsx";
+import CryptoTicker from "../components/cryptoticker.jsx";
 
 function Home() {
   return (
     <>
       <HeaderContent />
+      <CryptoTicker />
       <div className="mt-10 sm:container sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col text-center items-center justify-center space-y-6 pb-10">
         <p className="text-2xl">
           Por favor, selecciona una de las siguientes opciones para continuar.
