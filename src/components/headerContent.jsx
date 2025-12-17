@@ -4,6 +4,7 @@ import foto2 from "../assets/photo (2).jpg";
 import foto3 from "../assets/photo (3).jpg";
 import foto4 from "../assets/photo.jpg";
 import foto5 from "../assets/photo (3).avif";
+import { Link } from "react-router-dom";
 
 const HeaderContent = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -47,12 +48,29 @@ const HeaderContent = () => {
               El futuro de tus finanzas empieza aquí <br />
               <small className="ms-2 font-semibold text-gray-400">
                 La plataforma más segura y fácil de usar con las comisiones más
-                bajas del mercado.
+                bajas del mercado
               </small>
             </h1>
           </div>
         </div>
       ))}
+      <div className="absolute z-30 w-full flex flex-col sm:flex-row justify-center gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+        {/* Botón Principal */}
+        <button
+          className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
+                                bg-teal-400 shadow-[0_0_20px_rgba(255,116,0,0.4)] hover:shadow-[0_0_30px_rgba(255,116,0,0.6)] hover:scale-105"
+        >
+          Registrarse Gratis
+        </button>
+
+        {/* Botón Secundario (Glass Effect sobre imagen) */}
+        <button
+          className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-white transition-all duration-300
+                                bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
+        >
+          <Link to="/login">Ver Demo</Link>
+        </button>
+      </div>
 
       <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
         {images.map((_, index) => (
