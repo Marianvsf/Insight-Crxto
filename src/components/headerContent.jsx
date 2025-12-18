@@ -56,11 +56,8 @@ const HeaderContent = () => {
       ))}
       <div className="absolute z-30 w-full flex flex-col sm:flex-row justify-center gap-4 bottom-20">
         {/* Botón Principal */}
-        <button
-          className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
-                                bg-teal-400 shadow-[0_0_20px_rgba(255,116,0,0.4)] hover:shadow-[0_0_30px_rgba(255,116,0,0.6)] hover:scale-105"
-        >
-          Registrarse Gratis
+        <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
+          <Link to="/register">Registrarse Gratis</Link>
         </button>
 
         {/* Botón Secundario (Glass Effect sobre imagen) */}
@@ -78,7 +75,7 @@ const HeaderContent = () => {
             key={index}
             type="button"
             className={`w-3 h-3 rounded-full ${
-              index === currentSlide ? "bg-blue-500" : "bg-gray-300"
+              index === currentSlide ? "bg-teal-500" : "bg-gray-300"
             }`}
             aria-current={index === currentSlide}
             aria-label={`Slide ${index + 1}`}
