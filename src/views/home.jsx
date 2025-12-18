@@ -13,12 +13,12 @@ function Home() {
           Por favor, selecciona una de las siguientes opciones para continuar.
         </p>
         <div className="flex w-full gap-4 px-6 mt-5">
-          <button className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out">
+          <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
             <Link to="/register" className="nav-link">
               Registrarse
             </Link>
           </button>
-          <button className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out">
+          <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
             <Link to="/login" className="nav-link">
               Iniciar Sesión
             </Link>
