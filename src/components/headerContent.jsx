@@ -26,7 +26,7 @@ const HeaderContent = () => {
   };
 
   return (
-    <header className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+    <header className="relative w-full h-screen min-h-[600px] flex items-center overflow-hidden">
       {images.map((image, index) => (
         <div
           key={index}
@@ -54,7 +54,7 @@ const HeaderContent = () => {
           </div>
         </div>
       ))}
-      <div className="absolute z-30 w-full flex flex-col sm:flex-row justify-center gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+      <div className="absolute z-30 w-full flex flex-col sm:flex-row justify-center gap-4 bottom-20">
         {/* Botón Principal */}
         <button
           className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 
