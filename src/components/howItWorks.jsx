@@ -107,20 +107,20 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div
               key={step.id}
-              className="relative group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+              className="relative group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-500/50 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
             >
               {/* Número de paso sutil en el fondo */}
-              <span className="absolute top-2 right-4 text-6xl font-bold text-white/5 group-hover:text-blue-500/10 transition-colors pointer-events-none">
+              <span className="absolute top-2 right-4 text-6xl font-bold text-white/5 group-hover:text-teal-500/10 transition-colors pointer-events-none">
                 {step.id}
               </span>
 
               {/* Icono con círculo brillante */}
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br to-teal-600 flex items-center justify-center mb-6 shadow-lg shadow-teal-900/20 group-hover:scale-110 transition-transform duration-300">
                 {step.icon}
               </div>
 
               {/* Texto */}
-              <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors">
+              <h3 className="text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">
                 {step.title}
               </h3>
               <p className="text-gray-400 leading-relaxed">{step.desc}</p>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import HeaderContent from "../components/headerContent.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
+import HowItWorks from "../components/howItWorks.jsx";
 
 function Home() {
   return (
@@ -24,6 +25,7 @@ function Home() {
           </button>
         </div>
       </div>
+      <HowItWorks />
     </>
   );
 }
