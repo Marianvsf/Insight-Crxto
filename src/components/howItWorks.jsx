@@ -1,7 +1,7 @@
 import React from "react";
 
 const HowItWorks = () => {
-  // Datos de los pasos (fácil de editar)
+  // Datos de los pasos
   const steps = [
     {
       id: 1,
@@ -86,17 +86,17 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="relative w-full py-20 bg-[#0a0a0a] text-white overflow-hidden">
-      {/* Fondo decorativo (opcional) */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#0a0a0a] to-black opacity-50 z-0"></div>
+    <section className="relative w-full py-20 bg-white overflow-hidden">
+      {/* Fondo decorativo sutil (opcional para dar profundidad) */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-white opacity-60 z-0"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Encabezado de la sección */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-gray-900">
             ¿Cómo funciona?
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Eliminamos la complejidad. Empieza a invertir en tu futuro en cuatro
             simples pasos.
           </p>
@@ -107,27 +107,27 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <div
               key={step.id}
-              className="relative group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-500/50 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+              className="relative group p-6 rounded-2xl bg-white border border-gray-200 shadow-lg hover:shadow-2xl hover:border-teal-500 transition-all duration-300"
             >
               {/* Número de paso sutil en el fondo */}
-              <span className="absolute top-2 right-4 text-6xl font-bold text-white/5 group-hover:text-teal-500/10 transition-colors pointer-events-none">
+              <span className="absolute top-2 right-4 text-6xl font-bold text-gray-100 group-hover:text-teal-50 transition-colors pointer-events-none">
                 {step.id}
               </span>
 
               {/* Icono con círculo brillante */}
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br to-teal-600 flex items-center justify-center mb-6 shadow-lg shadow-teal-900/20 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 text-white flex items-center justify-center mb-6 shadow-lg shadow-teal-500/20 group-hover:scale-110 transition-transform duration-300">
                 {step.icon}
               </div>
 
               {/* Texto */}
-              <h3 className="text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">
+              <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-teal-600 transition-colors">
                 {step.title}
               </h3>
-              <p className="text-gray-400 leading-relaxed">{step.desc}</p>
+              <p className="text-gray-600 leading-relaxed">{step.desc}</p>
 
               {/* Flecha conectora (solo visible en desktop entre items, excepto el último) */}
               {index !== steps.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2 text-gray-700">
+                <div className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2 text-gray-300">
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -149,7 +149,7 @@ const HowItWorks = () => {
 
         {/* Botón CTA Final */}
         <div className="mt-16 text-center">
-          <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-400 hover:scale-105">
+          <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
             Comenzar Ahora
           </button>
         </div>
