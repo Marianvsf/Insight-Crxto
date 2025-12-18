@@ -110,7 +110,7 @@ const HowItWorks = () => {
               className="relative group p-6 rounded-2xl bg-white border border-gray-200 shadow-lg hover:shadow-2xl hover:border-teal-500 transition-all duration-300"
             >
               {/* Número de paso sutil en el fondo */}
-              <span className="absolute top-2 right-4 text-6xl font-bold text-gray-100 group-hover:text-teal-50 transition-colors pointer-events-none">
+              <span className="absolute top-2 right-4 text-6xl font-bold text-gray-300 group-hover:text-teal-50 transition-colors pointer-events-none">
                 {step.id}
               </span>
 
