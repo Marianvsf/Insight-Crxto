@@ -396,7 +396,7 @@ export default function Dashboard() {
                 en Blockchain están disponibles 24/7.
               </p>
 
-              <button className="w-full py-2.5 bg-teal-600 hover:bg-teal-500 rounded-lg text-sm font-bold text-white transition-all shadow-lg shadow-teal-900/50">
+              <button className="w-full py-2.5 bg-teal-500 hover:bg-teal-600 rounded-lg text-sm font-bold text-white transition-all shadow-lg shadow-teal-900/50">
                 Contactar Soporte Crypto
               </button>
             </div>
