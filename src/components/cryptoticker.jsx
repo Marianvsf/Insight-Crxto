@@ -9,7 +9,7 @@ const CryptoTicker = () => {
   ];
 
   return (
-    <div className="bg-black text-white py-2 overflow-hidden flex border-b border-gray-800">
+    <div className="h-12 items-center bg-black text-white py-2 overflow-hidden flex border-b border-gray-800">
       <div className="animate-marquee whitespace-nowrap flex min-w-full">
         {coins.map((coin) => (
           <span key={coin.name} className="mx-6 font-mono">
