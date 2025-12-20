@@ -123,7 +123,7 @@ export default function RegisterView() {
           <div className="flex flex-col w-full">
             <label
               htmlFor="email"
-              className="mb-2 mt-2 text-sm font-medium text-gray-700"
+              className="mb-2  text-sm font-medium text-gray-700"
             >
               Correo electrónico <span className="text-red-500">*</span>
             </label>
@@ -144,7 +144,7 @@ export default function RegisterView() {
             <div className="relative flex flex-col w-1/2">
               <label
                 htmlFor="password"
-                className="mt-2 mb-2 text-sm font-medium text-gray-700"
+                className=" mb-2 text-sm font-medium text-gray-700"
               >
                 Contraseña <span className="text-red-500">*</span>
               </label>
@@ -178,7 +178,7 @@ export default function RegisterView() {
             <div className="relative flex flex-col w-1/2">
               <label
                 htmlFor="confirmPassword"
-                className="mb-2 mt-2 text-sm font-medium text-gray-700"
+                className="mb-2 text-sm font-medium text-gray-700"
               >
                 Confirmar <span className="text-red-500">*</span>
               </label>
@@ -213,7 +213,7 @@ export default function RegisterView() {
 
           <button
             type="submit"
-            className="mt-2 w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase  bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+            className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase  bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
           >
             Registrarme
           </button>
@@ -233,7 +233,7 @@ export default function RegisterView() {
         )}
       </div>
       {/* Enlaces de políticas y login */}
-      <div className="text-center mt-2 space-y-3 text-sm">
+      <div className="text-center space-y-3 text-sm">
         <p className="text-gray-600">
           Al registrarme, acepto las{" "}
           <Link
