@@ -26,7 +26,7 @@ const Navbar = () => {
   );
 
   const commonSize =
-    "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold border-2 transition-all duration-200";
+    "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold border-2 transition-all duration-200 me-3";
 
   return (
     <nav className="border-b-gray-50 bg-gradient-to-b from-teal-100 to-white">
@@ -92,7 +92,7 @@ const Navbar = () => {
                   <li className="mb-0 md:mb-0">
                     <Link
                       to="/register"
-                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:scale-105 hover:border-teal-600 me-3`}
+                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:scale-105 hover:border-teal-600`}
                     >
                       REGISTRARSE
                     </Link>
