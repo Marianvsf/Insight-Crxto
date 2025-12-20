@@ -35,6 +35,7 @@ export const useAuthStore = create((set) => ({
   logout: () => {
     localStorage.removeItem("authToken");
     set({ token: null, isAuthenticated: false, user: null });
+    return true;
   },
   register: async ({ firstName, lastName, email, password }) => {
     const currentUsers = getMockUsers();
