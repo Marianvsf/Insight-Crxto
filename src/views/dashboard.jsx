@@ -382,7 +382,7 @@ export default function Dashboard() {
             </div>
 
             {/* WIDGET 2: SOPORTE PREMIUM / SEGURIDAD (Antes Soporte genérico) */}
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white shadow-lg border border-slate-700">
+            <div className="bg-white rounded-2xl p-6 text-black shadow-lg border border-gray-200">
               <div className="flex items-center gap-2 mb-3">
                 <div className="p-2 bg-teal-500/20 rounded-lg">
                   {/* Icono de escudo simple */}
@@ -391,7 +391,7 @@ export default function Dashboard() {
                 <h3 className="font-bold text-lg">Centro de Seguridad</h3>
               </div>
 
-              <p className="text-slate-300 text-sm mb-4 leading-relaxed">
+              <p className="text-gray-700 text-sm mb-4 leading-relaxed">
                 ¿Problemas con una transacción o tu billetera? Nuestros expertos
                 en Blockchain están disponibles 24/7.
               </p>
