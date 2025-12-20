@@ -17,19 +17,30 @@ const Navbar = () => {
     const success = await logout();
     if (success) {
       navigate("/");
+      setIsMenuOpen(false);
     }
   };
+
+  const isPublicRoute = ["/", "/login", "/register"].includes(
+    location.pathname
+  );
+
+  const commonSize =
+    "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold outline-1";
 
   return (
     <nav className="border-b-gray-50 bg-gradient-to-b from-teal-100 to-white">
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto px-4">
+        {/* LOGO ORIGINAL */}
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reversetext-center text-2xl text-teal-400 hover:text-teal-600 font-semibold"
+          className="flex items-center space-x-3 rtl:space-x-reverse text-center text-2xl text-teal-400 hover:text-teal-600 font-semibold"
         >
           <img src={logo} className="h-20" alt="Logo" />
           INSIGHT CRXTO
         </Link>
+
+        {/* BOTÓN HAMBURGUESA */}
         <button
           onClick={toggleMenu}
           data-collapse-toggle="navbar-default"
@@ -55,66 +66,49 @@ const Navbar = () => {
             />
           </svg>
         </button>
+
         <div
           className={`w-full md:block md:w-auto ${
             isMenuOpen ? "block" : "hidden"
           }`}
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-            {location.pathname === "/" && (
+            {isPublicRoute ? (
               <>
-                <li className="mb-0 md:mb-0">
-                  <Link
-                    to="/login"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
-                  >
-                    INICIAR SESIÓN
-                  </Link>
-                </li>
-                <li className="mb-0 md:mb-0">
-                  <Link
-                    to="/register"
-                    className="block w-full text-center font-semibold md:inline-block md:w-auto rounded-xl outline-1 p-2 px-3 text-white bg-teal-500 hover:bg-teal-600 hover:scale-105"
-                  >
-                    REGISTRARSE
-                  </Link>
-                </li>
+                {/* BOTÓN LOGIN */}
+                {location.pathname !== "/login" && (
+                  <li className="mb-0 md:mb-0">
+                    <Link
+                      to="/login"
+                      className={`${commonSize} text-teal-400 hover:text-teal-600`}
+                    >
+                      INICIAR SESIÓN
+                    </Link>
+                  </li>
+                )}
+
+                {/* BOTÓN REGISTRO */}
+                {location.pathname !== "/register" && (
+                  <li className="mb-0 md:mb-0">
+                    <Link
+                      to="/register"
+                      className={`${commonSize} text-white bg-teal-500 hover:bg-teal-600 hover:scale-105`}
+                    >
+                      REGISTRARSE
+                    </Link>
+                  </li>
+                )}
               </>
-            )}
-            {location.pathname === "/dashboard" && (
+            ) : (
+              /* BOTÓN LOGOUT */
               <li className="mb-0 md:mb-0">
-                <Link
+                <button
                   onClick={handleLogout}
-                  to="/"
-                  className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
+                  className={`${commonSize} text-teal-400 hover:text-teal-600`}
                 >
                   CERRAR SESIÓN
-                </Link>
+                </button>
               </li>
-            )}
-            {location.pathname === "/register" && (
-              <>
-                <li className="mb-0 md:mb-0">
-                  <Link
-                    to="/login"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
-                  >
-                    INICIAR SESIÓN
-                  </Link>
-                </li>
-              </>
-            )}
-            {location.pathname === "/login" && (
-              <>
-                <li className="mb-0 md:mb-0">
-                  <Link
-                    to="/register"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
-                  >
-                    REGISTRARSE
-                  </Link>
-                </li>
-              </>
             )}
           </ul>
         </div>
