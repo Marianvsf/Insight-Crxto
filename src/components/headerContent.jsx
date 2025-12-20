@@ -55,17 +55,16 @@ const HeaderContent = () => {
         </div>
       ))}
       <div className="absolute z-30 w-full flex flex-col sm:flex-row justify-center gap-4 bottom-20">
-        {/* Botón Principal */}
-        <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
-          <Link to="/register">Registrarse Gratis</Link>
-        </button>
-
         {/* Botón Secundario (Glass Effect sobre imagen) */}
         <button
           className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-white transition-all duration-300
                                 bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
         >
           <Link to="/login">Ver Demo</Link>
+        </button>
+        {/* Botón Principal */}
+        <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
+          <Link to="/register">Registrarse Gratis</Link>
         </button>
       </div>
 
