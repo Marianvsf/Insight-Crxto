@@ -26,7 +26,7 @@ const HeaderContent = () => {
   };
 
   return (
-    <header className="relative w-full h-[calc(100vh-48px)] min-h-[600px] flex items-center overflow-hidden">
+    <header className="relative w-full h-[calc(100vh-128px)] min-h-[600px] flex items-center overflow-hidden">
       {images.map((image, index) => (
         <div
           key={index}
