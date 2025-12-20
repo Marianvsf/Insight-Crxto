@@ -10,7 +10,7 @@ const CryptoTicker = () => {
 
   return (
     <div className="h-12 items-center bg-black text-white py-2 overflow-hidden flex border-b border-gray-800">
-      <div className="animate-marquee whitespace-nowrap flex min-w-full">
+      <div className="animate-marquee whitespace-nowrap flex min-w-full shrink-0">
         {coins.map((coin) => (
           <span key={coin.name} className="mx-6 font-mono">
             <span className="font-bold">{coin.name}</span>: {coin.price}
@@ -26,7 +26,7 @@ const CryptoTicker = () => {
           </span>
         ))}
       </div>
-      <div className="animate-marquee whitespace-nowrap flex min-w-full">
+      <div className="animate-marquee whitespace-nowrap flex min-w-full shrink-0">
         {coins.map((coin) => (
           <span key={coin.name} className="mx-6 font-mono">
             <span className="font-bold">{coin.name}</span>: {coin.price}
