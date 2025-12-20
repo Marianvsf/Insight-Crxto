@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto px-4">
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reversetext-center text-2xl text-teal-400 hover:text-teal-600 hover:underline font-semibold"
+          className="flex items-center space-x-3 rtl:space-x-reversetext-center text-2xl text-teal-400 hover:text-teal-600 font-semibold"
         >
           <img src={logo} className="h-20" alt="Logo" />
           INSIGHT CRXTO
@@ -66,7 +66,7 @@ const Navbar = () => {
                 <li className="mb-0 md:mb-0">
                   <Link
                     to="/register"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
                   >
                     REGISTRARSE
                   </Link>
@@ -74,7 +74,7 @@ const Navbar = () => {
                 <li className="mb-0 md:mb-0">
                   <Link
                     to="/login"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
                   >
                     INICIAR SESIÓN
                   </Link>
@@ -86,7 +86,7 @@ const Navbar = () => {
                 <Link
                   onClick={handleLogout}
                   to="/"
-                  className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                  className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
                 >
                   CERRAR SESIÓN
                 </Link>
@@ -97,7 +97,7 @@ const Navbar = () => {
                 <li className="mb-0 md:mb-0">
                   <Link
                     to="/login"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
                   >
                     INICIAR SESIÓN
                   </Link>
@@ -109,7 +109,7 @@ const Navbar = () => {
                 <li className="mb-0 md:mb-0">
                   <Link
                     to="/register"
-                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 hover:underline font-semibold"
+                    className="block w-full text-center md:inline-block md:w-auto text-teal-400 outline-1 p-2 px-3 rounded-xl hover:text-teal-600 font-semibold"
                   >
                     REGISTRARSE
                   </Link>
