@@ -29,7 +29,7 @@ const Navbar = () => {
     "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold border-2 transition-all duration-200 me-3";
 
   return (
-    <nav className="border-b-gray-50 bg-gradient-to-b from-teal-100 to-white">
+    <nav className="h-20 w-full relative z-50 border-b-gray-50 bg-gradient-to-b from-teal-100 to-white">
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto">
         {/* LOGO ORIGINAL */}
         <Link
@@ -45,7 +45,7 @@ const Navbar = () => {
           onClick={toggleMenu}
           data-collapse-toggle="navbar-default"
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-teal-400 rounded-lg md:hidden hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-200"
           aria-controls="navbar-default"
           aria-expanded={isMenuOpen}
         >
