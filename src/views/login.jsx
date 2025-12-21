@@ -1,26 +1,28 @@
 import React, { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaEnvelope,
+  FaLock,
+  FaGoogle,
+  FaGithub,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
 
 export default function LoginView() {
   const login = useAuthStore((state) => state.login);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false); // Nuevo estado de carga
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -29,129 +31,235 @@ export default function LoginView() {
     setIsSuccess(false);
 
     if (!formData.email || !formData.password) {
-      setMessage("Por favor, ingresa tu correo y contraseña.");
-      setIsSuccess(false);
+      setMessage("Por favor, completa todos los campos.");
       return;
     }
+    setIsLoading(true);
+
     try {
+      // Simulamos un pequeño delay si la respuesta es instantánea para que se vea la animación
+      // await new Promise(r => setTimeout(r, 800));
       const success = await login(formData.email, formData.password);
 
       if (success) {
-        setMessage("¡Inicio de sesión exitoso! Serás redirigido al Home.");
         setIsSuccess(true);
-
-        navigate("/dashboard");
+        setMessage("¡Bienvenido de vuelta!");
+        setTimeout(() => navigate("/dashboard"), 1000);
       } else {
-        setMessage("Credenciales incorrectas. Verifica tu email y contraseña.");
+        setMessage("Credenciales incorrectas.");
         setIsSuccess(false);
+        setIsLoading(false);
       }
     } catch (error) {
-      setMessage("Error al iniciar sesión. Inténtalo de nuevo más tarde.");
+      setMessage("Ocurrió un error inesperado.");
       setIsSuccess(false);
+      setIsLoading(false);
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 space-y-6">
-      <div className="sm:container sm:max-h-0 sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col items-center justify-center space-y-6">
-        <img src={logo} className="h-20" alt="Logo" />
-        <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
-          Inicio de Sesión
-        </h2>
-        <div className="max-w-md w-full bg-white p-8 md:container rounded-xl shadow-2xl z-10">
-          <form noValidate onSubmit={handleSubmit} className="space-y-6">
-            {/* Correo Electrónico */}
-            <div className="flex flex-col w-full">
-              <label
-                htmlFor="email"
-                className="mb-2 text-sm font-medium text-gray-700"
-              >
-                Correo electrónico <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="email@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
-                required
-              />
+    <div className="min-h-screen flex w-full">
+      {/* SECCIÓN IZQUIERDA: IMAGEN / BRANDING (Solo visible en desktop) */}
+      <div className="hidden lg:flex w-1/2 bg-gray-900 items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/90 to-black/90 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop"
+          alt="Crypto Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 p-12 text-white">
+          <img src={logo} className="h-20 mb-8" alt="Logo Insight" />
+          <h2 className="text-5xl font-bold mb-6">
+            El futuro de tus finanzas.
+          </h2>
+          <p className="text-xl text-gray-300">
+            Únete a la plataforma más segura y avanzada del mercado. Gestiona
+            tus activos con inteligencia.
+          </p>
+        </div>
+      </div>
+
+      {/* SECCIÓN DERECHA: FORMULARIO */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center bg-white p-8 md:p-16 overflow-y-auto">
+        <div className="w-full max-w-md space-y-8">
+          {/* Encabezado Móvil (Logo visible solo en móvil) */}
+          <div className="text-center lg:text-left">
+            <img
+              src={logo}
+              className="h-16 mx-auto lg:hidden mb-4"
+              alt="Logo"
+            />
+            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              Iniciar Sesión
+            </h2>
+            <p className="mt-2 text-sm text-gray-600">
+              Bienvenido de nuevo, ingresa tus credenciales.
+            </p>
+          </div>
+
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              {/* Input Email con Icono */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <FaEnvelope />
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="nombre@empresa.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition-colors"
+                />
+              </div>
+
+              {/* Input Password con Icono */}
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                  <FaLock />
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition-colors"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
 
-            {/* Contraseña */}
-            <div className="relative flex flex-col w-full">
-              <label
-                htmlFor="password"
-                className="mb-2 mt-2 text-sm font-medium text-gray-700"
-              >
-                Contraseña <span className="text-red-500">*</span>
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Tu contraseña"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
-                required
-              />
+            {/* Recordarme y Olvidé contraseña */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="remember-me"
+                  type="checkbox"
+                  className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-900"
+                >
+                  Recordarme
+                </label>
+              </div>
+
+              <div className="text-sm">
+                <Link
+                  to="/forgot-password"
+                  className="font-medium text-teal-600 hover:text-teal-500"
+                >
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            </div>
+
+            {/* Botón Submit con Loading State */}
+            <div>
               <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-                title={
-                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                }
+                type="submit"
+                disabled={isLoading}
+                className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white transition-all duration-200 
+                  ${
+                    isLoading
+                      ? "bg-teal-400 cursor-not-allowed"
+                      : "bg-teal-600 hover:bg-teal-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                  }`}
               >
-                {showPassword ? (
-                  <FaEyeSlash className="h-5 w-5" />
+                {isLoading ? (
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
                 ) : (
-                  <FaEye className="h-5 w-5" />
+                  "Iniciar Sesión"
                 )}
               </button>
             </div>
 
-            <div className="text-right text-sm">
-              {/* <Link to="/forgot-password" className="text-teal-600 hover:underline font-medium">
-              ¿Olvidaste tu contraseña?
-            </Link> */}
+            {/* Mensajes de Error/Éxito */}
+            {message && (
+              <div
+                className={`text-sm text-center p-3 rounded-lg border ${
+                  isSuccess
+                    ? "bg-green-50 text-green-700 border-green-200"
+                    : "bg-red-50 text-red-700 border-red-200"
+                }`}
+              >
+                {message}
+              </div>
+            )}
+
+            {/* Divisor */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">
+                  O continúa con
+                </span>
+              </div>
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-2 mt-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase bg-teal-400 hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
-            >
-              Iniciar Sesión
-            </button>
+            {/* Social Login Buttons (Visuales) */}
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+              >
+                <FaGoogle className="h-5 w-5 text-red-500" />
+                <span className="sr-only">Sign in with Google</span>
+              </button>
+              <button
+                type="button"
+                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+              >
+                <FaGithub className="h-5 w-5 text-gray-900" />
+                <span className="sr-only">Sign in with GitHub</span>
+              </button>
+            </div>
           </form>
 
-          {/* Mensaje de estado */}
-          {message && (
-            <p
-              className={`text-sm text-center mt-6 p-3 rounded-lg font-medium ${
-                isSuccess
-                  ? "text-green-800 bg-green-100 border border-green-200"
-                  : "text-red-800 bg-red-100 border border-red-200"
-              }`}
-            >
-              {message}
-            </p>
-          )}
-        </div>
-        {/* Enlace a registro */}
-        <div className="text-center mt-6 text-sm">
-          <p className="text-gray-700 font-medium">
+          <p className="mt-6 text-center text-sm text-gray-600">
             ¿No tienes cuenta?{" "}
             <Link
               to="/register"
-              className="text-teal-600 hover:text-teal-800 hover:underline font-bold"
+              className="font-bold text-teal-600 hover:text-teal-500 transition-colors"
             >
-              Regístrate aquí
+              Regístrate gratis
             </Link>
           </p>
         </div>
