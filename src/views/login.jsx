@@ -89,14 +89,13 @@ export default function LoginView() {
               className="h-16 mx-auto lg:hidden mb-4"
               alt="Logo"
             />
-            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h2 className="text-3xl text-center font-extrabold text-gray-900 tracking-tight">
               Iniciar Sesión
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-center text-sm text-gray-600">
               Bienvenido de nuevo, ingresa tus credenciales.
             </p>
           </div>
-
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               {/* Input Email con Icono */}
