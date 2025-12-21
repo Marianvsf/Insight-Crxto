@@ -69,12 +69,10 @@ export default function LoginView() {
         />
         <div className="relative z-20 p-12 text-white">
           <img src={logo} className="h-20 mb-8" alt="Logo Insight" />
-          <h2 className="text-5xl font-bold mb-6">
-            El futuro de tus finanzas.
-          </h2>
+          <h2 className="text-5xl font-bold mb-6">Domina tu portafolio.</h2>
           <p className="text-xl text-gray-300">
-            Únete a la plataforma más segura y avanzada del mercado. Gestiona
-            tus activos con inteligencia.
+            Accede a análisis en tiempo real y toma decisiones informadas. Tu
+            visión financiera, más clara que nunca.
           </p>
         </div>
       </div>
