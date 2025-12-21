@@ -71,11 +71,6 @@ export default function LoginView() {
 
           {/* Contenido Texto */}
           <div className="relative z-20 p-12 text-white text-left">
-            {/* Logo opcional aquí si quieres reforzar marca, si no, bórralo */}
-            <div className="mb-8 p-3 bg-white/10 backdrop-blur-sm rounded-xl w-fit inline-block">
-              <img src={logo} alt="Logo" className="h-10 w-auto" />
-            </div>
-
             <h2 className="text-4xl font-bold mb-4 leading-tight">
               Domina tu portafolio.
             </h2>
