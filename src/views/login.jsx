@@ -55,7 +55,7 @@ export default function LoginView() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-4 md:p-6 bg-gray-50">
+    <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-4 md:p-6 bg-white">
       {/* TARJETA FLOTANTE (CARD): */}
       <div className="flex w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden h-auto md:min-h-[600px]">
         {/* SECCIÓN IZQUIERDA: IMAGEN / BRANDING */}
