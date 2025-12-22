@@ -74,192 +74,223 @@ export default function RegisterView() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-160px)] bg-white flex flex-col items-center justify-center p-4 w-full space-y-6">
-      <img src={logo} className="h-20" alt=" Logo" />
-      <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
-        Registro de Usuario
-      </h2>
-      <div className="max-w-lg bg-white p-8 rounded-xl shadow-2xl z-10">
-        <form noValidate onSubmit={handleSubmit} className="space-y-10">
-          {/* Nombres y Apellidos */}
-          <div className="flex space-x-4">
-            <div className="flex flex-col w-1/2">
-              <label
-                htmlFor="firstName"
-                className="mb-2 text-sm font-medium text-gray-700"
-              >
-                Nombres <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="Juan"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
-                required
-              />
-            </div>
-            <div className="flex flex-col w-1/2">
-              <label
-                htmlFor="lastName"
-                className="mb-2 text-sm font-medium text-gray-700"
-              >
-                Apellidos <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Pérez"
-                value={formData.lastName}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Correo Electrónico */}
-          <div className="flex flex-col w-full">
-            <label
-              htmlFor="email"
-              className="mb-2  text-sm font-medium text-gray-700"
-            >
-              Correo electrónico <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="email@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
-              required
-            />
-          </div>
-
-          {/* Contraseñas */}
-          <div className="flex space-x-4">
-            {/* Contraseña Principal */}
-            <div className="relative flex flex-col w-1/2">
-              <label
-                htmlFor="password"
-                className=" mb-2 text-sm font-medium text-gray-700"
-              >
-                Contraseña <span className="text-red-500">*</span>
-              </label>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Mínimo 8 caracteres"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
-                required
-                minLength={8}
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-                title={
-                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-                }
-              >
-                {showPassword ? (
-                  <FaEyeSlash className="h-5 w-5" />
-                ) : (
-                  <FaEye className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-
-            {/* Confirmar Contraseña */}
-            <div className="relative flex flex-col w-1/2">
-              <label
-                htmlFor="confirmPassword"
-                className="mb-2 text-sm font-medium text-gray-700"
-              >
-                Confirmar <span className="text-red-500">*</span>
-              </label>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                placeholder="Repite la contraseña"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
-                required
-                minLength={8}
-              />
-              <button
-                type="button"
-                onClick={toggleConfirmPasswordVisibility}
-                className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-                title={
-                  showConfirmPassword
-                    ? "Ocultar confirmación"
-                    : "Mostrar confirmación"
-                }
-              >
-                {showConfirmPassword ? (
-                  <FaEyeSlash className="h-5 w-5" />
-                ) : (
-                  <FaEye className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase  bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
-          >
-            Registrarme
-          </button>
-        </form>
-
-        {/* Mensaje de estado */}
-        {message && (
-          <p
-            className={`text-sm text-center mt-6 p-3 rounded-lg font-medium ${
-              isSuccess
-                ? "text-green-800 bg-green-100 border border-green-200"
-                : "text-red-800 bg-red-100 border border-red-200"
-            }`}
-          >
-            {message}
+    <div className="min-h-screen flex w-full">
+      <div className="hidden lg:flex w-1/2 bg-gray-900 items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/90 to-black/90 z-10" />
+        <img
+          src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop"
+          alt="Crypto Background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 p-12 text-white">
+          <h2 className="text-5xl font-bold mb-6">
+            Tu futuro financiero empieza hoy.
+          </h2>
+          <p className="text-xl text-gray-300">
+            Crea tu cuenta gratuita y únete a miles de inversores que ya están
+            multiplicando su capital con tecnología de punta.
           </p>
-        )}
+        </div>
       </div>
-      {/* Enlaces de políticas y login */}
-      <div className="text-center space-y-3 text-sm">
-        <p className="text-gray-600">
-          Al registrarme, acepto las{" "}
-          <Link
-            to="#"
-            className="text-teal-600 hover:text-teal-800 hover:underline font-semibold"
-          >
-            Condiciones del servicio
-          </Link>{" "}
-          y la{" "}
-          <Link
-            to="#"
-            className="text-teal-600 hover:text-teal-800 hover:underline font-semibold"
-          >
-            Política de privacidad
-          </Link>
-          .
-        </p>
-        <p className="text-gray-700 font-medium">
-          ¿Ya tienes cuenta?{" "}
-          <Link
-            to="/login"
-            className="text-teal-600 hover:text-teal-800 hover:underline font-bold"
-          >
-            Inicia sesión
-          </Link>
-        </p>
+
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center bg-white p-8 md:p-16 overflow-y-auto">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center lg:text-left">
+            <Link
+              to="/"
+              className="block w-fit mx-auto hover:opacity-80 transition-opacity"
+            >
+              <img src={logo} className="h-20 mx-auto" alt="Logo Insight" />
+            </Link>
+            <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
+              Registro de Usuario
+            </h2>
+            <div className="max-w-lg bg-white p-8 rounded-xl shadow-2xl z-10">
+              <form noValidate onSubmit={handleSubmit} className="space-y-10">
+                {/* Nombres y Apellidos */}
+                <div className="flex space-x-4">
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="firstName"
+                      className="mb-2 text-sm font-medium text-gray-700"
+                    >
+                      Nombres <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="Juan"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col w-1/2">
+                    <label
+                      htmlFor="lastName"
+                      className="mb-2 text-sm font-medium text-gray-700"
+                    >
+                      Apellidos <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Pérez"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Correo Electrónico */}
+                <div className="flex flex-col w-full">
+                  <label
+                    htmlFor="email"
+                    className="mb-2  text-sm font-medium text-gray-700"
+                  >
+                    Correo electrónico <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="email@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
+                    required
+                  />
+                </div>
+
+                {/* Contraseñas */}
+                <div className="flex space-x-4">
+                  {/* Contraseña Principal */}
+                  <div className="relative flex flex-col w-1/2">
+                    <label
+                      htmlFor="password"
+                      className=" mb-2 text-sm font-medium text-gray-700"
+                    >
+                      Contraseña <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Mínimo 8 caracteres"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
+                      required
+                      minLength={8}
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                      title={
+                        showPassword
+                          ? "Ocultar contraseña"
+                          : "Mostrar contraseña"
+                      }
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash className="h-5 w-5" />
+                      ) : (
+                        <FaEye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Confirmar Contraseña */}
+                  <div className="relative flex flex-col w-1/2">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="mb-2 text-sm font-medium text-gray-700"
+                    >
+                      Confirmar <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      name="confirmPassword"
+                      placeholder="Repite la contraseña"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
+                      required
+                      minLength={8}
+                    />
+                    <button
+                      type="button"
+                      onClick={toggleConfirmPasswordVisibility}
+                      className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                      title={
+                        showConfirmPassword
+                          ? "Ocultar confirmación"
+                          : "Mostrar confirmación"
+                      }
+                    >
+                      {showConfirmPassword ? (
+                        <FaEyeSlash className="h-5 w-5" />
+                      ) : (
+                        <FaEye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase  bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+                >
+                  Registrarme
+                </button>
+              </form>
+
+              {/* Mensaje de estado */}
+              {message && (
+                <p
+                  className={`text-sm text-center mt-6 p-3 rounded-lg font-medium ${
+                    isSuccess
+                      ? "text-green-800 bg-green-100 border border-green-200"
+                      : "text-red-800 bg-red-100 border border-red-200"
+                  }`}
+                >
+                  {message}
+                </p>
+              )}
+            </div>
+            {/* Enlaces de políticas y login */}
+            <div className="text-center space-y-3 text-sm">
+              <p className="text-gray-600">
+                Al registrarme, acepto las{" "}
+                <Link
+                  to="#"
+                  className="text-teal-600 hover:text-teal-800 hover:underline font-semibold"
+                >
+                  Condiciones del servicio
+                </Link>{" "}
+                y la{" "}
+                <Link
+                  to="#"
+                  className="text-teal-600 hover:text-teal-800 hover:underline font-semibold"
+                >
+                  Política de privacidad
+                </Link>
+                .
+              </p>
+              <p className="text-gray-700 font-medium">
+                ¿Ya tienes cuenta?{" "}
+                <Link
+                  to="/login"
+                  className="text-teal-600 hover:text-teal-800 hover:underline font-bold"
+                >
+                  Inicia sesión
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
