@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
 
@@ -102,166 +102,162 @@ export default function RegisterView() {
             >
               <img src={logo} className="h-20 mx-auto" alt="Logo Insight" />
             </Link>
-            <h2 className="text-3xl font-semibold text-gray-900 text-center mb-6">
+            <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-6">
               Registro de Usuario
             </h2>
-            <div className="max-w-lg bg-white p-8 rounded-xl shadow-2xl z-10">
-              <form noValidate onSubmit={handleSubmit} className="space-y-10">
-                {/* Nombres y Apellidos */}
-                <div className="flex space-x-4">
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="firstName"
-                      className="mb-2 text-sm font-medium text-gray-700"
-                    >
-                      Nombres <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      placeholder="Juan"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col w-1/2">
-                    <label
-                      htmlFor="lastName"
-                      className="mb-2 text-sm font-medium text-gray-700"
-                    >
-                      Apellidos <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      placeholder="Pérez"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
-                      required
-                    />
-                  </div>
-                </div>
 
-                {/* Correo Electrónico */}
-                <div className="flex flex-col w-full">
+            <form noValidate onSubmit={handleSubmit} className="space-y-10">
+              {/* Nombres y Apellidos */}
+              <div className="flex space-x-4">
+                <div className="flex flex-col w-1/2">
                   <label
-                    htmlFor="email"
-                    className="mb-2  text-sm font-medium text-gray-700"
+                    htmlFor="firstName"
+                    className="mb-2 text-sm font-medium text-gray-700"
                   >
-                    Correo electrónico <span className="text-red-500">*</span>
+                    Nombres <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    placeholder="email@example.com"
-                    value={formData.email}
+                    type="text"
+                    name="firstName"
+                    placeholder="Juan"
+                    value={formData.firstName}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
                     required
                   />
                 </div>
+                <div className="flex flex-col w-1/2">
+                  <label
+                    htmlFor="lastName"
+                    className="mb-2 text-sm font-medium text-gray-700"
+                  >
+                    Apellidos <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Pérez"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
+                    required
+                  />
+                </div>
+              </div>
 
-                {/* Contraseñas */}
-                <div className="flex space-x-4">
-                  {/* Contraseña Principal */}
-                  <div className="relative flex flex-col w-1/2">
-                    <label
-                      htmlFor="password"
-                      className=" mb-2 text-sm font-medium text-gray-700"
-                    >
-                      Contraseña <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Mínimo 8 caracteres"
-                      value={formData.password}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
-                      required
-                      minLength={8}
-                    />
-                    <button
-                      type="button"
-                      onClick={togglePasswordVisibility}
-                      className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-                      title={
-                        showPassword
-                          ? "Ocultar contraseña"
-                          : "Mostrar contraseña"
-                      }
-                    >
-                      {showPassword ? (
-                        <FaEyeSlash className="h-5 w-5" />
-                      ) : (
-                        <FaEye className="h-5 w-5" />
-                      )}
-                    </button>
+              {/* Correo Electrónico */}
+              <div className="flex flex-col w-full">
+                <label
+                  htmlFor="email"
+                  className="mb-2  text-sm font-medium text-gray-700"
+                >
+                  Correo electrónico <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                    <FaEnvelope />
                   </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    placeholder="nombre@empresa.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition-colors"
+                  />
+                </div>
+              </div>
 
-                  {/* Confirmar Contraseña */}
-                  <div className="relative flex flex-col w-1/2">
-                    <label
-                      htmlFor="confirmPassword"
-                      className="mb-2 text-sm font-medium text-gray-700"
-                    >
-                      Confirmar <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      placeholder="Repite la contraseña"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
-                      required
-                      minLength={8}
-                    />
-                    <button
-                      type="button"
-                      onClick={toggleConfirmPasswordVisibility}
-                      className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
-                      title={
-                        showConfirmPassword
-                          ? "Ocultar confirmación"
-                          : "Mostrar confirmación"
-                      }
-                    >
-                      {showConfirmPassword ? (
-                        <FaEyeSlash className="h-5 w-5" />
-                      ) : (
-                        <FaEye className="h-5 w-5" />
-                      )}
-                    </button>
-                  </div>
+              {/* Contraseñas */}
+              <div className="flex space-x-4">
+                {/* Contraseña Principal */}
+                <div className="relative flex flex-col w-1/2">
+                  <label
+                    htmlFor="password"
+                    className=" mb-2 text-sm font-medium text-gray-700"
+                  >
+                    Contraseña <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Mínimo 8 caracteres"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
+                    required
+                    minLength={8}
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                    title={
+                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                    }
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white uppercase  bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
-                >
-                  Registrarme
-                </button>
-              </form>
+                {/* Confirmar Contraseña */}
+                <div className="relative flex flex-col w-1/2">
+                  <label
+                    htmlFor="confirmPassword"
+                    className="mb-2 text-sm font-medium text-gray-700"
+                  >
+                    Confirmar <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Repite la contraseña"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    className="w-full mb-2 px-4 py-2 border border-gray-300 rounded-lg shadow-sm pr-10 focus:ring-teal-500 focus:border-teal-500"
+                    required
+                    minLength={8}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleConfirmPasswordVisibility}
+                    className="absolute top-9 right-0 p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                    title={
+                      showConfirmPassword
+                        ? "Ocultar confirmación"
+                        : "Mostrar confirmación"
+                    }
+                  >
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+              </div>
 
-              {/* Mensaje de estado */}
-              {message && (
-                <p
-                  className={`text-sm text-center mt-6 p-3 rounded-lg font-medium ${
-                    isSuccess
-                      ? "text-green-800 bg-green-100 border border-green-200"
-                      : "text-red-800 bg-red-100 border border-red-200"
-                  }`}
-                >
-                  {message}
-                </p>
-              )}
-            </div>
+              <button
+                type="submit"
+                className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+              >
+                Registrarme
+              </button>
+            </form>
+
+            {/* Mensaje de estado */}
+            {message && (
+              <p
+                className={`text-sm text-center mt-6 p-3 rounded-lg font-medium ${
+                  isSuccess
+                    ? "text-green-800 bg-green-100 border border-green-200"
+                    : "text-red-800 bg-red-100 border border-red-200"
+                }`}
+              >
+                {message}
+              </p>
+            )}
             {/* Enlaces de políticas y login */}
-            <div className="text-center space-y-3 text-sm">
+            <div className="text-center space-y-3 mt-3 text-sm">
               <p className="text-gray-600">
                 Al registrarme, acepto las{" "}
                 <Link
