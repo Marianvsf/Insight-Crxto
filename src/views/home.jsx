@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import HeaderContent from "../components/headerContent.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
 import HowItWorks from "../components/howItWorks.jsx";
+import Navbar from "./navbar.jsx";
+import { Footer } from "./Footer.jsx";
 
 function Home() {
   return (
     <>
+      <Navbar />
       <HeaderContent />
       <CryptoTicker />
       {/* <div className="mt-10 sm:container sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col text-center items-center justify-center space-y-6 pb-10">
@@ -26,6 +29,7 @@ function Home() {
         </div>
       </div>*/}
       <HowItWorks />
+      <Footer />
     </>
   );
 }

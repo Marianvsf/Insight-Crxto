@@ -3,6 +3,8 @@ import FilterSort from "../components/filterSort.jsx";
 import UserBalances from "../components/userBalances.jsx";
 import { useAuthStore } from "../store/authStore.js";
 import CoinDetailsTable from "../components/coinDetails.jsx";
+import Navbar from "./navbar.jsx";
+import { Footer } from "./Footer.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -116,6 +118,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Navbar />
       <main className="container mx-auto px-4 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="mx-auto px-4 lg:px-8 py-8 lg:col-span-3 space-y-8">
           <div className="flex justify-between items-center mb-6 border-b pb-4 grid-cols-1">
@@ -403,6 +406,7 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
