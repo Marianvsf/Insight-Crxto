@@ -84,7 +84,13 @@ export default function LoginView() {
         {/* SECCIÓN DERECHA: FORMULARIO */}
         <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-y-auto">
           <div className="w-full max-w-md mx-auto space-y-6">
-            <div className="text-center lg:text-left">
+            <div className="text-center justify-center items-center lg:text-left">
+              <Link
+                to="/"
+                className="block w-fit mx-auto hover:opacity-80 transition-opacity"
+              >
+                <img src={logo} className="h-20 mx-auto" alt="Logo Insight" />
+              </Link>
               <h2 className="text-3xl text-center font-extrabold text-gray-900 tracking-tight">
                 Iniciar Sesión
               </h2>
