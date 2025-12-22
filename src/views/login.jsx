@@ -173,7 +173,7 @@ export default function LoginView() {
                   ${
                     isLoading
                       ? "bg-teal-400 cursor-not-allowed"
-                      : "bg-teal-600 hover:bg-teal-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                      : "bg-teal-600 hover:bg-teal-700 hover:shadow-lg"
                   }`}
               >
                 {isLoading ? (

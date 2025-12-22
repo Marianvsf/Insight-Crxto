@@ -106,7 +106,7 @@ export default function RegisterView() {
               Registro de Usuario
             </h2>
 
-            <form noValidate onSubmit={handleSubmit} className="space-y-10">
+            <form noValidate onSubmit={handleSubmit} className="space-y-6">
               {/* Nombres y Apellidos */}
               <div className="flex space-x-4">
                 <div className="flex flex-col w-1/2">
@@ -238,7 +238,7 @@ export default function RegisterView() {
 
               <button
                 type="submit"
-                className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white bg-teal-400 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+                className="w-full py-2 px-1 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
               >
                 Registrarme
               </button>
