@@ -15,9 +15,8 @@ const TopMovers = ({ coins }) => {
     )
     .slice(0, 3);
 
-  // Sub-componente para cada fila (DRY)
   const CoinRow = ({ coin, isGainer }) => (
-    <div className="flex items-center justify-between py-3 border-b border-gray-200 last:border-0 hover:bg-white/5 transition-colors px-2 rounded-lg cursor-pointer">
+    <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors px-2 rounded-lg cursor-pointer">
       <div className="flex items-center gap-3">
         <img
           src={coin.image}
@@ -25,17 +24,17 @@ const TopMovers = ({ coins }) => {
           className="w-8 h-8 rounded-full"
         />
         <div className="flex flex-col">
-          <span className="text-sm font-bold text-gray-500 uppercase">
+          <span className="text-sm font-bold text-gray-900 uppercase">
             {coin.symbol}
           </span>
-          <span className="text-xs text-gray-400 truncate max-w-[80px]">
+          <span className="text-xs text-gray-500 truncate max-w-[80px]">
             ${coin.current_price.toLocaleString()}
           </span>
         </div>
       </div>
       <div
         className={`text-sm font-bold flex items-center gap-1 ${
-          isGainer ? "text-teal-400" : "text-rose-500"
+          isGainer ? "text-teal-600" : "text-red-600"
         }`}
       >
         {isGainer ? "▲" : "▼"}{" "}
@@ -45,14 +44,14 @@ const TopMovers = ({ coins }) => {
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* TARJETA GANADORES */}
-      <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-lg">
-        <div className="flex items-center gap-2 mb-4 border-b border-gray-200 pb-2">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 bg-gray-100 p-4 border-b border-gray-200">
           <span className="text-xl">🚀</span>
-          <h3 className="font-bold text-gray-500">Top Ganadores (24h)</h3>
+          <h3 className="font-bold text-gray-900">Top Ganadores (24h)</h3>
         </div>
-        <div>
+        <div className="p-4">
           {gainers.map((coin) => (
             <CoinRow key={coin.id} coin={coin} isGainer={true} />
           ))}
@@ -60,12 +59,12 @@ const TopMovers = ({ coins }) => {
       </div>
 
       {/* TARJETA PERDEDORES */}
-      <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-lg">
-        <div className="flex items-center gap-2 mb-4 border-b border-gray-200 pb-2">
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 bg-gray-100 p-4 border-b border-gray-200">
           <span className="text-xl">📉</span>
-          <h3 className="font-bold text-gray-500">Top Perdedores (24h)</h3>
+          <h3 className="font-bold text-gray-900">Top Perdedores (24h)</h3>
         </div>
-        <div>
+        <div className="p-4">
           {losers.map((coin) => (
             <CoinRow key={coin.id} coin={coin} isGainer={false} />
           ))}
