@@ -6,6 +6,14 @@ import TopMovers from "./topMovers.jsx";
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
 
+const ASSET_COLORS = [
+  "bg-orange-500",
+  "bg-blue-600",
+  "bg-teal-500",
+  "bg-purple-500",
+  "bg-pink-500",
+];
+
 const fetchCryptoPrices = async () => {
   try {
     const response = await fetch(
@@ -78,6 +86,10 @@ const UserBalances = ({ userId }) => {
   const totalPortfolioValue = dataForTable.reduce(
     (sum, item) => sum + item.totalValueUSD,
     0
+  );
+
+  const sortedData = [...dataForTable].sort(
+    (a, b) => b.totalValueUSD - a.totalValueUSD
   );
 
   const handleSwapClick = () => {
@@ -156,6 +168,63 @@ const UserBalances = ({ userId }) => {
           </strong>
         </p>
       </div>
+
+      {/* BARRA DE DISTRIBUCIÓN */}
+      {totalPortfolioValue > 0 && (
+        <div className="mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
+          <div className="flex justify-between text-xs text-gray-500 mb-2 font-semibold uppercase tracking-wider">
+            <span>Distribución de Activos</span>
+            <span>{sortedData.length} Monedas</span>
+          </div>
+
+          {/* Barra visual */}
+          <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden flex shadow-inner">
+            {sortedData.map((item, index) => {
+              const percentage =
+                (item.totalValueUSD / totalPortfolioValue) * 100;
+              if (percentage < 1) return null;
+              return (
+                <div
+                  key={item.id}
+                  style={{ width: `${percentage}%` }}
+                  className={`h-full ${
+                    ASSET_COLORS[index % ASSET_COLORS.length]
+                  } hover:opacity-90 transition-opacity`}
+                  title={`${item.name}: ${percentage.toFixed(2)}%`}
+                />
+              );
+            })}
+          </div>
+
+          {/* Leyenda de la barra */}
+          <div className="flex flex-wrap gap-4 mt-3">
+            {sortedData.slice(0, 4).map((item, index) => (
+              <div key={item.id} className="flex items-center gap-1.5">
+                <div
+                  className={`w-2.5 h-2.5 rounded-full ${
+                    ASSET_COLORS[index % ASSET_COLORS.length]
+                  }`}
+                />
+                <span className="text-xs text-gray-600 font-bold uppercase">
+                  {item.symbol || item.id}
+                  <span className="font-normal text-gray-500 ml-1">
+                    {((item.totalValueUSD / totalPortfolioValue) * 100).toFixed(
+                      0
+                    )}
+                    %
+                  </span>
+                </span>
+              </div>
+            ))}
+            {sortedData.length > 4 && (
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-gray-300" />
+                <span className="text-xs text-gray-500">Otros</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {isSwapping && (
         <div className="mb-8 border border-teal-300 p-4 rounded-lg bg-teal-50/50 shadow-inner">
