@@ -47,7 +47,7 @@ const TopMovers = ({ coins }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* TARJETA GANADORES */}
-      <div className="bg-gray-50 rounded-2xl p-5 border border-gray-200 shadow-lg">
+      <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-lg">
         <div className="flex items-center gap-2 mb-4 border-b border-gray-200 pb-2">
           <span className="text-xl">🚀</span>
           <h3 className="font-bold text-gray-500">Top Ganadores (24h)</h3>
@@ -60,7 +60,7 @@ const TopMovers = ({ coins }) => {
       </div>
 
       {/* TARJETA PERDEDORES */}
-      <div className="bg-gray-50 rounded-2xl p-5 border border-gray-200 shadow-lg">
+      <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-lg">
         <div className="flex items-center gap-2 mb-4 border-b border-gray-200 pb-2">
           <span className="text-xl">📉</span>
           <h3 className="font-bold text-gray-500">Top Perdedores (24h)</h3>
