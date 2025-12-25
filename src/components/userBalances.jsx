@@ -79,6 +79,7 @@ const UserBalances = ({ userId }) => {
         priceChange24h: priceData
           ? priceData.price_change_percentage_24h
           : null,
+        name: priceData ? priceData.name : balance.id,
       };
     });
   }, [cryptoMarketData, userBalances]);
