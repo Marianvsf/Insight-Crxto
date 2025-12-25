@@ -169,6 +169,33 @@ const UserBalances = ({ userId }) => {
       {/* BOTONES DE ACCIÓN */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         <button
+          onClick={handleSwapClick}
+          className={`flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-teal-50 hover:border-teal-200 border border-transparent transition-all group ${
+            isSwapping
+              ? "bg-gray-100 opacity-50 cursor-not-allowed"
+              : "bg-gray-50 hover:bg-purple-50 hover:border-purple-200"
+          }`}
+        >
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 ${
+              isSwapping
+                ? "bg-teal-200 text-teal-700 rotate-180"
+                : "bg-teal-100 text-teal-600 group-hover:scale-110"
+            }`}
+          >
+            {isSwapping ? "✕" : "🔄"}
+          </div>
+          <span
+            className={`text-sm font-bold ${
+              isSwapping
+                ? "text-gray-400"
+                : "text-gray-800 group-hover:text-teal-700"
+            }`}
+          >
+            {isSwapping ? "Cerrar" : "Swap"}
+          </span>
+        </button>
+        <button
           onClick={handleDeposit}
           className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-teal-50 hover:border-teal-200 border border-transparent transition-all group"
         >
@@ -182,41 +209,13 @@ const UserBalances = ({ userId }) => {
 
         <button
           onClick={handleSend}
-          className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-blue-50 hover:border-blue-200 border border-transparent transition-all group"
+          className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-teal-50 hover:border-teal-200 border border-transparent transition-all group"
         >
-          <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+          <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
             ⬆
           </div>
-          <span className="text-sm font-bold text-gray-700 group-hover:text-blue-700">
+          <span className="text-sm font-bold text-gray-700 group-hover:text-teal-700">
             Enviar
-          </span>
-        </button>
-
-        <button
-          onClick={handleSwapClick}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border border-transparent transition-all group ${
-            isSwapping
-              ? "bg-gray-100 opacity-50 cursor-not-allowed"
-              : "bg-gray-50 hover:bg-purple-50 hover:border-purple-200"
-          }`}
-        >
-          <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 ${
-              isSwapping
-                ? "bg-purple-200 text-purple-700 rotate-180"
-                : "bg-purple-100 text-purple-600 group-hover:scale-110"
-            }`}
-          >
-            {isSwapping ? "✕" : "🔄"}
-          </div>
-          <span
-            className={`text-sm font-bold ${
-              isSwapping
-                ? "text-gray-400"
-                : "text-gray-700 group-hover:text-purple-700"
-            }`}
-          >
-            {isSwapping ? "Cerrar" : "Swap"}
           </span>
         </button>
       </div>
