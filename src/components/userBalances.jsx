@@ -94,6 +94,11 @@ const UserBalances = ({ userId }) => {
   );
 
   const handleSwapClick = () => {
+    if (isSwapping) {
+      setIsSwapping(false);
+      return;
+    }
+
     if (userBalances.length < 1) {
       alert("Necesitas tener al menos un saldo para iniciar un intercambio.");
       return;
@@ -189,7 +194,6 @@ const UserBalances = ({ userId }) => {
 
         <button
           onClick={handleSwapClick}
-          disabled={isSwapping}
           className={`flex flex-col items-center justify-center p-3 rounded-xl border border-transparent transition-all group ${
             isSwapping
               ? "bg-gray-100 opacity-50 cursor-not-allowed"
@@ -197,13 +201,13 @@ const UserBalances = ({ userId }) => {
           }`}
         >
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-transform ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 ${
               isSwapping
-                ? "bg-gray-200 text-gray-400"
+                ? "bg-purple-200 text-purple-700 rotate-180"
                 : "bg-purple-100 text-purple-600 group-hover:scale-110"
             }`}
           >
-            🔄
+            {isSwapping ? "✕" : "🔄"}
           </div>
           <span
             className={`text-sm font-bold ${
@@ -212,7 +216,7 @@ const UserBalances = ({ userId }) => {
                 : "text-gray-700 group-hover:text-purple-700"
             }`}
           >
-            {isSwapping ? "Operando..." : "Swap"}
+            {isSwapping ? "Cerrar" : "Swap"}
           </span>
         </button>
       </div>
