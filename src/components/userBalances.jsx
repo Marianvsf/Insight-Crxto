@@ -148,22 +148,6 @@ const UserBalances = ({ userId }) => {
         Portafolio de {currentUser.firstName} 💰
       </h2>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <button
-          onClick={handleSwapClick}
-          disabled={isSwapping}
-          className={`
-            py-2 px-4 rounded-lg shadow-md text-sm font-bold uppercase
-            transition duration-150 ease-in-out
-            ${
-              isSwapping
-                ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                : "bg-teal-500 hover:bg-teal-700 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-            }
-          `}
-        >
-          {isSwapping ? "Intercambio Abierto" : "Realizar Intercambio 🔄"}
-        </button>
-
         <p className="total-value text-xl font-medium text-gray-800">
           Valor Total Estimado:{" "}
           <strong className="text-teal-600 font-extrabold text-2xl">
