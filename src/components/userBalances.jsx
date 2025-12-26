@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { getMockUsers } from "../mocks/mockUsers.js";
 import { CryptoSwapForm } from "./cryptoSwap.jsx";
-import TopMovers from "./TopMovers.jsx"; // Asegúrate de que coincida mayúscula/minúscula
+import TopMovers from "./TopMovers.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -54,7 +54,6 @@ const UserBalances = ({ userId }) => {
     loadPrices();
   }, [refreshKey]);
 
-  // --- LÓGICA DE CÁLCULO OPTIMIZADA (Fix del error anterior) ---
   const portfolioData = useMemo(() => {
     if (!cryptoMarketData.length || !userBalances.length) {
       return {
@@ -148,12 +147,11 @@ const UserBalances = ({ userId }) => {
 
   return (
     <div className="bg-white p-6 shadow-2xl rounded-xl">
-      {/* 1. HEADER RESTAURADO (Estilo original) */}
       <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b pb-3">
         Portafolio de {currentUser.firstName} 💰
       </h2>
 
-      {/* 2. SECCIÓN DE SALDO (Estilo original + P&L añadido sutilmente) */}
+      {/* SECCIÓN DE SALDO */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
           <p className="total-value text-xl font-medium text-gray-800">
@@ -167,7 +165,7 @@ const UserBalances = ({ userId }) => {
               USD
             </strong>
           </p>
-          {/* P&L añadido justo debajo del saldo, sin romper el estilo original */}
+          {/* P&L */}
           <p
             className={`text-sm mt-1 font-semibold ${
               isProfit ? "text-green-600" : "text-red-600"
@@ -185,8 +183,35 @@ const UserBalances = ({ userId }) => {
         </div>
       </div>
 
-      {/* 3. BOTONES DE ACCIÓN (Integrados debajo del saldo) */}
+      {/* BOTONES DE ACCIÓN */}
       <div className="grid grid-cols-3 gap-4 mb-8">
+        <button
+          onClick={handleSwapClick}
+          className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all group ${
+            isSwapping
+              ? "bg-teal-50 border-teal-200 ring-2 ring-teal-100"
+              : "bg-gray-50 border-transparent hover:bg-teal-50 hover:border-teal-200"
+          }`}
+        >
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 ${
+              isSwapping
+                ? "bg-teal-200 text-teal-700 rotate-180"
+                : "bg-teal-100 text-teal-600 group-hover:scale-110"
+            }`}
+          >
+            {isSwapping ? "✕" : "🔄"}
+          </div>
+          <span
+            className={`text-sm font-bold ${
+              isSwapping
+                ? "text-teal-700"
+                : "text-gray-700 group-hover:text-teal-700"
+            }`}
+          >
+            {isSwapping ? "Cerrar" : "Swap"}
+          </span>
+        </button>
         <button
           onClick={handleDeposit}
           className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-teal-50 hover:border-teal-200 border border-transparent transition-all group"
@@ -201,46 +226,18 @@ const UserBalances = ({ userId }) => {
 
         <button
           onClick={handleSend}
-          className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-blue-50 hover:border-blue-200 border border-transparent transition-all group"
+          className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-teal-50 hover:border-teal-200 border border-transparent transition-all group"
         >
-          <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+          <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
             ⬆
           </div>
-          <span className="text-sm font-bold text-gray-700 group-hover:text-blue-700">
+          <span className="text-sm font-bold text-gray-700 group-hover:text-teal-700">
             Enviar
-          </span>
-        </button>
-
-        <button
-          onClick={handleSwapClick}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all group ${
-            isSwapping
-              ? "bg-purple-50 border-purple-200 ring-2 ring-purple-100"
-              : "bg-gray-50 border-transparent hover:bg-purple-50 hover:border-purple-200"
-          }`}
-        >
-          <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 ${
-              isSwapping
-                ? "bg-purple-200 text-purple-700 rotate-180"
-                : "bg-purple-100 text-purple-600 group-hover:scale-110"
-            }`}
-          >
-            {isSwapping ? "✕" : "🔄"}
-          </div>
-          <span
-            className={`text-sm font-bold ${
-              isSwapping
-                ? "text-purple-700"
-                : "text-gray-700 group-hover:text-purple-700"
-            }`}
-          >
-            {isSwapping ? "Cerrar" : "Swap"}
           </span>
         </button>
       </div>
 
-      {/* 4. BARRA DE DISTRIBUCIÓN */}
+      {/* BARRA DE DISTRIBUCIÓN */}
       {totalValue > 0 && (
         <div className="mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
           <div className="flex justify-between text-xs text-gray-500 mb-2 font-semibold uppercase tracking-wider">
@@ -283,9 +280,9 @@ const UserBalances = ({ userId }) => {
         </div>
       )}
 
-      {/* FORMULARIO SWAP (Se muestra al hacer click en el botón Swap) */}
+      {/* FORMULARIO SWAP */}
       {isSwapping && (
-        <div className="mb-8 border border-purple-200 p-4 rounded-lg bg-purple-50/50 shadow-inner">
+        <div className="mb-8 border border-teal-200 p-4 rounded-lg bg-teal-50/50 shadow-inner">
           <CryptoSwapForm
             userId={userId}
             onSwapComplete={handleSwapComplete}
