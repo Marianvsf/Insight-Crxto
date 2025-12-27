@@ -3,6 +3,7 @@ import FilterSort from "../components/filterSort.jsx";
 import UserBalances from "../components/userBalances.jsx";
 import { useAuthStore } from "../store/authStore.js";
 import CoinDetailsTable from "../components/coinDetails.jsx";
+import MarketOverview from "../components/MarketOverview.jsx";
 import Navbar from "./navbar.jsx";
 import { Footer } from "./Footer.jsx";
 
@@ -133,6 +134,10 @@ export default function Dashboard() {
               Ver Mi Balance 💰
             </button>
           </div>
+
+          {!selectedCoin && coins.length > 0 && (
+            <MarketOverview coins={coins} />
+          )}
 
           {selectedCoin ? (
             <CoinDetailsTable
