@@ -29,7 +29,7 @@ const Navbar = () => {
     "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold border-2 transition-all duration-200 me-3";
 
   return (
-    <nav className="h-20 w-full relative z-50 border-b-gray-50 bg-gradient-to-b from-teal-100 to-white">
+    <nav className="h-20 w-full relative z-50 border-b-gray-50 bg-linear-to-b from-teal-100 to-white">
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto">
         {/* LOGO ORIGINAL */}
         <Link
@@ -72,7 +72,7 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-6 rtl:space-x-reverse md:mt-0 md:border-0">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-1 rtl:space-x-reverse md:mt-0 md:border-0">
             {isPublicRoute ? (
               <>
                 {/* BOTÓN LOGIN */}
