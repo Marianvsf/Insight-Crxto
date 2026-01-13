@@ -44,9 +44,9 @@ const HeaderContent = () => {
           />
           <div className="absolute w-full text-center m-auto inset-0 bg-black/50 backdrop-blur-[2px]" />
           <div className="relative z-10 w-full max-w-[980px] px-6 items-center text-white">
-            <h1 className="text-center m-auto relative text-3xl md:text-7xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
+            <h1 className="text-center m-auto relative text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1]">
               El futuro de tus finanzas empieza aquí <br />
-              <p className="mt-5 text-5xl font-semibold text-gray-400">
+              <p className="mt-5 text-lg md:text-3xl font-semibold text-gray-400">
                 La plataforma más segura y fácil de usar con las comisiones más
                 bajas del mercado
               </p>
@@ -57,13 +57,13 @@ const HeaderContent = () => {
       <div className="absolute z-30 w-full flex flex-col sm:flex-row justify-center gap-4 bottom-20">
         {/* Botón Secundario (Glass Effect sobre imagen) */}
         <button
-          className="h-[52px] w-full sm:w-[240px] text-lg font-medium rounded-xl text-white transition-all duration-300
+          className="h-[52px] w-full px-16 sm:w-auto text-lg font-medium rounded-xl text-white transition-all duration-300
                                 bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
         >
           <Link to="/login">Ver Demo</Link>
         </button>
         {/* Botón Principal */}
-        <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
+        <button className="h-[52px] w-full sm:w-auto px-8 text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
           <Link to="/register">Registrarse Gratis</Link>
         </button>
       </div>
