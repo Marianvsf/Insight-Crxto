@@ -28,32 +28,30 @@ const Navbar = () => {
   );
 
   const commonSize =
-    "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold border-2 transition-all duration-200 me-3";
+    "block w-full md:inline-block md:w-auto text-center py-2 px-6 rounded-xl font-semibold border-2 transition-all duration-200 me-0 md:me-3 text-sm tracking-wide";
 
+  // Lógica de Glassmorphism vs Normal
   const navClasses = isHomePage
-    ? "absolute top-0 w-full bg-white/30 backdrop-blur-md border-b border-white/20 shadow-sm"
-    : "relative w-full border-b-gray-50 bg-linear-to-b from-teal-100 to-white";
+    ? "absolute top-0 w-full bg-white/20 backdrop-blur-md border-b border-white/20 shadow-sm"
+    : "relative w-full border-b-gray-50 bg-gradient-to-b from-teal-100 to-white";
 
   return (
-    <nav className={`h-20 w-full z-50 ${navClasses}`}>
-      <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto">
-        {/* LOGO ORIGINAL */}
+    <nav className={`h-16 z-50 ${navClasses}`}>
+      <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto px-4 h-full">
+        {/* LOGO */}
         <Link
           to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse text-center text-2xl text-teal-400 hover:text-teal-600 font-semibold"
+          className="flex items-center space-x-2 rtl:space-x-reverse text-center text-xl text-teal-400 hover:text-teal-600 font-bold"
         >
-          <img src={logo} className="h-20" alt="Logo" />
-          INSIGHT CRXTO
+          <img src={logo} className="h-10 w-auto" alt="Logo" />
+          <span>INSIGHT CRXTO</span>
         </Link>
 
         {/* BOTÓN HAMBURGUESA */}
         <button
           onClick={toggleMenu}
-          data-collapse-toggle="navbar-default"
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-teal-400 rounded-lg md:hidden hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-200"
-          aria-controls="navbar-default"
-          aria-expanded={isMenuOpen}
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-teal-400 rounded-lg md:hidden hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200"
         >
           <span className="sr-only">Menu</span>
           <svg
@@ -73,22 +71,23 @@ const Navbar = () => {
           </svg>
         </button>
 
+        {/* MENÚ */}
         <div
           className={`w-full md:block md:w-auto ${
             isMenuOpen
-              ? "block bg-white/90 backdrop-blur-md md:bg-transparent rounded-b-lg"
+              ? "block absolute top-16 left-0 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-lg"
               : "hidden"
-          }`}
+          } md:static md:bg-transparent md:shadow-none md:border-0`}
         >
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-1 rtl:space-x-reverse md:mt-0 md:border-0">
+          <ul className="font-medium flex flex-col p-4 md:p-0 md:flex-row space-y-2 md:space-y-0 md:space-x-2 rtl:space-x-reverse md:mt-0 md:items-center">
             {isPublicRoute ? (
               <>
                 {/* BOTÓN LOGIN */}
                 {location.pathname !== "/login" && (
-                  <li className="mb-0 md:mb-0">
+                  <li>
                     <Link
                       to="/login"
-                      className={`${commonSize} text-teal-400 hover:text-teal-500 hover:scale-105`}
+                      className={`${commonSize} text-teal-500 hover:text-teal-700 hover:bg-teal-50 border-transparent`}
                     >
                       INICIAR SESIÓN
                     </Link>
@@ -97,10 +96,10 @@ const Navbar = () => {
 
                 {/* BOTÓN REGISTRO */}
                 {location.pathname !== "/register" && (
-                  <li className="mb-0 md:mb-0">
+                  <li>
                     <Link
                       to="/register"
-                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:scale-105 hover:border-teal-600`}
+                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:scale-105 hover:border-teal-600 shadow-md hover:shadow-lg`}
                     >
                       REGISTRARSE
                     </Link>
@@ -109,10 +108,10 @@ const Navbar = () => {
               </>
             ) : (
               /* BOTÓN LOGOUT */
-              <li className="mb-0 md:mb-0">
+              <li>
                 <button
                   onClick={handleLogout}
-                  className={`${commonSize} text-teal-400 hover:text-teal-600`}
+                  className={`${commonSize} text-teal-500 hover:text-teal-700 hover:bg-teal-50 border-transparent`}
                 >
                   CERRAR SESIÓN
                 </button>
