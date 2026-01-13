@@ -21,6 +21,8 @@ const Navbar = () => {
     }
   };
 
+  const isHomePage = location.pathname === "/";
+
   const isPublicRoute = ["/", "/login", "/register"].includes(
     location.pathname
   );
@@ -28,8 +30,12 @@ const Navbar = () => {
   const commonSize =
     "block w-full sm:w-[240px] md:inline-block md:w-48 text-center p-2 px-3 rounded-xl font-semibold border-2 transition-all duration-200 me-3";
 
+  const navClasses = isHomePage
+    ? "absolute top-0 w-full bg-white/30 backdrop-blur-md border-b border-white/20 shadow-sm"
+    : "relative w-full border-b-gray-50 bg-linear-to-b from-teal-100 to-white";
+
   return (
-    <nav className="h-20 w-full relative z-50 border-b-gray-50 bg-linear-to-b from-teal-100 to-white">
+    <nav className={`h-20 w-full z-50 ${navClasses}`}>
       <div className="max-w-screen-7xl flex flex-wrap items-center justify-between mx-auto">
         {/* LOGO ORIGINAL */}
         <Link
@@ -69,7 +75,9 @@ const Navbar = () => {
 
         <div
           className={`w-full md:block md:w-auto ${
-            isMenuOpen ? "block" : "hidden"
+            isMenuOpen
+              ? "block bg-white/90 backdrop-blur-md md:bg-transparent rounded-b-lg"
+              : "hidden"
           }`}
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row space-y-2 md:space-y-0 md:space-x-1 rtl:space-x-reverse md:mt-0 md:border-0">
