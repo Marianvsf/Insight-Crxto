@@ -335,7 +335,7 @@ export default function Dashboard() {
         <div className="lg:col-span-1">
           <div className="sticky top-28 space-y-6">
             {/* WIDGET 1: NFT SPOTLIGHT (Antes Galería de Arte) */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="bg-white mt-5 rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
               <div className="p-4 border-b border-gray-100 flex justify-between items-center">
                 <h3 className="font-bold text-gray-900">Mercado NFT</h3>
                 <span className="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded-full font-medium">
