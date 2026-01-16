@@ -87,7 +87,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/login"
-                      className={`${commonSize} text-teal-500 hover:text-teal-700 hover:bg-teal-50 border-transparent`}
+                      className={`${commonSize} text-white hover:bg-teal-50/20 hover:text-white border-transparent`}
                     >
                       INICIAR SESIÓN
                     </Link>
@@ -99,7 +99,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/register"
-                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:scale-105 hover:border-teal-600 shadow-md hover:shadow-lg`}
+                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:border-teal-600 shadow-md hover:shadow-lg`}
                     >
                       REGISTRARSE
                     </Link>

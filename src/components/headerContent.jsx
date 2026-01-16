@@ -63,7 +63,7 @@ const HeaderContent = () => {
           <Link to="/login">Ver Demo</Link>
         </button>
         {/* Botón Principal */}
-        <button className="h-[52px] w-full sm:w-auto px-8 text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
+        <button className="h-[52px] w-full sm:w-auto px-8 text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105">
           <Link to="/register">Registrarse Gratis</Link>
         </button>
       </div>
