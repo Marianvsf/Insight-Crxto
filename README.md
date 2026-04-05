@@ -1,116 +1,57 @@
-<h1 align="center">INSIGHT-CRXTO</h1>
-<p align="center">Transforme los datos en acciones con total claridad</p>
+<h1 align="center">🚀 INSIGHT-CRXTO</h1>
+<p align="center">
+  <strong>Transforme datos en acciones con total claridad.</strong>
+  <br />
+  Una plataforma integral para el análisis y visualización de criptomonedas en tiempo real.
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+</p>
 
+---
 
-###
-###
-<h2 align="left">Construido con las herramientas y tecnologías:</h2>
+## 🛠️ Tecnologías y Herramientas
 
 <div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo" />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo" />
   <img width="12" />
-  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="40" alt="tailwind logo" />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo" />
 </div>
 
-###
+## 📄 Descripción General
 
+**Insight-Crxto** es una plataforma de desarrollo moderna basada en **React** y **Vite**, diseñada para la creación de paneles de control (dashboards) y herramientas de visualización de criptoactivos. 
 
-<h2 align="left">Descripción general</h2>
+El proyecto implementa una arquitectura modular y escalable, utilizando **Babel, SWC y ESLint** para garantizar un código limpio y eficiente. Ofrece componentes interactivos que incluyen tasas de cambio en vivo, análisis detallado de monedas y un sistema de gestión de cartera para el usuario.
 
-###
+## ✨ ¿Por qué Insight-Crxto?
 
-<p align="left">Insight-Crxto es una plataforma integral de desarrollo en React diseñada para crear paneles de control de criptomonedas en tiempo real y herramientas de visualización de datos. Utiliza Vite para un reemplazo de módulos ultrarrápido e integra plugins esenciales como Babel, SWC, ESLint y TypeScript para garantizar la calidad y el mantenimiento del código. Diseñado para desarrolladores, Insight-Crxto ofrece una arquitectura modular con componentes interactivos y completos, como tasas de criptomonedas en tiempo real, información detallada sobre las monedas y gestión de la cartera de usuarios.</p>
+Este proyecto optimiza el desarrollo de aplicaciones criptográficas sofisticadas mediante:
 
+* **⚡ Entorno de alto rendimiento:** Configuración optimizada con Vite para un reemplazo de módulos (HMR) instantáneo.
+* **📊 Visualización en tiempo real:** Gráficos dinámicos e integración con la API de **CoinGecko** para datos precisos del mercado.
+* **🧩 Arquitectura Modular:** Separación clara de componentes, lógica de enrutamiento y gestión de estados.
+* **🎨 UI/UX Moderna:** Interfaz construida con Tailwind CSS, garantizando un diseño responsivo y profesional.
+* **🧪 Entorno de Pruebas:** Incluye datos y usuarios simulados para facilitar el desarrollo sin dependencias críticas de backend.
 
+---
 
-<h2 align="left">¿Por qué Insight-Crxto?</h2>
+## 🚀 Primeros Pasos
 
-<h5 align="left">Este proyecto optimiza el proceso de creación de aplicaciones criptográficas sofisticadas con modernas herramientas frontend e integración de datos en tiempo real. Las principales características incluyen:</h5>
+### Requisitos previos
+* **Lenguaje:** JavaScript / Node.js
+* **Gestor de paquetes:** npm (o yarn/pnpm)
 
-<p align="left">- Entorno de desarrollo rápido: Configuración optimizada con Vite, React, Tailwind CSS y reemplazo de módulos en tiempo real para una iteración rápida.</p>
-<p align="left">- Visualización de datos en tiempo real: Gráficos dinámicos y tasas de criptomonedas en vivo, impulsados ​​por API externas como CoinGecko.</p>
-<p align="left">- Arquitectura modular: Enrutamiento claro, gestión de estados y separación de componentes para mayor facilidad de mantenimiento.</p>
-<p align="left">- Componentes de interfaz de usuario interactivos: Intercambios de criptomonedas, paneles de control, información detallada sobre monedas y flujos de autenticación de usuarios.</p>
-<p align="left">- Pruebas integradas y datos simulados: Facilita el desarrollo con usuarios simulados y datos simulados, reduciendo las dependencias del backend.</p>
+### Instalación
 
-###
-
-<h2 align="left">Primeros pasos</h2>
-
-<h5 align="left">Este proyecto requiere las siguientes dependencias:</h5>
-
-- Lenguaje de programación: JavaScript
-- Gestor de paquetes: Npm
-
-<h2 align="left">Instalación</h2>
-
-Compile Insight-Crxto desde el código fuente e instale las dependencias:
-
-1. Clone el repositorio:
-
-> git clone https://github.com/mariansvf/Insight-Crxto
-
-2. Vaya al directorio del proyecto:
-
-> cd Insight-Crxto
-
-3. Instale las dependencias:
-
-Usando npm:
-
-> npm install
-
-<h2 align="left">Uso</h2>
-
-Ejecute el proyecto con:
-
-Usando npm:
-
-> npm start
-
-
-<h2 align="left">Para hacer uso de Insight-Crxto en la web con los usuarios simulados, puedes utilizar las siguientes credenciales para iniciar sesión y explorar las funcionalidades:</h2>
-<h5 align="left">Usuarios Simulados para Pruebas</h5>
-<li align="left">Se han proporcionado tres cuentas simuladas que puedes usar para acceder a la aplicación, cada una con un balance de criptomonedas precargado:</li>
-
-###
-###
-
-<ul align="left"><h5>Usuario:</h5></ul>
->AliceTrader
-<ul align="left"><h5>Correo Electrónico:</h5></ul>
->test@exchange.com
-<ul align="left"><h5>Contraseña:</h5></ul>
-- password123
-<ul align="left"><h5>Criptomonedas de Muestra:</h5></ul>
-- Bitcoin (BTC), Ethereum (ETH), Tether (USDT)
-
-###
-###
-
-<ul align="left"><h5>Usuario:</h5></ul>
-- BobCrypto
-<ul align="left"><h5>Correo Electrónico:</h5></ul>
-- bob@exchange.com
-<ul align="left"><h5>Contraseña:</h5></ul>
-- securepwd
-<ul align="left"><h5>Criptomonedas de Muestra:</h5></ul>
-- Bitcoin (BTC), Solana (SOL), Cardano (ADA)
-
-###
-###
-
-<ul align="left"><h5>Usuario:</h5></ul>
-- AdminX
-<ul align="left"><h5>Correo Electrónico:</h5></ul>
-- adn@exchange.com
-<ul align="left"><h5>Contraseña:</h5></ul>
-- adminpwd
-<ul align="left"><h5>Criptomonedas de Muestra:</h5></ul>
-- Ethereum (ETH), Tether (USDT)
-
-
-
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/mariansvf/Insight-Crxto](https://github.com/mariansvf/Insight-Crxto)
