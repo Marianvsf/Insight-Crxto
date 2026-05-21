@@ -4,8 +4,6 @@ import UserBalances from "../components/userBalances.jsx";
 import { useAuthStore } from "../store/authStore.js";
 import CoinDetailsTable from "../components/coinDetails.jsx";
 import MarketOverview from "../components/MarketOverview.jsx";
-import Navbar from "./navbar.jsx";
-import { Footer } from "./Footer.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
@@ -34,7 +32,7 @@ export default function Dashboard() {
   // Calculate currentItems based on pagination
   const currentItems = filteredCoins.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
   const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
 
@@ -54,7 +52,7 @@ export default function Dashboard() {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         );
         if (!response.ok) {
           throw new Error("Error fetching coins:", response.statusText);
@@ -120,7 +118,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
       <CryptoTicker />
       <main className="container mx-auto px-4 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="mx-auto px-4 lg:px-8 py-8 lg:col-span-3 space-y-8">
@@ -413,7 +410,6 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
