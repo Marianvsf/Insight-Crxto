@@ -80,6 +80,14 @@ const Navbar = () => {
           } md:static md:bg-transparent md:shadow-none md:border-0`}
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 md:flex-row space-y-2 md:space-y-0 md:space-x-2 rtl:space-x-reverse md:mt-0 md:items-center">
+            <li>
+              <Link
+                to="/contact"
+                className={`${commonSize} text-teal-600 hover:text-teal-800 border-transparent`}
+              >
+                SOPORTE
+              </Link>
+            </li>
             {isPublicRoute ? (
               <>
                 {/* BOTÓN LOGIN */}
