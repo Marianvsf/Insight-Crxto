@@ -6,19 +6,23 @@ import Home from "./views/home.jsx";
 import Navbar from "./views/navbar.jsx";
 import Dashboard from "./views/dashboard.jsx";
 import { Footer } from "./views/Footer.jsx";
+import Contact from "./views/contact.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen w-full">
+        <Navbar />
         <main className="flex-1 w-full">
           <Routes>
             <Route path="/login" element={<LoginView />} />
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegisterView />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </BrowserRouter>
   );
