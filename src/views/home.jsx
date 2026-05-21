@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import HeaderContent from "../components/headerContent.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
 import HowItWorks from "../components/howItWorks.jsx";
-import Navbar from "./navbar.jsx";
-import { Footer } from "./Footer.jsx";
 import { useEffect, useState } from "react";
 import TopMovers from "../components/TopMovers.jsx";
 
@@ -18,7 +16,7 @@ function Home() {
     const fetchCoins = async () => {
       try {
         const response = await fetch(
-          `${URL_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false${API_KEY}`
+          `${URL_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false${API_KEY}`,
         );
         const data = await response.json();
         setCoins(data);
@@ -34,7 +32,6 @@ function Home() {
 
   return (
     <>
-      <Navbar />
       <HeaderContent />
       <CryptoTicker />
       {/* <div className="mt-10 sm:container sm:mx-auto sm:max-w-md sm:px-6 lg:max-w-md lg:px-8 flex flex-col text-center items-center justify-center space-y-6 pb-10">
@@ -86,7 +83,6 @@ function Home() {
         </div>
       </section>
       <HowItWorks />
-      <Footer />
     </>
   );
 }
