@@ -30,7 +30,6 @@ export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Calculate currentItems based on pagination
   const currentItems = filteredCoins.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
@@ -77,7 +76,6 @@ export default function Dashboard() {
   }, [filteredCoins.length]);
 
   useEffect(() => {
-    // Reset currentPage when filteredCoins changes
     setCurrentPage(1);
   }, [filteredCoins]);
 
@@ -107,7 +105,7 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto py-6">
           <button
             onClick={handleBackToDashboard}
-            className="mb-6 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out font-medium"
+            className="mb-6 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out font-medium w-full sm:w-auto text-center"
           >
             ← Volver al Tablero
           </button>
@@ -118,25 +116,30 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50/50">
       <CryptoTicker />
-      <main className="container mx-auto px-4 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="mx-auto px-4 lg:px-8 py-8 lg:col-span-3 space-y-8">
-          <div className="flex justify-between items-center mb-6 border-b pb-4 grid-cols-1">
-            <h1 className="text-3xl font-bold text-gray-900">
+
+      <main className="container mx-auto px-4 py-6 lg:py-8 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* COLUMNA PRINCIPAL (TABLA Y CONTENIDO) */}
+        <div className="lg:col-span-3 space-y-6 lg:space-y-8">
+          {/* Header de Bienvenida adaptable */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 pb-5">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
               Bienvenido de nuevo,{" "}
-              <span className="text-teal-600">{username}</span>
+              <span className="text-teal-600 block sm:inline">{username}</span>
             </h1>
             <button
               onClick={handleShowBalances}
-              className="py-2 px-4 rounded-lg shadow-lg text-sm font-bold text-white uppercase bg-teal-500 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out"
+              className="w-full sm:w-auto py-2.5 px-5 rounded-xl shadow-md text-sm font-bold text-white uppercase bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out text-center"
             >
               Ver Mi Balance 💰
             </button>
           </div>
 
           {!selectedCoin && coins.length > 0 && (
-            <MarketOverview coins={coins} />
+            <div className="w-full overflow-hidden">
+              <MarketOverview coins={coins} />
+            </div>
           )}
 
           {selectedCoin ? (
@@ -146,25 +149,29 @@ export default function Dashboard() {
             />
           ) : (
             <>
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                Criptomonedas disponibles
-              </h2>
-              <p className="text-sm text-gray-500 mb-6">
-                Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
-                (Cada 30 segundos)
-              </p>
+              <div>
+                <h2 className="text-xl font-bold text-gray-800 mb-1">
+                  Criptomonedas disponibles
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  Última actualización: {lastUpdated.toLocaleTimeString()} 🔄
+                  <span className="hidden sm:inline"> (Cada 30 segundos)</span>
+                </p>
+              </div>
 
               {error && (
-                <div className="text-sm text-red-800 bg-red-100 border border-red-200 p-3 rounded-lg font-medium mb-4">
+                <div className="text-sm text-red-800 bg-red-100 border border-red-200 p-3 rounded-lg font-medium">
                   ⚠️ {error}
                 </div>
               )}
 
               {coins.length === 0 ? (
-                <p className="text-gray-600">Cargando datos de monedas...</p>
+                <p className="text-gray-600 animate-pulse">
+                  Cargando datos de monedas...
+                </p>
               ) : (
                 <>
-                  <div className="mb-6">
+                  <div className="w-full">
                     <FilterSort
                       coins={coins}
                       setFilteredCoins={setFilteredCoins}
@@ -172,29 +179,30 @@ export default function Dashboard() {
                     />
                   </div>
 
-                  <div className="overflow-x-auto shadow-xl rounded-lg border border-gray-200">
-                    <table className="min-w-full divide-y divide-gray-200">
+                  {/* Wrapper para evitar rotura de layout en mobile */}
+                  <div className="w-full overflow-x-auto shadow-md rounded-xl border border-gray-200 bg-white">
+                    <table className="min-w-full divide-y divide-gray-200 table-auto">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             Ranking
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             Símbolo
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             Nombre
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             Precio actual
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Capitalización de Mercado
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                            Cap. de Mercado
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Cambio % (24h)
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                            Cambio (24h)
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
                             Acción
                           </th>
                         </tr>
@@ -203,7 +211,7 @@ export default function Dashboard() {
                         {currentItems.map((coin) => (
                           <tr
                             key={coin.id}
-                            className="hover:bg-gray-50 transition duration-150"
+                            className="hover:bg-gray-50/70 transition duration-150"
                           >
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                               {coin.market_cap_rank}
@@ -212,17 +220,18 @@ export default function Dashboard() {
                               <img
                                 src={coin.image}
                                 alt={coin.name}
-                                width="25"
-                                className="mr-2"
+                                width="24"
+                                height="24"
+                                className="mr-2 rounded-full"
                               />
-                              <span className="uppercase font-semibold">
+                              <span className="uppercase font-bold text-gray-800">
                                 {coin.symbol}
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                               {coin.name}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono font-medium">
                               {new Intl.NumberFormat("en-US", {
                                 style: "currency",
                                 currency: "USD",
@@ -230,7 +239,8 @@ export default function Dashboard() {
                                 maximumFractionDigits: 4,
                               }).format(coin.current_price)}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">
+                            {/* Ocultamos la capitalización en pantallas muy pequeñas para mejorar legibilidad */}
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono hidden md:table-cell">
                               {new Intl.NumberFormat("en-US", {
                                 style: "currency",
                                 currency: "USD",
@@ -239,18 +249,19 @@ export default function Dashboard() {
                               }).format(coin.market_cap)}
                             </td>
                             <td
-                              className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
+                              className={`px-6 py-4 whitespace-nowrap text-sm font-bold ${
                                 coin.price_change_percentage_24h > 0
                                   ? "text-green-600"
                                   : "text-red-600"
                               }`}
                             >
+                              {coin.price_change_percentage_24h > 0 ? "+" : ""}
                               {coin.price_change_percentage_24h.toFixed(2)}%
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                               <button
                                 onClick={() => handleCoinClick(coin)}
-                                className="text-teal-600 hover:text-teal-800 transition duration-150 font-medium"
+                                className="text-teal-600 hover:text-teal-800 transition duration-150 font-semibold"
                               >
                                 Ver Detalles
                               </button>
@@ -260,41 +271,35 @@ export default function Dashboard() {
                       </tbody>
                     </table>
                   </div>
+
+                  {/* Paginación adaptable */}
                   <nav
-                    className="flex justify-center items-center mt-6"
+                    className="flex justify-center items-center mt-6 overflow-x-auto py-2"
                     aria-label="Pagination"
                   >
-                    <ul className="flex items-center space-x-2">
+                    <ul className="flex items-center space-x-1 sm:space-x-2">
                       <li>
                         <button
                           onClick={() => paginate(currentPage - 1)}
                           disabled={currentPage === 1}
-                          className={`
-                          px-4 py-2 text-sm font-medium rounded-lg border
-                          transition duration-150 ease-in-out
-                          ${
+                          className={`px-3 py-2 text-xs sm:text-sm font-medium rounded-lg border transition ${
                             currentPage === 1
                               ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
                               : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
-                          }
-                        `}
+                          }`}
                         >
-                          ← Anterior
+                          ←
                         </button>
                       </li>
                       {Array.from({ length: totalPages }, (_, index) => (
                         <li key={index + 1}>
                           <button
                             onClick={() => paginate(index + 1)}
-                            className={`
-                            px-4 py-2 text-sm font-semibold rounded-lg
-                            transition duration-150 ease-in-out
-                            ${
+                            className={`px-3 py-2 text-xs sm:text-sm font-semibold rounded-lg transition ${
                               currentPage === index + 1
-                                ? "bg-teal-600 text-white shadow-md"
+                                ? "bg-teal-600 text-white shadow-sm"
                                 : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
-                            }
-                          `}
+                            }`}
                           >
                             {index + 1}
                           </button>
@@ -304,23 +309,20 @@ export default function Dashboard() {
                         <button
                           onClick={() => paginate(currentPage + 1)}
                           disabled={currentPage === totalPages}
-                          className={`
-                          px-4 py-2 text-sm font-medium rounded-lg border
-                          transition duration-150 ease-in-out
-                          ${
+                          className={`px-3 py-2 text-xs sm:text-sm font-medium rounded-lg border transition ${
                             currentPage === totalPages
                               ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
                               : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
-                          }
-                        `}
+                          }`}
                         >
-                          Siguiente →
+                          →
                         </button>
                       </li>
                     </ul>
                   </nav>
+
                   {filteredCoins.length === 0 && (
-                    <p className="mt-4 text-center text-gray-600">
+                    <p className="mt-4 text-center text-gray-500 text-sm">
                       No se encontraron resultados con el filtro aplicado.
                     </p>
                   )}
@@ -329,19 +331,22 @@ export default function Dashboard() {
             </>
           )}
         </div>
-        {/* WIDGETS */}
-        <div className="lg:col-span-1">
-          <div className="sticky top-28 space-y-6">
-            {/* WIDGET 1: NFT SPOTLIGHT (Antes Galería de Arte) */}
-            <div className="bg-white mt-5 rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+
+        {/* COLUMNA LATERAL (BARRA DE WIDGETS) */}
+        <div className="lg:col-span-1 w-full">
+          <div className="lg:sticky lg:top-24 space-y-6">
+            {/* WIDGET 1: NFT SPOTLIGHT */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
               <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-                <h3 className="font-bold text-gray-900">Mercado NFT</h3>
-                <span className="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded-full font-medium">
+                <h3 className="font-bold text-gray-900 text-sm sm:text-base">
+                  Mercado NFT
+                </h3>
+                <span className="text-[11px] bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-semibold">
                   Trending 🔥
                 </span>
               </div>
 
-              <div className="relative h-[400px] w-full bg-slate-900 group">
+              <div className="relative h-[300px] sm:h-[350px] lg:h-[400px] w-full bg-slate-900 group">
                 {galleryImages.map((img, index) => (
                   <div
                     key={index}
@@ -354,16 +359,15 @@ export default function Dashboard() {
                       alt={`NFT Collection ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
-                    {/* Gradiente más oscuro para que el texto resalte más (estilo crypto dark mode) */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                   </div>
                 ))}
 
                 <div className="absolute bottom-0 left-0 w-full p-5 text-white">
-                  <p className="text-xs text-teal-400 font-bold uppercase tracking-wider mb-1">
+                  <p className="text-[11px] text-teal-400 font-bold uppercase tracking-wider mb-1">
                     Floor Price: 2.5 ETH
                   </p>
-                  <h4 className="text-lg font-bold leading-tight">
+                  <h4 className="text-base sm:text-lg font-bold leading-tight">
                     Colección "Genesis" <br /> & Metaverso
                   </h4>
                 </div>
@@ -383,35 +387,34 @@ export default function Dashboard() {
               </div>
 
               <div className="p-4 bg-gray-50 border-t border-gray-100">
-                <p className="text-xs text-slate-500 text-center italic">
+                <p className="text-xs text-gray-500 text-center italic">
                   "Not your keys, not your coins. Mantén tus activos seguros."
                 </p>
               </div>
             </div>
 
-            {/* WIDGET 2: SOPORTE PREMIUM / SEGURIDAD (Antes Soporte genérico) */}
-            <div className="bg-white rounded-2xl p-6 text-black shadow-lg border border-gray-200">
+            {/* WIDGET 2: SOPORTE PREMIUM / SEGURIDAD */}
+            <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-200">
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-2 bg-teal-500/20 rounded-lg">
-                  {/* Icono de escudo simple */}
-                  <span className="text-xl">🛡️</span>
+                <div className="p-2 bg-teal-50 rounded-lg text-teal-600">
+                  <span className="text-lg">🛡️</span>
                 </div>
-                <h3 className="font-bold text-lg">Centro de Seguridad</h3>
+                <h3 className="font-bold text-gray-900 text-sm sm:text-base">
+                  Centro de Seguridad
+                </h3>
               </div>
 
-              <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+              <p className="text-gray-600 text-xs sm:text-sm mb-4 leading-relaxed">
                 ¿Problemas con una transacción o tu billetera? Nuestros expertos
                 en Blockchain están disponibles 24/7.
               </p>
 
-              <button className="w-full py-2.5 bg-teal-500 hover:bg-teal-600 rounded-lg text-sm font-bold text-white transition-all shadow-lg shadow-teal-900/50">
-                <Link
-                  to="/contact"
-                  className="text-teal-600 hover:text-teal-800 border-transparent"
-                >
-                  Contactar Soporte Crypto
-                </Link>
-              </button>
+              <Link
+                to="/contact"
+                className="block w-full py-2.5 bg-teal-600 hover:bg-teal-700 rounded-xl text-xs sm:text-sm font-bold text-white transition-all text-center shadow-sm"
+              >
+                Contactar Soporte Crypto
+              </Link>
             </div>
           </div>
         </div>
