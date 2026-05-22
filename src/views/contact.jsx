@@ -1,7 +1,12 @@
 import { useState } from "react";
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
   const [status, setStatus] = useState(null);
 
   const handleChange = (e) => {
@@ -10,56 +15,135 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validación mínima
+
     if (!form.name || !form.email || !form.message) {
-      setStatus({ type: "error", msg: "Por favor completa Nombre, Email y Mensaje." });
+      setStatus({
+        type: "error",
+        msg: "Por favor completa Nombre, Email y Mensaje.",
+      });
       return;
     }
 
-    // Aquí podrías llamar a una API real. Por ahora simulamos envío.
     console.log("Enviando soporte:", form);
-    setStatus({ type: "success", msg: "Mensaje enviado. Nuestro equipo de soporte te responderá pronto." });
+    setStatus({
+      type: "success",
+      msg: "¡Mensaje enviado con éxito! Nuestro equipo te responderá pronto.",
+    });
     setForm({ name: "", email: "", subject: "", message: "" });
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Contacto — Soporte</h1>
+    <div className="max-w-2xl mx-auto px-4 py-12">
+      {/* Encabezado */}
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          Contacto y Soporte
+        </h1>
+        <p className="mt-3 text-lg text-gray-500">
+          ¿Tienes alguna pregunta o problema? Escríbenos y te responderemos en
+          breve.
+        </p>
+      </div>
 
-      <p className="mb-6 text-gray-600">¿Tienes un problema o pregunta? Escríbenos y te responderemos en breve.</p>
+      {/* Tarjeta del Formulario */}
+      <div className="bg-white p-8 border border-gray-200 rounded-2xl shadow-sm">
+        {/* Mensajes de Estado */}
+        {status && (
+          <div
+            className={`mb-6 p-4 rounded-xl border text-sm font-medium ${
+              status.type === "error"
+                ? "bg-red-50 text-red-800 border-red-200"
+                : "bg-green-50 text-green-800 border-green-200"
+            }`}
+          >
+            {status.msg}
+          </div>
+        )}
 
-      {status && (
-        <div className={`mb-4 p-3 rounded ${status.type === "error" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}>
-          {status.msg}
-        </div>
-      )}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Fila: Nombre + Email */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block mb-2 text-sm font-semibold text-gray-700">
+                Nombre
+              </label>
+              <input
+                name="name"
+                type="text"
+                placeholder="Tu nombre completo"
+                value={form.name}
+                onChange={handleChange}
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-white transition-all duration-200"
+              />
+            </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1 font-medium">Nombre</label>
-          <input name="name" value={form.name} onChange={handleChange} className="w-full p-2 border rounded" />
-        </div>
+            <div>
+              <label className="block mb-2 text-sm font-semibold text-gray-700">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-white transition-all duration-200"
+              />
+            </div>
+          </div>
 
-        <div>
-          <label className="block mb-1 font-medium">Email</label>
-          <input name="email" type="email" value={form.email} onChange={handleChange} className="w-full p-2 border rounded" />
-        </div>
+          {/* Asunto */}
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Asunto{" "}
+              <span className="text-gray-400 font-normal">(opcional)</span>
+            </label>
+            <input
+              name="subject"
+              type="text"
+              placeholder="¿De qué trata tu consulta?"
+              value={form.subject}
+              onChange={handleChange}
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-white transition-all duration-200"
+            />
+          </div>
 
-        <div>
-          <label className="block mb-1 font-medium">Asunto (opcional)</label>
-          <input name="subject" value={form.subject} onChange={handleChange} className="w-full p-2 border rounded" />
-        </div>
+          {/* Mensaje */}
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700">
+              Mensaje
+            </label>
+            <textarea
+              name="message"
+              placeholder="Escribe los detalles aquí..."
+              value={form.message}
+              onChange={handleChange}
+              rows={5}
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-white transition-all duration-200 resize-none"
+            />
+          </div>
 
-        <div>
-          <label className="block mb-1 font-medium">Mensaje</label>
-          <textarea name="message" value={form.message} onChange={handleChange} rows={6} className="w-full p-2 border rounded" />
-        </div>
-
-        <div className="flex items-center space-x-3">
-          <button type="submit" className="px-4 py-2 bg-teal-500 text-white rounded">Enviar</button>
-          <button type="button" onClick={() => { setForm({ name: "", email: "", subject: "", message: "" }); setStatus(null); }} className="px-4 py-2 border rounded">Limpiar</button>
-        </div>
-      </form>
+          {/* Acciones */}
+          <div className="flex items-center justify-end space-x-4 pt-2">
+            <button
+              type="button"
+              onClick={() => {
+                setForm({ name: "", email: "", subject: "", message: "" });
+                setStatus(null);
+              }}
+              className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 border border-gray-300 bg-white rounded-lg hover:bg-gray-50 transition-colors duration-200"
+            >
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              className="px-6 py-2.5 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 active:bg-teal-800 rounded-lg shadow-sm transition-colors duration-200"
+            >
+              Enviar mensaje
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
