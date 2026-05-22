@@ -5,6 +5,7 @@ import { useAuthStore } from "../store/authStore.js";
 import CoinDetailsTable from "../components/coinDetails.jsx";
 import MarketOverview from "../components/MarketOverview.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
+import { Link } from "react-router-dom";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
@@ -404,7 +405,12 @@ export default function Dashboard() {
               </p>
 
               <button className="w-full py-2.5 bg-teal-500 hover:bg-teal-600 rounded-lg text-sm font-bold text-white transition-all shadow-lg shadow-teal-900/50">
-                Contactar Soporte Crypto
+                <Link
+                  to="/contact"
+                  className="text-teal-600 hover:text-teal-800 border-transparent"
+                >
+                  Contactar Soporte Crypto
+                </Link>
               </button>
             </div>
           </div>
