@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const galleryImages = [
     "/assets/img1.jpg",
     "/assets/img2.jpg",
@@ -79,6 +80,17 @@ export default function Dashboard() {
     setCurrentPage(1);
   }, [filteredCoins]);
 
+  useEffect(() => {
+    const onAppLogout = () => {
+      setIsLoggingOut(true);
+      // safety reset in case navigation doesn't occur
+      setTimeout(() => setIsLoggingOut(false), 1200);
+    };
+
+    window.addEventListener("app-logout", onAppLogout);
+    return () => window.removeEventListener("app-logout", onAppLogout);
+  }, []);
+
   const handleFilterSortChange = useCallback(() => {
     setCurrentPage(1);
   }, []);
@@ -116,8 +128,40 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div
+      className={`min-h-screen bg-gray-50/50 relative ${isLoggingOut ? "pointer-events-none" : ""}`}
+    >
       <CryptoTicker />
+
+      {isLoggingOut && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm transition-opacity">
+          <div className="text-center space-y-3">
+            <svg
+              className="animate-spin mx-auto h-10 w-10 text-teal-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            <div className="text-sm font-semibold text-gray-700">
+              CERRANDO SESIÓN...
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="container mx-auto px-4 py-6 lg:py-8 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* COLUMNA PRINCIPAL (TABLA Y CONTENIDO) */}
