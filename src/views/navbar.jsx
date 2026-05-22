@@ -14,17 +14,25 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    const success = await logout();
-    if (success) {
-      navigate("/");
+    // notify other components (Dashboard) to animate before logout
+    try {
+      // dispatch a global event so Dashboard can animate
+      window.dispatchEvent(new Event("app-logout"));
       setIsMenuOpen(false);
+      await new Promise((res) => setTimeout(res, 300));
+      const success = await logout();
+      if (success) {
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const isHomePage = location.pathname === "/";
 
   const isPublicRoute = ["/", "/login", "/register"].includes(
-    location.pathname
+    location.pathname,
   );
 
   const commonSize =
