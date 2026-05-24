@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
@@ -9,16 +9,17 @@ const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    closeMenu();
+  }, [location.pathname]);
 
   const handleLogout = async () => {
-    // notify other components (Dashboard) to animate before logout
     try {
-      // dispatch a global event so Dashboard can animate
       window.dispatchEvent(new Event("app-logout"));
-      setIsMenuOpen(false);
+      closeMenu();
       await new Promise((res) => setTimeout(res, 300));
       const success = await logout();
       if (success) {
@@ -30,110 +31,119 @@ const Navbar = () => {
   };
 
   const isHomePage = location.pathname === "/";
-
   const isPublicRoute = ["/", "/login", "/register"].includes(
     location.pathname,
   );
 
-  const commonSize =
-    "block w-full md:inline-block md:w-auto text-center py-2 px-6 rounded-xl font-semibold border-2 transition-all duration-200 me-0 md:me-3 text-sm tracking-wide";
-
-  // Lógica de Glassmorphism vs Normal
   const navClasses = isHomePage
-    ? "absolute top-0 w-full bg-white/20 backdrop-blur-md border-b border-white/20 shadow-sm"
-    : "relative w-full border-b-gray-50 bg-gradient-to-b from-teal-100 to-white";
+    ? "bg-[#0B1120]/40 backdrop-blur-md border-white/[0.05]"
+    : "bg-[#0B1120]/70 backdrop-blur-xl border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.1)]";
 
   return (
-    <nav className={`h-16 z-50 ${navClasses}`}>
-      <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto px-4 h-full">
-        {/* LOGO */}
+    <nav
+      className={`fixed top-0 inset-x-0 h-[72px] z-50 border-b transition-all duration-300 ${navClasses}`}
+    >
+      <div className="max-w-7xl h-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* LOGO CON EFECTO HOVER */}
         <Link
           to="/"
-          className="flex items-center space-x-2 rtl:space-x-reverse text-center text-xl text-teal-400 hover:text-teal-600 font-bold"
+          onClick={closeMenu}
+          className="group relative flex items-center gap-3 z-50"
         >
-          <img src={logo} className="h-10 w-auto" alt="Logo" />
-          <span>INSIGHT CRXTO</span>
+          {/* Resplandor detrás del logo al hacer hover */}
+          <div className="absolute inset-0 bg-teal-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <img
+            src={logo}
+            className="h-10 w-auto relative z-10 drop-shadow-[0_0_8px_rgba(45,212,191,0.3)] group-hover:scale-105 transition-transform duration-300"
+            alt="Logo"
+          />
+          <span className="text-xl font-bold tracking-wide text-white relative z-10">
+            INSIGHT <span className="text-teal-400">CRXTO</span>
+          </span>
         </Link>
 
-        {/* BOTÓN HAMBURGUESA */}
+        {/* BOTÓN HAMBURGUESA ANIMADO (Móvil) */}
         <button
           onClick={toggleMenu}
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-teal-400 rounded-lg md:hidden hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-200"
+          aria-expanded={isMenuOpen}
+          className="md:hidden z-50 relative p-2 text-gray-300 hover:text-teal-400 focus:outline-none transition-colors"
         >
-          <span className="sr-only">Menu</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="false"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
+          <span className="sr-only">Menú</span>
+          <div className="w-6 h-5 flex flex-col justify-between items-center relative">
+            <span
+              className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[9px]" : ""}`}
             />
-          </svg>
+            <span
+              className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-[9px]" : ""}`}
+            />
+          </div>
         </button>
 
-        {/* MENÚ */}
+        {/* MENÚ DE NAVEGACIÓN (Desktop & Mobile) */}
         <div
-          className={`w-full md:block md:w-auto ${
-            isMenuOpen
-              ? "block absolute top-16 left-0 bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-lg"
-              : "hidden"
-          } md:static md:bg-transparent md:shadow-none md:border-0`}
+          className={`
+            absolute top-[72px] left-0 w-full bg-[#0f172a]/95 backdrop-blur-3xl border-b border-white/[0.05] p-6 flex flex-col gap-5
+            transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top
+            md:static md:w-auto md:bg-transparent md:backdrop-blur-none md:border-none md:p-0 md:flex-row md:items-center md:gap-6
+            ${isMenuOpen ? "opacity-100 translate-y-0 visible shadow-2xl" : "opacity-0 -translate-y-4 invisible md:opacity-100 md:translate-y-0 md:visible md:shadow-none"}
+          `}
         >
-          <ul className="font-medium flex flex-col p-4 md:p-0 md:flex-row space-y-2 md:space-y-0 md:space-x-2 rtl:space-x-reverse md:mt-0 md:items-center">
-            <li>
-              <Link
-                to="/contact"
-                className={`${commonSize} text-teal-600 hover:text-teal-800 border-transparent`}
-              >
-                SOPORTE
-              </Link>
-            </li>
-            {isPublicRoute ? (
-              <>
-                {/* BOTÓN LOGIN */}
-                {location.pathname !== "/login" && (
-                  <li>
-                    <Link
-                      to="/login"
-                      className={`${commonSize} text-white hover:bg-teal-50/20 hover:text-white border-transparent`}
-                    >
-                      INICIAR SESIÓN
-                    </Link>
-                  </li>
-                )}
+          {/* Enlace Normal con efecto Underline */}
+          <Link
+            to="/contact"
+            onClick={closeMenu}
+            className="group relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 md:py-0 text-center md:text-left"
+          >
+            Soporte
+            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 group-hover:w-full" />
+          </Link>
 
-                {/* BOTÓN REGISTRO */}
-                {location.pathname !== "/register" && (
-                  <li>
-                    <Link
-                      to="/register"
-                      className={`${commonSize} border-teal-500 text-white bg-teal-500 hover:bg-teal-600 hover:border-teal-600 shadow-md hover:shadow-lg`}
-                    >
-                      REGISTRARSE
-                    </Link>
-                  </li>
-                )}
-              </>
-            ) : (
-              /* BOTÓN LOGOUT */
-              <li>
-                <button
-                  onClick={handleLogout}
-                  className={`${commonSize} text-teal-500 hover:text-teal-700 hover:bg-teal-50 border-transparent`}
+          {isPublicRoute ? (
+            <div className="flex flex-col md:flex-row items-center gap-4 mt-2 md:mt-0">
+              {/* BOTÓN LOGIN: Texto sutil pero elegante */}
+              {location.pathname !== "/login" && (
+                <Link
+                  to="/login"
+                  onClick={closeMenu}
+                  className="w-full md:w-auto text-center px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/5 transition-colors"
                 >
-                  CERRAR SESIÓN
-                </button>
-              </li>
-            )}
-          </ul>
+                  Iniciar Sesión
+                </Link>
+              )}
+
+              {/* BOTÓN REGISTRO: CTA Principal con brillo */}
+              {location.pathname !== "/register" && (
+                <Link
+                  to="/register"
+                  onClick={closeMenu}
+                  className="relative group w-full md:w-auto overflow-hidden rounded-full p-[1px]"
+                >
+                  {/* Borde animado de cristal */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-teal-500/50 via-emerald-400/50 to-teal-500/50 rounded-full opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Interior del botón */}
+                  <div className="relative flex items-center justify-center w-full bg-[#0B1120] px-6 py-2.5 rounded-full transition-all duration-300 group-hover:bg-[#0B1120]/50">
+                    <span className="text-sm font-semibold text-teal-400 group-hover:text-teal-300 transition-colors tracking-wide">
+                      Registrarse
+                    </span>
+                  </div>
+                </Link>
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col md:flex-row items-center gap-4 mt-2 md:mt-0">
+              {/* BOTÓN LOGOUT: Rojo oscuro con efecto cristal */}
+              <button
+                onClick={handleLogout}
+                className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-semibold hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/30 transition-all duration-300 shadow-[0_0_15px_rgba(244,63,94,0)] hover:shadow-[0_0_15px_rgba(244,63,94,0.15)]"
+              >
+                Cerrar Sesión
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
