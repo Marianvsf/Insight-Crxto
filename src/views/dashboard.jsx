@@ -16,7 +16,7 @@ export default function Dashboard() {
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide] = useState(0);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const galleryImages = [
     "/assets/img1.jpg",
@@ -30,6 +30,24 @@ export default function Dashboard() {
   const [showBalances, setShowBalances] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const formatPriceChange = (value) => {
+    const numericValue = Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+      return { label: "N/D", className: "text-gray-500" };
+    }
+
+    return {
+      label: `${numericValue > 0 ? "+" : ""}${numericValue.toFixed(2)}%`,
+      className:
+        numericValue > 0
+          ? "text-green-600"
+          : numericValue < 0
+            ? "text-red-600"
+            : "text-gray-500",
+    };
+  };
 
   const currentItems = filteredCoins.slice(
     (currentPage - 1) * itemsPerPage,
@@ -65,7 +83,7 @@ export default function Dashboard() {
         if (filteredCoins.length === 0) {
           setFilteredCoins(data);
         }
-      } catch (error) {
+      } catch {
         setError("Fallo al cargar los datos.");
       }
     };
@@ -252,66 +270,67 @@ export default function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {currentItems.map((coin) => (
-                          <tr
-                            key={coin.id}
-                            className="hover:bg-gray-50/70 transition duration-150"
-                          >
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {coin.market_cap_rank}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 flex items-center">
-                              <img
-                                src={coin.image}
-                                alt={coin.name}
-                                width="24"
-                                height="24"
-                                className="mr-2 rounded-full"
-                              />
-                              <span className="uppercase font-bold text-gray-800">
-                                {coin.symbol}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                              {coin.name}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono font-medium">
-                              {new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 4,
-                              }).format(coin.current_price)}
-                            </td>
-                            {/* Ocultamos la capitalización en pantallas muy pequeñas para mejorar legibilidad */}
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono hidden md:table-cell">
-                              {new Intl.NumberFormat("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0,
-                              }).format(coin.market_cap)}
-                            </td>
-                            <td
-                              className={`px-6 py-4 whitespace-nowrap text-sm font-bold ${
-                                coin.price_change_percentage_24h > 0
-                                  ? "text-green-600"
-                                  : "text-red-600"
-                              }`}
+                        {currentItems.map((coin) => {
+                          const priceChange = formatPriceChange(
+                            coin.price_change_percentage_24h,
+                          );
+
+                          return (
+                            <tr
+                              key={coin.id}
+                              className="hover:bg-gray-50/70 transition duration-150"
                             >
-                              {coin.price_change_percentage_24h > 0 ? "+" : ""}
-                              {coin.price_change_percentage_24h.toFixed(2)}%
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                              <button
-                                onClick={() => handleCoinClick(coin)}
-                                className="text-teal-600 hover:text-teal-800 transition duration-150 font-semibold"
+                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {coin.market_cap_rank}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 flex items-center">
+                                <img
+                                  src={coin.image}
+                                  alt={coin.name}
+                                  width="24"
+                                  height="24"
+                                  className="mr-2 rounded-full"
+                                />
+                                <span className="uppercase font-bold text-gray-800">
+                                  {coin.symbol}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                {coin.name}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono font-medium">
+                                {new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 4,
+                                }).format(coin.current_price)}
+                              </td>
+                              {/* Ocultamos la capitalización en pantallas muy pequeñas para mejorar legibilidad */}
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono hidden md:table-cell">
+                                {new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                  minimumFractionDigits: 0,
+                                  maximumFractionDigits: 0,
+                                }).format(coin.market_cap)}
+                              </td>
+                              <td
+                                className={`px-6 py-4 whitespace-nowrap text-sm font-bold ${priceChange.className}`}
                               >
-                                Ver Detalles
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                                {priceChange.label}
+                              </td>
+                              <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <button
+                                  onClick={() => handleCoinClick(coin)}
+                                  className="text-teal-600 hover:text-teal-800 transition duration-150 font-semibold"
+                                >
+                                  Ver Detalles
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -403,7 +422,7 @@ export default function Dashboard() {
                       alt={`NFT Collection ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-transparent to-transparent" />
                   </div>
                 ))}
 
