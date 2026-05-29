@@ -40,10 +40,10 @@ export default function LoginView() {
       const success = await login(formData.email, formData.password);
       if (success) {
         setIsSuccess(true);
-        setMessage("¡Bienvenido de vuelta!");
+        setMessage("¡Bienvenido de vuelta! Redirigiendo...");
         setTimeout(() => navigate("/dashboard"), 1000);
       } else {
-        setMessage("Credenciales incorrectas.");
+        setMessage("Credenciales incorrectas. Intenta de nuevo.");
         setIsSuccess(false);
         setIsLoading(false);
       }
@@ -55,18 +55,35 @@ export default function LoginView() {
   };
 
   return (
-    <div className="min-h-screen flex w-full">
-      {/* SECCIÓN IZQUIERDA: IMAGEN / BRANDING (Solo visible en desktop) */}
-      <div className="hidden lg:flex w-1/2 bg-gray-900 items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-900/90 to-black/90 z-10" />
+    <div className="min-h-screen flex w-full font-sans bg-white">
+      {/* SECCIÓN IZQUIERDA: IMAGEN / BRANDING (Solo desktop) */}
+      <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-slate-900 items-center justify-center">
+        {/* Imagen de fondo con Ken Burns sutil */}
         <img
           src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop"
           alt="Crypto Background"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover opacity-50 scale-105"
         />
-        <div className="relative z-20 p-12 text-white">
-          <h2 className="text-5xl font-bold mb-6">Domina tu portafolio.</h2>
-          <p className="text-xl text-gray-300">
+        {/* Gradiente oscuro superior */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-black/90 z-10" />
+
+        {/* Decoración Glowing Orb */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-[100px] z-10 animate-pulse" />
+
+        {/* Contenido de Branding */}
+        <div className="relative z-20 p-12 lg:p-20 text-white w-full max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <div className="mb-6 inline-flex px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+            <span className="text-sm font-medium text-teal-300">
+              Plataforma V2.0
+            </span>
+          </div>
+          <h2 className="text-5xl xl:text-6xl font-extrabold mb-6 leading-[1.1] tracking-tight">
+            Domina tu <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-200">
+              portafolio.
+            </span>
+          </h2>
+          <p className="text-lg xl:text-xl text-gray-300 font-light leading-relaxed max-w-lg">
             Accede a análisis en tiempo real y toma decisiones informadas. Tu
             visión financiera, más clara que nunca.
           </p>
@@ -74,28 +91,33 @@ export default function LoginView() {
       </div>
 
       {/* SECCIÓN DERECHA: FORMULARIO */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center bg-white p-8 md:p-16 overflow-y-auto">
-        <div className="w-full max-w-md space-y-8">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 sm:p-12 md:p-16 overflow-y-auto">
+        <div className="w-full max-w-md space-y-8 animate-in fade-in zoom-in-95 duration-700">
+          {/* Header del Formulario */}
           <div className="text-center lg:text-left">
             <Link
               to="/"
-              className="block w-fit mx-auto hover:opacity-80 transition-opacity"
+              className="inline-block hover:scale-105 transition-transform duration-300"
             >
-              <img src={logo} className="h-20 mx-auto" alt="Logo Insight" />
+              <img
+                src={logo}
+                className="h-16 lg:h-20 mb-4 lg:mx-0 mx-auto"
+                alt="Logo Insight"
+              />
             </Link>
-            <h2 className="text-3xl text-center font-extrabold text-gray-900 tracking-tight">
+            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
               Iniciar Sesión
             </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-500 font-medium">
               Bienvenido de nuevo, ingresa tus credenciales.
             </p>
           </div>
 
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-4">
-              {/* Input Email con Icono */}
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+            <div className="space-y-5">
+              {/* Input Email */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-teal-500 transition-colors duration-300">
                   <FaEnvelope />
                 </div>
                 <input
@@ -104,16 +126,16 @@ export default function LoginView() {
                   type="email"
                   autoComplete="email"
                   required
-                  placeholder="nombre@empresa.com"
+                  placeholder="tucorreo@empresa.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition-colors"
+                  className="block w-full pl-11 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 focus:bg-white transition-all duration-300"
                 />
               </div>
 
-              {/* Input Password con Icono */}
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+              {/* Input Password */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-teal-500 transition-colors duration-300">
                   <FaLock />
                 </div>
                 <input
@@ -125,30 +147,34 @@ export default function LoginView() {
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={handleChange}
-                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 sm:text-sm transition-colors"
+                  className="block w-full pl-11 pr-12 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 focus:bg-white transition-all duration-300"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-teal-600 transition-colors cursor-pointer focus:outline-none"
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? (
+                    <FaEyeSlash className="w-5 h-5" />
+                  ) : (
+                    <FaEye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
 
             {/* Recordarme y Olvidé contraseña */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pt-1">
               <div className="flex items-center">
                 <input
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                  className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded cursor-pointer transition-colors"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
+                  className="ml-2 block text-sm font-medium text-gray-700 cursor-pointer select-none"
                 >
                   Recordarme
                 </label>
@@ -157,23 +183,61 @@ export default function LoginView() {
               <div className="text-sm">
                 <Link
                   to="/forgot-password"
-                  className="font-medium text-teal-600 hover:text-teal-500"
+                  className="font-semibold text-teal-600 hover:text-teal-500 transition-colors"
                 >
                   ¿Olvidaste tu contraseña?
                 </Link>
               </div>
             </div>
 
-            {/* Botón Submit con Loading State */}
+            {/* Alertas de Estado Visuales */}
+            {message && (
+              <div
+                className={`flex items-center gap-3 p-3.5 rounded-xl text-sm font-medium transition-all duration-300 animate-in fade-in slide-in-from-top-2 ${
+                  isSuccess
+                    ? "bg-teal-50 text-teal-800 border border-teal-100"
+                    : "bg-red-50 text-red-800 border border-red-100"
+                }`}
+              >
+                {isSuccess ? (
+                  <svg
+                    className="w-5 h-5 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-5 h-5 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+                {message}
+              </div>
+            )}
+
+            {/* Botón Submit Premium */}
             <div>
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white transition-all duration-200 
+                className={`group relative w-full flex justify-center items-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-teal-500/20
                   ${
                     isLoading
-                      ? "bg-teal-400 cursor-not-allowed"
-                      : "bg-teal-600 hover:bg-teal-700 hover:shadow-lg"
+                      ? "bg-teal-400 cursor-not-allowed shadow-none"
+                      : "bg-teal-600 hover:bg-teal-500 shadow-lg shadow-teal-500/30 hover:shadow-teal-500/40 hover:-translate-y-0.5"
                   }`}
               >
                 {isLoading ? (
@@ -203,51 +267,39 @@ export default function LoginView() {
               </button>
             </div>
 
-            {/* Mensajes de Error/Éxito */}
-            {message && (
-              <div
-                className={`text-sm text-center p-3 rounded-lg border ${
-                  isSuccess
-                    ? "bg-green-50 text-green-700 border-green-200"
-                    : "bg-red-50 text-red-700 border-red-200"
-                }`}
-              >
-                {message}
-              </div>
-            )}
-
             {/* Divisor */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+            <div className="relative pt-4 pb-2">
+              <div className="absolute inset-0 flex items-center pt-2">
+                <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
+                <span className="px-4 bg-white text-gray-500 font-medium">
                   O continúa con
                 </span>
               </div>
             </div>
 
-            {/* Social Login Buttons (Visuales) */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Botones Sociales Mejorados */}
+            <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                className="w-full inline-flex justify-center items-center gap-2 py-2.5 px-4 border border-gray-200 rounded-xl bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-200"
               >
-                <FaGoogle className="h-5 w-5 text-red-500" />
-                <span className="sr-only">Sign in with Google</span>
+                <FaGoogle className="h-4 w-4 text-red-500" />
+                Google
               </button>
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                className="w-full inline-flex justify-center items-center gap-2 py-2.5 px-4 border border-gray-200 rounded-xl bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-200"
               >
-                <FaGithub className="h-5 w-5 text-gray-900" />
-                <span className="sr-only">Sign in with GitHub</span>
+                <FaGithub className="h-4 w-4 text-gray-900" />
+                GitHub
               </button>
             </div>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-600">
+          {/* Enlace a Registro */}
+          <p className="mt-8 text-center text-sm font-medium text-gray-600">
             ¿No tienes cuenta?{" "}
             <Link
               to="/register"
