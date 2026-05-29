@@ -14,7 +14,7 @@ const HeaderContent = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === IMAGES.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 5000); // Aumentado a 5s para disfrutar el efecto de la imagen
     return () => clearInterval(interval);
   }, []);
 
@@ -27,8 +27,8 @@ const HeaderContent = () => {
   };
 
   return (
-    <header className="relative w-full h-[calc(100vh-48px)] min-h-[600px] flex items-center justify-center overflow-hidden bg-black">
-      {/* 1. CAPA DE IMÁGENES (Fondo dinámico) */}
+    <header className="relative w-full h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-[#0a0a0a] font-sans">
+      {/* 1. CAPA DE IMÁGENES (Fondo con Efecto Ken Burns) */}
       {IMAGES.map((image, index) => (
         <div
           key={index}
@@ -39,54 +39,69 @@ const HeaderContent = () => {
         >
           <img
             src={image}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+              index === currentSlide ? "scale-100" : "scale-110"
+            }`}
             alt={`Slide ${index + 1}`}
           />
-          {/* Overlay oscuro para que el texto se lea mejor */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+          {/* Overlay con gradiente premium para legibilidad perfecta */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90 backdrop-blur-[2px]" />
         </div>
       ))}
 
-      {/* 2. CAPA DE CONTENIDO (Texto y botones estáticos superiores) */}
-      <div className="relative z-20 w-full max-w-[980px] px-6 text-center text-white flex flex-col items-center">
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 leading-[1.1]">
-          El futuro de tus finanzas empieza aquí
+      {/* 2. CAPA DE CONTENIDO (Texto y botones) */}
+      <div className="relative z-20 w-full max-w-[1000px] px-6 flex flex-col items-center text-center mt-[-5%]">
+        {/* Badge superior moderno */}
+        <div className="mb-6 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+          <span className="text-sm font-medium text-teal-50 tracking-wide">
+            Nueva plataforma 2.0
+          </span>
+        </div>
+
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1] text-white drop-shadow-lg">
+          El futuro de tus finanzas <br className="hidden md:block" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-200">
+            empieza aquí
+          </span>
         </h1>
-        <p className="mb-10 text-lg md:text-3xl font-semibold text-gray-300">
-          La plataforma más segura y fácil de usar con las comisiones más bajas
-          del mercado
+
+        <p className="max-w-2xl mb-10 text-lg md:text-2xl font-light text-gray-300 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+          La plataforma más segura y fácil de usar. Multiplica tu capital con
+          las comisiones más bajas del mercado.
         </p>
 
-        <div className="w-full flex flex-col sm:flex-row justify-center gap-4">
-          {/* Botón Secundario convertido a Link */}
-          <Link
-            to="/login"
-            className="flex items-center justify-center h-[52px] w-full sm:w-auto px-16 text-lg font-medium rounded-xl text-white transition-all duration-300 bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 hover:scale-105"
-          >
-            Ver Demo
-          </Link>
-          {/* Botón Principal convertido a Link */}
+        <div className="w-full flex flex-col sm:flex-row justify-center gap-5 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300">
+          {/* Botón Principal (Glow effect) */}
           <Link
             to="/register"
-            className="flex items-center justify-center h-[52px] w-full sm:w-auto px-8 text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105"
+            className="group relative flex items-center justify-center h-14 px-8 text-lg font-semibold rounded-2xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-400 hover:scale-[1.02] hover:shadow-[0_0_40px_-10px_rgba(20,184,166,0.6)]"
           >
             Registrarse Gratis
+          </Link>
+
+          {/* Botón Secundario (Glassmorphism pulido) */}
+          <Link
+            to="/login"
+            className="flex items-center justify-center h-14 px-8 text-lg font-medium rounded-2xl text-white transition-all duration-300 bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/10 hover:border-white/30 hover:scale-[1.02]"
+          >
+            Ver Demo
           </Link>
         </div>
       </div>
 
       {/* 3. CONTROLES DEL SLIDER */}
 
-      {/* Indicadores (Puntitos) */}
-      <div className="absolute z-30 flex -translate-x-1/2 bottom-8 left-1/2 space-x-3 rtl:space-x-reverse">
+      {/* Indicadores (Estilo Píldora moderna) */}
+      <div className="absolute z-30 flex gap-2.5 bottom-10 left-1/2 -translate-x-1/2">
         {IMAGES.map((_, index) => (
           <button
             key={index}
             type="button"
-            className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+            className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
               index === currentSlide
-                ? "bg-teal-500"
-                : "bg-white/40 hover:bg-white/70"
+                ? "w-8 bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.5)]"
+                : "w-2 bg-white/30 hover:bg-white/60"
             }`}
             aria-current={index === currentSlide}
             aria-label={`Ir al slide ${index + 1}`}
@@ -95,16 +110,16 @@ const HeaderContent = () => {
         ))}
       </div>
 
-      {/* Flecha Anterior */}
+      {/* Flechas de Navegación más minimalistas */}
       <button
         type="button"
-        className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+        className="absolute top-1/2 -translate-y-1/2 start-4 md:start-8 z-30 flex items-center justify-center cursor-pointer group focus:outline-none"
         onClick={handlePrev}
         aria-label="Anterior"
       >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/30 transition-all">
+        <span className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-black/20 backdrop-blur-md text-white/50 group-hover:text-white group-hover:bg-white/10 transition-all duration-300 hover:scale-110">
           <svg
-            className="w-4 h-4 text-white rtl:rotate-180"
+            className="w-5 h-5 rtl:rotate-180"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -121,16 +136,15 @@ const HeaderContent = () => {
         </span>
       </button>
 
-      {/* Flecha Siguiente */}
       <button
         type="button"
-        className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+        className="absolute top-1/2 -translate-y-1/2 end-4 md:end-8 z-30 flex items-center justify-center cursor-pointer group focus:outline-none"
         onClick={handleNext}
         aria-label="Siguiente"
       >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm group-hover:bg-white/30 transition-all">
+        <span className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-black/20 backdrop-blur-md text-white/50 group-hover:text-white group-hover:bg-white/10 transition-all duration-300 hover:scale-110">
           <svg
-            className="w-4 h-4 text-white rtl:rotate-180"
+            className="w-5 h-5 rtl:rotate-180"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
