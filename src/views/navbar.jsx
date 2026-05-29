@@ -7,14 +7,35 @@ const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const location = useLocation();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Detectar el scroll para cambiar el diseño del Navbar dinámicamente
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Cerrar el menú si la ruta cambia
   useEffect(() => {
     closeMenu();
   }, [location.pathname]);
+
+  // Bloquear el scroll del body cuando el menú móvil está abierto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMenuOpen]);
 
   const handleLogout = async () => {
     try {
@@ -35,118 +56,163 @@ const Navbar = () => {
     location.pathname,
   );
 
-  const navClasses = isHomePage
-    ? "bg-[#0B1120]/40 backdrop-blur-md border-white/[0.05]"
-    : "bg-[#0B1120]/70 backdrop-blur-xl border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.1)]";
+  // Lógica de estilos dinámicos del Navbar
+  const navBackground =
+    isHomePage && !isScrolled
+      ? "bg-transparent border-transparent"
+      : "bg-[#0a0f1c]/80 backdrop-blur-2xl border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]";
+
+  const navPadding = isScrolled ? "py-3" : "py-5";
 
   return (
-    <nav
-      className={`fixed top-0 inset-x-0 h-[72px] z-50 border-b transition-all duration-300 ${navClasses}`}
-    >
-      <div className="max-w-7xl h-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* LOGO CON EFECTO HOVER */}
-        <Link
-          to="/"
-          onClick={closeMenu}
-          className="group relative flex items-center gap-3 z-50"
-        >
-          {/* Resplandor detrás del logo al hacer hover */}
-          <div className="absolute inset-0 bg-teal-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <img
-            src={logo}
-            className="h-10 w-auto relative z-10 drop-shadow-[0_0_8px_rgba(45,212,191,0.3)] group-hover:scale-105 transition-transform duration-300"
-            alt="Logo"
-          />
-          <span className="text-xl font-bold tracking-wide text-white relative z-10">
-            INSIGHT <span className="text-teal-400">CRXTO</span>
-          </span>
-        </Link>
-
-        {/* BOTÓN HAMBURGUESA ANIMADO (Móvil) */}
-        <button
-          onClick={toggleMenu}
-          aria-expanded={isMenuOpen}
-          className="md:hidden z-50 relative p-2 text-gray-300 hover:text-teal-400 focus:outline-none transition-colors"
-        >
-          <span className="sr-only">Menú</span>
-          <div className="w-6 h-5 flex flex-col justify-between items-center relative">
-            <span
-              className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-[9px]" : ""}`}
-            />
-            <span
-              className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-[9px]" : ""}`}
-            />
-          </div>
-        </button>
-
-        {/* MENÚ DE NAVEGACIÓN (Desktop & Mobile) */}
+    <>
+      <nav
+        className={`fixed top-0 inset-x-0 z-50 border-b transition-all duration-500 ease-out ${navBackground}`}
+      >
         <div
-          className={`
-            absolute top-[72px] left-0 w-full bg-[#0f172a]/95 backdrop-blur-3xl border-b border-white/[0.05] p-6 flex flex-col gap-5
-            transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top
-            md:static md:w-auto md:bg-transparent md:backdrop-blur-none md:border-none md:p-0 md:flex-row md:items-center md:gap-6
-            ${isMenuOpen ? "opacity-100 translate-y-0 visible shadow-2xl" : "opacity-0 -translate-y-4 invisible md:opacity-100 md:translate-y-0 md:visible md:shadow-none"}
-          `}
+          className={`max-w-7xl mx-auto px-6 lg:px-8 transition-all duration-500 ${navPadding} flex items-center justify-between`}
         >
-          {/* Enlace Normal con efecto Underline */}
+          {/* LOGO PREMIUM */}
           <Link
-            to="/contact"
+            to="/"
             onClick={closeMenu}
-            className="group relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2 md:py-0 text-center md:text-left"
+            className="group relative flex items-center gap-3 z-50 focus:outline-none"
           >
-            Soporte
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 group-hover:w-full" />
+            <div className="absolute inset-0 bg-teal-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <img
+              src={logo}
+              className="h-9 md:h-10 w-auto relative z-10 group-hover:scale-105 transition-transform duration-500 ease-out"
+              alt="Logo Insight"
+            />
+            <span className="text-xl md:text-2xl font-extrabold tracking-tight text-white relative z-10 flex gap-1.5">
+              INSIGHT
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">
+                CRXTO
+              </span>
+            </span>
           </Link>
 
-          {isPublicRoute ? (
-            <div className="flex flex-col md:flex-row items-center gap-4 mt-2 md:mt-0">
-              {/* BOTÓN LOGIN: Texto sutil pero elegante */}
-              {location.pathname !== "/login" && (
-                <Link
-                  to="/login"
-                  onClick={closeMenu}
-                  className="w-full md:w-auto text-center px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white rounded-full hover:bg-white/5 transition-colors"
-                >
-                  Iniciar Sesión
-                </Link>
-              )}
-
-              {/* BOTÓN REGISTRO: CTA Principal con brillo */}
-              {location.pathname !== "/register" && (
-                <Link
-                  to="/register"
-                  onClick={closeMenu}
-                  className="relative group w-full md:w-auto overflow-hidden rounded-full p-[1px]"
-                >
-                  {/* Borde animado de cristal */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-teal-500/50 via-emerald-400/50 to-teal-500/50 rounded-full opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Interior del botón */}
-                  <div className="relative flex items-center justify-center w-full bg-[#0B1120] px-6 py-2.5 rounded-full transition-all duration-300 group-hover:bg-[#0B1120]/50">
-                    <span className="text-sm font-semibold text-teal-400 group-hover:text-teal-300 transition-colors tracking-wide">
-                      Registrarse
-                    </span>
-                  </div>
-                </Link>
-              )}
+          {/* BOTÓN HAMBURGUESA ANIMADO (Móvil) */}
+          <button
+            onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            className="md:hidden z-50 relative p-2 text-gray-400 hover:text-white focus:outline-none transition-colors"
+          >
+            <span className="sr-only">Menú</span>
+            <div className="w-6 h-5 flex flex-col justify-between items-center relative">
+              <span
+                className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out ${isMenuOpen ? "rotate-45 translate-y-[9px] bg-white" : ""}`}
+              />
+              <span
+                className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-0" : ""}`}
+              />
+              <span
+                className={`w-full h-[2px] bg-current rounded-full transition-all duration-300 ease-in-out ${isMenuOpen ? "-rotate-45 -translate-y-[9px] bg-white" : ""}`}
+              />
             </div>
-          ) : (
-            <div className="flex flex-col md:flex-row items-center gap-4 mt-2 md:mt-0">
-              {/* BOTÓN LOGOUT: Rojo oscuro con efecto cristal */}
-              <button
-                onClick={handleLogout}
-                className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-semibold hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/30 transition-all duration-300 shadow-[0_0_15px_rgba(244,63,94,0)] hover:shadow-[0_0_15px_rgba(244,63,94,0.15)]"
-              >
-                Cerrar Sesión
-              </button>
-            </div>
-          )}
+          </button>
+
+          {/* MENÚ DE NAVEGACIÓN DESKTOP */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link
+              to="/contact"
+              className="group relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2"
+            >
+              Soporte
+              <span className="absolute bottom-1 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 ease-out group-hover:w-full rounded-full" />
+            </Link>
+
+            {isPublicRoute ? (
+              <div className="flex items-center gap-4 border-l border-white/10 pl-8 ml-2">
+                {location.pathname !== "/login" && (
+                  <Link
+                    to="/login"
+                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                  >
+                    Iniciar Sesión
+                  </Link>
+                )}
+                {location.pathname !== "/register" && (
+                  <Link
+                    to="/register"
+                    className="px-6 py-2.5 text-sm font-bold text-white bg-teal-600 rounded-full hover:bg-teal-500 hover:-translate-y-0.5 transition-all duration-300 shadow-[0_0_0_rgba(20,184,166,0)] hover:shadow-[0_8px_20px_-6px_rgba(20,184,166,0.5)]"
+                  >
+                    Registrarse
+                  </Link>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-4 border-l border-white/10 pl-8 ml-2">
+                <button
+                  onClick={handleLogout}
+                  className="px-5 py-2 text-sm font-semibold text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-full hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-300"
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
+            )}
+          </div>
         </div>
+      </nav>
+
+      {/* OVERLAY Y MENÚ MÓVIL TIPO "ISLA" */}
+      <div
+        className={`md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        onClick={closeMenu}
+      />
+
+      <div
+        className={`md:hidden fixed top-[80px] inset-x-4 z-40 bg-[#131c2f]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isMenuOpen
+            ? "opacity-100 translate-y-0 scale-100"
+            : "opacity-0 -translate-y-8 scale-95 pointer-events-none"
+        }`}
+      >
+        <Link
+          to="/contact"
+          onClick={closeMenu}
+          className="text-lg font-medium text-gray-200 hover:text-white p-2 rounded-xl hover:bg-white/5 transition-colors"
+        >
+          Soporte
+        </Link>
+
+        {isPublicRoute ? (
+          <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
+            {location.pathname !== "/login" && (
+              <Link
+                to="/login"
+                onClick={closeMenu}
+                className="w-full text-center px-6 py-3.5 text-base font-medium text-gray-200 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+              >
+                Iniciar Sesión
+              </Link>
+            )}
+            {location.pathname !== "/register" && (
+              <Link
+                to="/register"
+                onClick={closeMenu}
+                className="w-full text-center px-6 py-3.5 text-base font-bold text-white bg-teal-600 rounded-xl hover:bg-teal-500 transition-colors shadow-lg shadow-teal-500/20"
+              >
+                Registrarse Gratis
+              </Link>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
+            <button
+              onClick={handleLogout}
+              className="w-full text-center px-6 py-3.5 text-base font-semibold text-rose-400 bg-rose-500/10 border border-rose-500/20 rounded-xl hover:bg-rose-500 hover:text-white transition-colors"
+            >
+              Cerrar Sesión
+            </button>
+          </div>
+        )}
       </div>
-    </nav>
+    </>
   );
 };
 
