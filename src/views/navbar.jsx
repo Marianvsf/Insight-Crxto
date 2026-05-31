@@ -4,6 +4,7 @@ import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
 
 const Navbar = () => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,6 +56,7 @@ const Navbar = () => {
   const isPublicRoute = ["/", "/login", "/register"].includes(
     location.pathname,
   );
+  const showLogoutButton = isAuthenticated && !isPublicRoute;
 
   // Lógica de estilos dinámicos del Navbar
   const navBackground =
@@ -122,7 +124,7 @@ const Navbar = () => {
               <span className="absolute bottom-1 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 ease-out group-hover:w-full rounded-full" />
             </Link>
 
-            {isPublicRoute ? (
+            {!showLogoutButton ? (
               <div className="flex items-center gap-4 border-l border-white/10 pl-8 ml-2">
                 {location.pathname !== "/login" && (
                   <Link
@@ -180,7 +182,7 @@ const Navbar = () => {
           Soporte
         </Link>
 
-        {isPublicRoute ? (
+        {!showLogoutButton ? (
           <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
             {location.pathname !== "/login" && (
               <Link
