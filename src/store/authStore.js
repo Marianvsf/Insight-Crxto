@@ -10,7 +10,7 @@ export const useAuthStore = create((set) => ({
 
   login: async (email, password) => {
     const foundUser = getMockUsers().find(
-      (user) => user.email === email && user.password === password
+      (user) => user.email === email && user.password === password,
     );
 
     if (foundUser) {
@@ -27,9 +27,9 @@ export const useAuthStore = create((set) => ({
         },
       });
       return true;
-    } else {
-      throw new Error("Credenciales inválidas");
     }
+
+    return false;
   },
 
   logout: () => {
