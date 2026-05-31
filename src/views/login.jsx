@@ -48,7 +48,11 @@ export default function LoginView() {
         setIsLoading(false);
       }
     } catch (error) {
-      setMessage("Ocurrió un error inesperado.");
+      setMessage(
+        error instanceof Error && error.message === "Credenciales inválidas"
+          ? "Credenciales incorrectas. Intenta de nuevo."
+          : "Ocurrió un error inesperado.",
+      );
       setIsSuccess(false);
       setIsLoading(false);
     }
@@ -65,7 +69,7 @@ export default function LoginView() {
           className="absolute inset-0 w-full h-full object-cover opacity-50 scale-105"
         />
         {/* Gradiente oscuro superior */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-black/90 z-10" />
+        <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 via-slate-900/60 to-black/90 z-10" />
 
         {/* Decoración Glowing Orb */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-[100px] z-10 animate-pulse" />
@@ -79,7 +83,7 @@ export default function LoginView() {
           </div>
           <h2 className="text-5xl xl:text-6xl font-extrabold mb-6 leading-[1.1] tracking-tight">
             Domina tu <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-200">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-emerald-200">
               portafolio.
             </span>
           </h2>
@@ -201,7 +205,7 @@ export default function LoginView() {
               >
                 {isSuccess ? (
                   <svg
-                    className="w-5 h-5 flex-shrink-0"
+                    className="w-5 h-5 shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -213,7 +217,7 @@ export default function LoginView() {
                   </svg>
                 ) : (
                   <svg
-                    className="w-5 h-5 flex-shrink-0"
+                    className="w-5 h-5 shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
