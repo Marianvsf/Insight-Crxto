@@ -118,6 +118,39 @@ function Home() {
 
       {/* Características / Cómo funciona */}
       <HowItWorks />
+
+      <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.16),transparent_30%)]" />
+        <div className="relative container mx-auto px-4 lg:px-8 max-w-[1400px]">
+          <div className="max-w-4xl mx-auto bg-white/5 border border-white/10 rounded-3xl p-8 md:p-10 shadow-2xl backdrop-blur-xl">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 text-teal-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4 border border-teal-400/20">
+                  Soporte Crypto
+                </div>
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+                  ¿Necesitas ayuda con tu cuenta o una transacción?
+                </h2>
+                <p className="text-slate-300 text-base md:text-lg leading-relaxed">
+                  Nuestro equipo puede ayudarte con acceso, billetera, depósitos
+                  y cualquier duda de la plataforma. Accede al centro de
+                  soporte y envíanos tu consulta.
+                </p>
+              </div>
+
+              <div className="shrink-0">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold transition-all duration-300 shadow-lg shadow-teal-500/20 hover:-translate-y-0.5"
+                >
+                  Ir a soporte
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
