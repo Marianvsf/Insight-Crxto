@@ -116,14 +116,6 @@ const Navbar = () => {
 
           {/* MENÚ DE NAVEGACIÓN DESKTOP */}
           <div className="hidden md:flex items-center gap-8">
-            <Link
-              to="/contact"
-              className="group relative text-sm font-medium text-gray-300 hover:text-white transition-colors py-2"
-            >
-              Soporte
-              <span className="absolute bottom-1 left-0 w-0 h-[2px] bg-teal-400 transition-all duration-300 ease-out group-hover:w-full rounded-full" />
-            </Link>
-
             {!showLogoutButton ? (
               <div className="flex items-center gap-4 border-l border-white/10 pl-8 ml-2">
                 {location.pathname !== "/login" && (
@@ -174,14 +166,6 @@ const Navbar = () => {
             : "opacity-0 -translate-y-8 scale-95 pointer-events-none"
         }`}
       >
-        <Link
-          to="/contact"
-          onClick={closeMenu}
-          className="text-lg font-medium text-gray-200 hover:text-white p-2 rounded-xl hover:bg-white/5 transition-colors"
-        >
-          Soporte
-        </Link>
-
         {!showLogoutButton ? (
           <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
             {location.pathname !== "/login" && (
