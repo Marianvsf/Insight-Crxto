@@ -7,6 +7,7 @@ import Navbar from "./views/navbar.jsx";
 import Dashboard from "./views/dashboard.jsx";
 import { Footer } from "./views/Footer.jsx";
 import Contact from "./views/contact.jsx";
+import ChatBot from "./components/chatBot.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <ChatBot />
       </div>
     </BrowserRouter>
   );
