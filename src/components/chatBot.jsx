@@ -104,6 +104,28 @@ function ChatBot() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const chatWidgetRef = useRef(null);
+
+  // <-- 2. Nuevo efecto para detectar clics fuera del chat
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // Si hacemos clic en un elemento que NO está dentro de nuestro ref, cerramos el chat
+      if (
+        chatWidgetRef.current &&
+        !chatWidgetRef.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    }
+    // Solo escuchamos el evento si el chat está abierto por rendimiento
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -131,7 +153,7 @@ function ChatBot() {
   };
 
   return (
-    <>
+    <div ref={chatWidgetRef}>
       {/* Ventana del chat */}
       {isOpen && (
         <div className="fixed bottom-24 right-5 z-50 w-[90vw] max-w-sm h-[70vh] max-h-[520px] flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-[fadeIn_0.2s_ease-out]">
@@ -245,7 +267,7 @@ function ChatBot() {
           <FaCommentDots className="w-6 h-6" />
         )}
       </button>
-    </>
+    </div>
   );
 }
 
