@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaEye, FaEyeSlash, FaUser, FaLock } from "react-icons/fa";
 import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
+import TermsModal from "../components/termsModal.jsx";
+import { PRIVACY_SECTIONS } from "../data/legalContent.js";
 
 export default function RegisterView() {
   const register = useAuthStore((state) => state.register);
@@ -19,6 +21,8 @@ export default function RegisterView() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Añadido estado de carga
+  const [showTerms, setShowTerms] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -319,19 +323,21 @@ export default function RegisterView() {
           <div className="text-center space-y-4 mt-6">
             <p className="text-xs text-gray-500">
               Al registrarte, aceptas nuestras{" "}
-              <Link
-                to="#"
-                className="text-teal-600 hover:text-teal-500 font-medium transition-colors"
+              <button
+                type="button"
+                onClick={() => setShowTerms(true)}
+                className="text-teal-600 hover:text-teal-500 font-medium transition-colors underline-offset-2 hover:underline"
               >
                 Condiciones de servicio
-              </Link>{" "}
+              </button>{" "}
               y la{" "}
-              <Link
-                to="#"
-                className="text-teal-600 hover:text-teal-500 font-medium transition-colors"
+              <button
+                type="button"
+                onClick={() => setShowPrivacy(true)}
+                className="text-teal-600 hover:text-teal-500 font-medium transition-colors underline-offset-2 hover:underline"
               >
                 Política de privacidad
-              </Link>
+              </button>
               .
             </p>
             <p className="text-sm font-medium text-gray-600">
@@ -346,6 +352,14 @@ export default function RegisterView() {
           </div>
         </div>
       </div>
+
+      <TermsModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
+      <TermsModal
+        isOpen={showPrivacy}
+        onClose={() => setShowPrivacy(false)}
+        title="Política de Privacidad"
+        sections={PRIVACY_SECTIONS}
+      />
     </div>
   );
 }
