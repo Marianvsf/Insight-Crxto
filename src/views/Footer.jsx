@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <footer className="w-full py-16 mt-auto bg-transparent flex flex-col items-center justify-center relative overflow-hidden">
       {/* Línea divisoria superior muy sutil con degradado */}
-      <div className="absolute top-0 w-3/4 max-w-3xl h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="absolute top-0 w-3/4 max-w-3xl h-px bg-linear-to-r from-transparent via-gray-200 to-transparent" />
 
       <div className="flex flex-col items-center gap-8 z-10 px-4">
         {/* 1. Etiqueta superior minimalista */}
@@ -18,7 +18,7 @@ export const Footer = () => {
           className="group relative flex items-center gap-4 p-2 pr-5 rounded-full bg-white border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.04)] hover:shadow-[0_15px_35px_rgba(20,184,166,0.15)] hover:border-teal-200 transition-all duration-300 ease-out hover:-translate-y-1"
         >
           {/* Avatar con reborde limpio */}
-          <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm group-hover:border-teal-300 transition-colors duration-300 bg-gray-300 flex-shrink-0">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm group-hover:border-teal-300 transition-colors duration-300 bg-gray-300 shrink-0">
             <img
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               src="/github.png"
@@ -35,7 +35,7 @@ export const Footer = () => {
               Marian Suárez
             </span>
             {/* Texto con gradiente para destacar el rol profesional */}
-            <span className="text-[11px] font-bold uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-teal-500 to-emerald-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider bg-clip-text text-transparent bg-linear-to-r from-teal-500 to-emerald-400">
               Full Stack Developer
             </span>
           </div>
