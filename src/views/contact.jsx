@@ -50,7 +50,7 @@ const Contact = () => {
 
             <div className="space-y-6">
               <div className="flex items-center gap-4">
-                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/5">
+                <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/5">
                   <svg
                     className="w-5 h-5 text-teal-400"
                     fill="none"
@@ -76,7 +76,7 @@ const Contact = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/5">
+                <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 border border-white/5">
                   <svg
                     className="w-5 h-5 text-teal-400"
                     fill="none"
@@ -127,7 +127,7 @@ const Contact = () => {
             >
               {status.type === "error" ? (
                 <svg
-                  className="w-5 h-5 flex-shrink-0"
+                  className="w-5 h-5 shrink-0"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -139,7 +139,7 @@ const Contact = () => {
                 </svg>
               ) : (
                 <svg
-                  className="w-5 h-5 flex-shrink-0"
+                  className="w-5 h-5 shrink-0"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
