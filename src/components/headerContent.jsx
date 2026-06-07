@@ -39,13 +39,13 @@ const HeaderContent = () => {
         >
           <img
             src={image}
-            className={`w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+            className={`w-full h-full object-cover transition-transform duration-10000 ease-out ${
               index === currentSlide ? "scale-100" : "scale-110"
             }`}
             alt={`Slide ${index + 1}`}
           />
           {/* Overlay con gradiente premium para legibilidad perfecta */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-black/90 backdrop-blur-[2px]" />
         </div>
       ))}
 
@@ -61,7 +61,7 @@ const HeaderContent = () => {
 
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 leading-[1.1] text-white drop-shadow-lg">
           El futuro de tus finanzas <br className="hidden md:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-200">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-emerald-200">
             empieza aquí
           </span>
         </h1>
