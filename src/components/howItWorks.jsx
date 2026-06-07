@@ -88,7 +88,7 @@ const HowItWorks = () => {
   return (
     <section className="relative w-full py-20 bg-white overflow-hidden">
       {/* Fondo decorativo sutil (opcional para dar profundidad) */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-white opacity-60 z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-\[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops\)\)\] from-gray-50 via-white to-white opacity-60 z-0"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Encabezado de la sección */}
@@ -115,7 +115,7 @@ const HowItWorks = () => {
               </span>
 
               {/* Icono con círculo brillante */}
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 text-white flex items-center justify-center mb-6 shadow-lg shadow-teal-500/20 group-hover:scale-110 transition-transform duration-300">
+              <div className="w-14 h-14 rounded-full bg-linear-to-br-to-br from-teal-400 to-teal-600 text-gray-600 flex items-center justify-center mb-6 shadow-lg shadow-teal-500/20 group-hover:scale-110 transition-transform duration-300">
                 {step.icon}
               </div>
 
@@ -149,7 +149,7 @@ const HowItWorks = () => {
 
         {/* Botón CTA Final */}
         <div className="mt-16 text-center">
-          <button className="h-[52px] w-full sm:w-[240px] text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
+          <button className="h-[52px] w-full sm:w-60 text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
             Comenzar Ahora
           </button>
         </div>
