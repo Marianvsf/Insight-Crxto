@@ -25,7 +25,7 @@ export default function FilterSort({
       filtered = filtered.filter(
         (coin) =>
           coin.name.toLowerCase().includes(lowerCaseSearch) ||
-          coin.symbol.toLowerCase().includes(lowerCaseSearch)
+          coin.symbol.toLowerCase().includes(lowerCaseSearch),
       );
     }
 
@@ -123,7 +123,7 @@ export default function FilterSort({
       <button
         onClick={toggleSortOrder}
         className="
-          flex-shrink-0
+          shrink-0
           px-4 py-2
           border border-gray-300 rounded-lg shadow-sm
           text-sm font-medium text-gray-700

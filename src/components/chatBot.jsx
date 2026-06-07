@@ -158,7 +158,7 @@ function ChatBot() {
       {isOpen && (
         <div className="fixed bottom-24 right-5 z-50 w-[90vw] max-w-sm h-[70vh] max-h-[520px] flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-[fadeIn_0.2s_ease-out]">
           {/* Encabezado */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-teal-600 to-teal-500 text-white">
+          <div className="flex items-center justify-between px-4 py-3 bg-linear-to-r from-teal-600 to-teal-500 text-white">
             <div className="flex items-center gap-2">
               <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
                 <FaRobot className="w-5 h-5" />
