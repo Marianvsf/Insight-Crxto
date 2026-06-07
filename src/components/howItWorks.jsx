@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HowItWorks = () => {
   // Datos de los pasos
@@ -149,9 +150,12 @@ const HowItWorks = () => {
 
         {/* Botón CTA Final */}
         <div className="mt-16 text-center">
-          <button className="h-[52px] w-full sm:w-60 text-lg font-bold rounded-xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30">
+          <Link
+            to="/register"
+            className="py-4 px-6 w-full sm:w-60 text-lg items-center font-bold rounded-2xl text-white transition-all duration-300 bg-teal-500 hover:bg-teal-600 hover:scale-105 shadow-xl shadow-teal-500/30"
+          >
             Comenzar Ahora
-          </button>
+          </Link>
         </div>
       </div>
     </section>
