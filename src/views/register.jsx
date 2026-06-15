@@ -76,7 +76,7 @@ export default function RegisterView() {
           alt="Crypto Background"
           className="absolute inset-0 w-full h-full object-cover opacity-50 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-black/90 z-10" />
+        <div className="absolute inset-0 bg-linear-to-br from-slate-900/90 via-slate-900/60 to-black/90 z-10" />
 
         {/* Decoración Glowing Orb */}
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-[100px] z-10 animate-pulse" />
@@ -89,7 +89,7 @@ export default function RegisterView() {
           </div>
           <h2 className="text-5xl xl:text-6xl font-extrabold mb-6 leading-[1.1] tracking-tight">
             Tu futuro financiero <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-200">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-emerald-200">
               empieza hoy.
             </span>
           </h2>
@@ -104,7 +104,7 @@ export default function RegisterView() {
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 sm:p-12 md:p-16 overflow-y-auto">
         <div className="w-full max-w-md space-y-8 animate-in fade-in zoom-in-95 duration-700">
           {/* Header del Formulario */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-center">
             <Link
               to="/"
               className="inline-block hover:scale-105 transition-transform duration-300"
@@ -252,7 +252,7 @@ export default function RegisterView() {
               >
                 {isSuccess ? (
                   <svg
-                    className="w-5 h-5 flex-shrink-0"
+                    className="w-5 h-5 shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -264,7 +264,7 @@ export default function RegisterView() {
                   </svg>
                 ) : (
                   <svg
-                    className="w-5 h-5 flex-shrink-0"
+                    className="w-5 h-5 shrink-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >

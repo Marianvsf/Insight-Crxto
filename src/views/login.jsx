@@ -98,7 +98,7 @@ export default function LoginView() {
       <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-6 sm:p-12 md:p-16 overflow-y-auto">
         <div className="w-full max-w-md space-y-8 animate-in fade-in zoom-in-95 duration-700">
           {/* Header del Formulario */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-center">
             <Link
               to="/"
               className="inline-block hover:scale-105 transition-transform duration-300"
