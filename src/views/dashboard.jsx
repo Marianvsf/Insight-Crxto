@@ -1,14 +1,17 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { Link } from "react-router-dom";
 import FilterSort from "../components/filterSort.jsx";
 import UserBalances from "../components/userBalances.jsx";
 import { useAuthStore } from "../store/authStore.js";
 import CoinDetailsTable from "../components/coinDetails.jsx";
 import MarketOverview from "../components/MarketOverview.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
-import { Link } from "react-router-dom";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
-const API_KEY = "&x_cg_demo_api_key=CG-qpB7vSSJxz2hyL8M2QWJfZrS";
+// Se recomienda usar variables de entorno, o mejor aún, hacer esta petición desde tu propio backend
+const API_KEY_PARAM = import.meta.env.VITE_CG_API_KEY
+  ? `&x_cg_demo_api_key=${import.meta.env.VITE_CG_API_KEY}`
+  : "";
 
 export default function Dashboard() {
   const [error, setError] = useState(null);
@@ -16,8 +19,12 @@ export default function Dashboard() {
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
-  const [currentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0); // Añadido el setter
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [showBalances, setShowBalances] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 10;
   const galleryImages = [
     "/assets/img1.jpg",
     "/assets/img2.jpg",
@@ -27,16 +34,21 @@ export default function Dashboard() {
   const { user } = useAuthStore();
   const username = user?.username || "Usuario";
   const currentUserId = user?.id;
-  const [showBalances, setShowBalances] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+
+  // Optimización: Solo recalcular cuando cambian filteredCoins o currentPage
+  const currentItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredCoins.slice(start, start + itemsPerPage);
+  }, [filteredCoins, currentPage]);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredCoins.length / itemsPerPage);
+  }, [filteredCoins.length]);
 
   const formatPriceChange = (value) => {
     const numericValue = Number(value);
-
-    if (!Number.isFinite(numericValue)) {
+    if (!Number.isFinite(numericValue))
       return { label: "N/D", className: "text-gray-500" };
-    }
 
     return {
       label: `${numericValue > 0 ? "+" : ""}${numericValue.toFixed(2)}%`,
@@ -49,50 +61,48 @@ export default function Dashboard() {
     };
   };
 
-  const currentItems = filteredCoins.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
-  const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
-
   const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
+    if (pageNumber >= 1 && pageNumber <= totalPages) setCurrentPage(pageNumber);
   };
 
+  // Lógica para rotar el carrusel de NFTs
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) =>
+        prev === galleryImages.length - 1 ? 0 : prev + 1,
+      );
+    }, 4000);
+    return () => clearInterval(slideInterval);
+  }, [galleryImages.length]);
+
+  // Fetching de monedas
   useEffect(() => {
     const fetchCoins = async () => {
       try {
         const response = await fetch(
-          `${URL_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false${API_KEY}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
+          `${URL_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false${API_KEY_PARAM}`,
         );
-        if (!response.ok) {
-          throw new Error("Error fetching coins:", response.statusText);
-        }
+
+        if (!response.ok)
+          throw new Error(`Error fetching coins: ${response.statusText}`);
+
         const data = await response.json();
         setCoins(data);
         setLastUpdated(new Date());
+        setError(null);
 
-        if (filteredCoins.length === 0) {
-          setFilteredCoins(data);
-        }
-      } catch {
-        setError("Fallo al cargar los datos.");
+        // Actualizamos filteredCoins solo si está vacío para no romper filtros activos
+        setFilteredCoins((prev) => (prev.length === 0 ? data : prev));
+      } catch (err) {
+        setError("Fallo al cargar los datos de las criptomonedas.");
+        console.error(err);
       }
     };
 
     fetchCoins();
-
     const intervalId = setInterval(fetchCoins, 30000);
     return () => clearInterval(intervalId);
-  }, [filteredCoins.length]);
+  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -101,41 +111,21 @@ export default function Dashboard() {
   useEffect(() => {
     const onAppLogout = () => {
       setIsLoggingOut(true);
-      // safety reset in case navigation doesn't occur
       setTimeout(() => setIsLoggingOut(false), 1200);
     };
-
     window.addEventListener("app-logout", onAppLogout);
     return () => window.removeEventListener("app-logout", onAppLogout);
   }, []);
 
-  const handleFilterSortChange = useCallback(() => {
-    setCurrentPage(1);
-  }, []);
-
-  const handleCoinClick = (coin) => {
-    setSelectedCoin(coin);
-  };
-
-  const handleCloseDetails = () => {
-    setSelectedCoin(null);
-  };
-
-  const handleShowBalances = () => {
-    setShowBalances(true);
-  };
-
-  const handleBackToDashboard = () => {
-    setShowBalances(false);
-  };
+  const handleFilterSortChange = useCallback(() => setCurrentPage(1), []);
 
   if (showBalances) {
     return (
       <div className="min-h-screen bg-white p-4">
         <div className="max-w-7xl mx-auto py-6">
           <button
-            onClick={handleBackToDashboard}
-            className="mb-6 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out font-medium w-full sm:w-auto text-center"
+            onClick={() => setShowBalances(false)}
+            className="mb-6 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150 font-medium w-full sm:w-auto"
           >
             ← Volver al Tablero
           </button>
@@ -182,17 +172,16 @@ export default function Dashboard() {
       )}
 
       <main className="container mx-auto px-4 py-6 lg:py-8 lg:px-8 max-w-[1400px] grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* COLUMNA PRINCIPAL (TABLA Y CONTENIDO) */}
+        {/* COLUMNA PRINCIPAL */}
         <div className="lg:col-span-3 space-y-6 lg:space-y-8">
-          {/* Header de Bienvenida adaptable */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 pb-5">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
               Bienvenido de nuevo,{" "}
               <span className="text-teal-600 block sm:inline">{username}</span>
             </h1>
             <button
-              onClick={handleShowBalances}
-              className="w-full sm:w-auto py-2.5 px-5 rounded-xl shadow-md text-sm font-bold text-white uppercase bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out text-center"
+              onClick={() => setShowBalances(true)}
+              className="w-full sm:w-auto py-2.5 px-5 rounded-xl shadow-md text-sm font-bold text-white uppercase bg-teal-600 hover:bg-teal-700 transition duration-150"
             >
               Ver Mi Balance 💰
             </button>
@@ -207,7 +196,7 @@ export default function Dashboard() {
           {selectedCoin ? (
             <CoinDetailsTable
               coin={selectedCoin}
-              onClose={handleCloseDetails}
+              onClose={() => setSelectedCoin(null)}
             />
           ) : (
             <>
@@ -227,44 +216,41 @@ export default function Dashboard() {
                 </div>
               )}
 
-              {coins.length === 0 ? (
+              {coins.length === 0 && !error ? (
                 <p className="text-gray-600 animate-pulse">
                   Cargando datos de monedas...
                 </p>
               ) : (
                 <>
-                  <div className="w-full">
-                    <FilterSort
-                      coins={coins}
-                      setFilteredCoins={setFilteredCoins}
-                      onFilterSortChange={handleFilterSortChange}
-                    />
-                  </div>
+                  <FilterSort
+                    coins={coins}
+                    setFilteredCoins={setFilteredCoins}
+                    onFilterSortChange={handleFilterSortChange}
+                  />
 
-                  {/* Wrapper para evitar rotura de layout en mobile */}
-                  <div className="w-full overflow-x-auto shadow-md rounded-xl border border-gray-200 bg-white">
+                  <div className="w-full overflow-x-auto shadow-md rounded-xl border border-gray-200 bg-white mt-4">
                     <table className="min-w-full divide-y divide-gray-200 table-auto">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
                             Ranking
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
                             Símbolo
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
                             Nombre
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
                             Precio actual
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase hidden md:table-cell">
                             Cap. de Mercado
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
                             Cambio (24h)
                           </th>
-                          <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase">
                             Acción
                           </th>
                         </tr>
@@ -274,7 +260,6 @@ export default function Dashboard() {
                           const priceChange = formatPriceChange(
                             coin.price_change_percentage_24h,
                           );
-
                           return (
                             <tr
                               key={coin.id}
@@ -302,16 +287,12 @@ export default function Dashboard() {
                                 {new Intl.NumberFormat("en-US", {
                                   style: "currency",
                                   currency: "USD",
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 4,
                                 }).format(coin.current_price)}
                               </td>
-                              {/* Ocultamos la capitalización en pantallas muy pequeñas para mejorar legibilidad */}
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono hidden md:table-cell">
                                 {new Intl.NumberFormat("en-US", {
                                   style: "currency",
                                   currency: "USD",
-                                  minimumFractionDigits: 0,
                                   maximumFractionDigits: 0,
                                 }).format(coin.market_cap)}
                               </td>
@@ -322,8 +303,8 @@ export default function Dashboard() {
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                 <button
-                                  onClick={() => handleCoinClick(coin)}
-                                  className="text-teal-600 hover:text-teal-800 transition duration-150 font-semibold"
+                                  onClick={() => setSelectedCoin(coin)}
+                                  className="text-teal-600 hover:text-teal-800 font-semibold"
                                 >
                                   Ver Detalles
                                 </button>
@@ -335,56 +316,40 @@ export default function Dashboard() {
                     </table>
                   </div>
 
-                  {/* Paginación adaptable */}
-                  <nav
-                    className="flex justify-center items-center mt-6 overflow-x-auto py-2"
-                    aria-label="Pagination"
-                  >
-                    <ul className="flex items-center space-x-1 sm:space-x-2">
-                      <li>
-                        <button
-                          onClick={() => paginate(currentPage - 1)}
-                          disabled={currentPage === 1}
-                          className={`px-3 py-2 text-xs sm:text-sm font-medium rounded-lg border transition ${
-                            currentPage === 1
-                              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
-                              : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
-                          }`}
-                        >
-                          ←
-                        </button>
-                      </li>
-                      {Array.from({ length: totalPages }, (_, index) => (
-                        <li key={index + 1}>
+                  {filteredCoins.length > 0 ? (
+                    <nav className="flex justify-center items-center mt-6 overflow-x-auto py-2">
+                      <ul className="flex items-center space-x-1 sm:space-x-2">
+                        <li>
                           <button
-                            onClick={() => paginate(index + 1)}
-                            className={`px-3 py-2 text-xs sm:text-sm font-semibold rounded-lg transition ${
-                              currentPage === index + 1
-                                ? "bg-teal-600 text-white shadow-sm"
-                                : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
-                            }`}
+                            onClick={() => paginate(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className={`px-3 py-2 text-sm font-medium rounded-lg border transition ${currentPage === 1 ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-white text-gray-700 hover:bg-gray-50"}`}
                           >
-                            {index + 1}
+                            ←
                           </button>
                         </li>
-                      ))}
-                      <li>
-                        <button
-                          onClick={() => paginate(currentPage + 1)}
-                          disabled={currentPage === totalPages}
-                          className={`px-3 py-2 text-xs sm:text-sm font-medium rounded-lg border transition ${
-                            currentPage === totalPages
-                              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
-                              : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"
-                          }`}
-                        >
-                          →
-                        </button>
-                      </li>
-                    </ul>
-                  </nav>
-
-                  {filteredCoins.length === 0 && (
+                        {Array.from({ length: totalPages }, (_, i) => (
+                          <li key={i + 1}>
+                            <button
+                              onClick={() => paginate(i + 1)}
+                              className={`px-3 py-2 text-sm font-semibold rounded-lg transition border ${currentPage === i + 1 ? "bg-teal-600 text-white border-teal-600" : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300"}`}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        ))}
+                        <li>
+                          <button
+                            onClick={() => paginate(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className={`px-3 py-2 text-sm font-medium rounded-lg border transition ${currentPage === totalPages ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-white text-gray-700 hover:bg-gray-50"}`}
+                          >
+                            →
+                          </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  ) : (
                     <p className="mt-4 text-center text-gray-500 text-sm">
                       No se encontraron resultados con el filtro aplicado.
                     </p>
@@ -395,10 +360,10 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* COLUMNA LATERAL (BARRA DE WIDGETS) */}
+        {/* COLUMNA LATERAL (WIDGETS) */}
         <div className="lg:col-span-1 w-full">
           <div className="lg:sticky lg:top-24 space-y-6">
-            {/* WIDGET 1: NFT SPOTLIGHT */}
+            {/* WIDGET 1: NFT */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
               <div className="p-4 border-b border-gray-100 flex justify-between items-center">
                 <h3 className="font-bold text-gray-900 text-sm sm:text-base">
@@ -409,13 +374,11 @@ export default function Dashboard() {
                 </span>
               </div>
 
-              <div className="relative h-[300px] sm:h-[350px] lg:h-[400px] w-full bg-slate-900 group">
+              <div className="relative h-[300px] sm:h-[350px] lg:h-[400px] w-full bg-slate-900">
                 {galleryImages.map((img, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                      index === currentSlide ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
                   >
                     <img
                       src={img}
@@ -439,24 +402,14 @@ export default function Dashboard() {
                   {galleryImages.map((_, idx) => (
                     <div
                       key={idx}
-                      className={`h-1.5 w-1.5 rounded-full transition-all ${
-                        idx === currentSlide
-                          ? "bg-teal-500 scale-125"
-                          : "bg-white/50"
-                      }`}
+                      className={`h-1.5 w-1.5 rounded-full transition-all ${idx === currentSlide ? "bg-teal-500 scale-125" : "bg-white/50"}`}
                     />
                   ))}
                 </div>
               </div>
-
-              <div className="p-4 bg-gray-50 border-t border-gray-100">
-                <p className="text-xs text-gray-500 text-center italic">
-                  "Not your keys, not your coins. Mantén tus activos seguros."
-                </p>
-              </div>
             </div>
 
-            {/* WIDGET 2: SOPORTE PREMIUM / SEGURIDAD */}
+            {/* WIDGET 2: SOPORTE */}
             <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-200">
               <div className="flex items-center gap-2 mb-3">
                 <div className="p-2 bg-teal-50 rounded-lg text-teal-600">
@@ -466,17 +419,15 @@ export default function Dashboard() {
                   Centro de Seguridad
                 </h3>
               </div>
-
               <p className="text-gray-600 text-xs sm:text-sm mb-4 leading-relaxed">
-                ¿Problemas con una transacción o tu billetera? Nuestros expertos
-                en Blockchain están disponibles 24/7.
+                ¿Problemas con una transacción? Nuestros expertos en Blockchain
+                están disponibles 24/7.
               </p>
-
               <Link
                 to="/contact"
-                className="block w-full py-2.5 bg-teal-600 hover:bg-teal-700 rounded-xl text-xs sm:text-sm font-bold text-white transition-all text-center shadow-sm"
+                className="block w-full py-2.5 bg-teal-600 hover:bg-teal-700 rounded-xl text-sm font-bold text-white transition-all text-center"
               >
-                Contactar Soporte Crypto
+                Contactar Soporte
               </Link>
             </div>
           </div>
