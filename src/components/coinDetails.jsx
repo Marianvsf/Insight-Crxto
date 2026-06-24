@@ -38,6 +38,17 @@ export default function CoinDetailsTable({ coin, onClose }) {
       >
         &times;
       </button>
+      <button
+        onClick={onClose}
+        className="
+          mb-4 inline-flex items-center gap-1 px-4 py-2
+          border border-gray-300 rounded-lg text-gray-700
+          hover:bg-gray-100 transition duration-150 font-medium
+        "
+        aria-label="Volver a la lista de monedas"
+      >
+        ← Volver
+      </button>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
         Detalles de {coin.name} ({coin.symbol.toUpperCase()})
         <img
