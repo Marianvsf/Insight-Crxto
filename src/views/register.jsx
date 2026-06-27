@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaEye, FaEyeSlash, FaUser, FaLock } from "react-icons/fa";
 import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
-import TermsModal from "../components/termsModal.jsx";
-import { PRIVACY_SECTIONS } from "../data/legalContent.js";
 
 export default function RegisterView() {
   const register = useAuthStore((state) => state.register);
@@ -21,8 +19,7 @@ export default function RegisterView() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Añadido estado de carga
-  const [showTerms, setShowTerms] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +36,12 @@ export default function RegisterView() {
 
     if (formData.password !== formData.confirmPassword) {
       setMessage("Las contraseñas no coinciden.");
+      setIsSuccess(false);
+      return;
+    }
+
+    if (!acceptedTerms) {
+      setMessage("Debes aceptar los Términos y Condiciones para continuar.");
       setIsSuccess(false);
       return;
     }
@@ -279,6 +282,27 @@ export default function RegisterView() {
               </div>
             )}
 
+            {/* Aceptación de Términos y Condiciones */}
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                name="acceptedTerms"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-300 text-teal-600 focus:ring-teal-500/30 accent-teal-600"
+              />
+              <span className="text-xs text-gray-500 leading-relaxed">
+                He leído y acepto los{" "}
+                <Link
+                  to="/terms"
+                  className="text-teal-600 hover:text-teal-500 font-medium transition-colors underline-offset-2 hover:underline"
+                >
+                  Términos y Condiciones
+                </Link>{" "}
+                y la Política de Privacidad.
+              </span>
+            </label>
+
             {/* Botón Submit Premium */}
             <div className="pt-2">
               <button
@@ -319,27 +343,8 @@ export default function RegisterView() {
             </div>
           </form>
 
-          {/* Enlaces de políticas y login */}
-          <div className="text-center space-y-4 mt-6">
-            <p className="text-xs text-gray-500">
-              Al registrarte, aceptas nuestras{" "}
-              <button
-                type="button"
-                onClick={() => setShowTerms(true)}
-                className="text-teal-600 hover:text-teal-500 font-medium transition-colors underline-offset-2 hover:underline"
-              >
-                Condiciones de servicio
-              </button>{" "}
-              y la{" "}
-              <button
-                type="button"
-                onClick={() => setShowPrivacy(true)}
-                className="text-teal-600 hover:text-teal-500 font-medium transition-colors underline-offset-2 hover:underline"
-              >
-                Política de privacidad
-              </button>
-              .
-            </p>
+          {/* Enlace a login */}
+          <div className="text-center mt-6">
             <p className="text-sm font-medium text-gray-600">
               ¿Ya tienes cuenta?{" "}
               <Link
@@ -352,14 +357,6 @@ export default function RegisterView() {
           </div>
         </div>
       </div>
-
-      <TermsModal isOpen={showTerms} onClose={() => setShowTerms(false)} />
-      <TermsModal
-        isOpen={showPrivacy}
-        onClose={() => setShowPrivacy(false)}
-        title="Política de Privacidad"
-        sections={PRIVACY_SECTIONS}
-      />
     </div>
   );
 }
