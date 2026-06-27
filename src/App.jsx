@@ -8,6 +8,7 @@ import Dashboard from "./views/dashboard.jsx";
 import { Footer } from "./views/Footer.jsx";
 import Contact from "./views/contact.jsx";
 import ChatBot from "./components/chatBot.jsx";
+import ProtectedRoute from "./components/protectedRoute.jsx";
 
 function App() {
   return (
@@ -19,7 +20,14 @@ function App() {
             <Route path="/login" element={<LoginView />} />
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<RegisterView />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
