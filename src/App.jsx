@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import LoginView from "./views/login.jsx";
 import RegisterView from "./views/register.jsx";
@@ -10,30 +10,39 @@ import Contact from "./views/contact.jsx";
 import ChatBot from "./components/chatBot.jsx";
 import ProtectedRoute from "./components/protectedRoute.jsx";
 
+function AppContent() {
+  const location = useLocation();
+  const showChatBot = ["/", "/dashboard"].includes(location.pathname);
+
+  return (
+    <div className="flex flex-col min-h-screen w-full">
+      <Navbar />
+      <main className="flex-1 w-full">
+        <Routes>
+          <Route path="/login" element={<LoginView />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<RegisterView />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+      <Footer />
+      {showChatBot && <ChatBot />}
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen w-full">
-        <Navbar />
-        <main className="flex-1 w-full">
-          <Routes>
-            <Route path="/login" element={<LoginView />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<RegisterView />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <Footer />
-        <ChatBot />
-      </div>
+      <AppContent />
     </BrowserRouter>
   );
 }
