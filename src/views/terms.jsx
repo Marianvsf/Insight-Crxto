@@ -5,7 +5,7 @@ const Terms = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center p-4 sm:p-8 pt-24 sm:pt-28 font-sans">
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center p-4 sm:p-8 font-sans">
       <div className="w-full max-w-3xl">
         <button
           onClick={() => navigate(-1)}
