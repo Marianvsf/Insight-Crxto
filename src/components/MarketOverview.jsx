@@ -5,8 +5,14 @@ const MarketStatCard = ({
   isPositive,
   icon,
   color,
+  onClick,
 }) => (
-  <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition-shadow">
+  <div
+    onClick={onClick}
+    className={`bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center space-x-4 hover:shadow-md transition-shadow ${
+      onClick ? "cursor-pointer" : ""
+    }`}
+  >
     <div className={`p-3 rounded-full ${color} text-white`}>{icon}</div>
     <div>
       <p className="text-xs text-gray-500 uppercase font-bold tracking-wider">
@@ -28,7 +34,7 @@ const MarketStatCard = ({
   </div>
 );
 
-const MarketOverview = ({ coins }) => {
+const MarketOverview = ({ coins, onSelectCoin }) => {
   if (!coins || coins.length === 0) return null;
 
   const sortedByChange = [...coins].sort(
@@ -53,6 +59,7 @@ const MarketOverview = ({ coins }) => {
         subValue={`${btc.price_change_percentage_24h.toFixed(2)}%`}
         isPositive={btc.price_change_percentage_24h > 0}
         color="bg-orange-500"
+        onClick={onSelectCoin ? () => onSelectCoin(btc) : undefined}
         icon={
           <svg
             className="w-6 h-6"
@@ -77,6 +84,7 @@ const MarketOverview = ({ coins }) => {
         subValue={`+${topGainer.price_change_percentage_24h.toFixed(2)}%`}
         isPositive={true}
         color="bg-green-500"
+        onClick={onSelectCoin ? () => onSelectCoin(topGainer) : undefined}
         icon={
           <svg
             className="w-6 h-6"
@@ -101,6 +109,7 @@ const MarketOverview = ({ coins }) => {
         subValue={`${topLoser.price_change_percentage_24h.toFixed(2)}%`}
         isPositive={false}
         color="bg-red-500"
+        onClick={onSelectCoin ? () => onSelectCoin(topLoser) : undefined}
         icon={
           <svg
             className="w-6 h-6"
