@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -36,15 +34,6 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-4 sm:p-8 font-sans">
-      <div className="w-full max-w-5xl">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-4 inline-flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-100 transition duration-150 font-medium"
-          aria-label="Volver a la página anterior"
-        >
-          ← Volver
-        </button>
-      </div>
       <div className="w-full max-w-5xl bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col md:flex-row">
         {/* LADO IZQUIERDO: Información de Contacto (Ancla Visual) */}
         <div className="relative w-full md:w-5/12 bg-slate-900 p-10 text-white overflow-hidden flex flex-col justify-between">
