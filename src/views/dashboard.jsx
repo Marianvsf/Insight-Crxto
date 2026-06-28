@@ -194,7 +194,7 @@ export default function Dashboard() {
 
           {!selectedCoin && coins.length > 0 && (
             <div className="w-full overflow-hidden">
-              <MarketOverview coins={coins} />
+              <MarketOverview coins={coins} onSelectCoin={setSelectedCoin} />
             </div>
           )}
 
