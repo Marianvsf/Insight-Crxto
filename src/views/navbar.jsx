@@ -58,6 +58,10 @@ const Navbar = () => {
   );
   const showLogoutButton = isAuthenticated && !isPublicRoute;
 
+  // Mostrar el botón "Volver" en páginas secundarias (no en las rutas principales)
+  const topLevelRoutes = ["/", "/login", "/register", "/dashboard"];
+  const showBackButton = !topLevelRoutes.includes(location.pathname);
+
   // Lógica de estilos dinámicos del Navbar
   const navBackground =
     isHomePage && !isScrolled
@@ -74,25 +78,37 @@ const Navbar = () => {
         <div
           className={`max-w-7xl mx-auto px-6 lg:px-8 transition-all duration-500 ${navPadding} flex items-center justify-between`}
         >
-          {/* LOGO PREMIUM */}
-          <Link
-            to="/"
-            onClick={closeMenu}
-            className="group relative flex items-center gap-3 z-50 focus:outline-none"
-          >
-            <div className="absolute inset-0 bg-teal-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <img
-              src={logo}
-              className="h-9 md:h-10 w-auto relative z-10 group-hover:scale-105 transition-transform duration-500 ease-out"
-              alt="Logo Insight"
-            />
-            <span className="text-xl md:text-2xl font-extrabold tracking-tight text-white relative z-10 flex gap-1.5">
-              INSIGHT
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">
-                CRXTO
+          {/* LOGO PREMIUM + BOTÓN VOLVER */}
+          <div className="flex items-center gap-3 md:gap-5 z-50">
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className="group relative flex items-center gap-3 focus:outline-none"
+            >
+              <div className="absolute inset-0 bg-teal-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <img
+                src={logo}
+                className="h-9 md:h-10 w-auto relative z-10 group-hover:scale-105 transition-transform duration-500 ease-out"
+                alt="Logo Insight"
+              />
+              <span className="text-xl md:text-2xl font-extrabold tracking-tight text-white relative z-10 flex gap-1.5">
+                INSIGHT
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">
+                  CRXTO
+                </span>
               </span>
-            </span>
-          </Link>
+            </Link>
+
+            {showBackButton && (
+              <button
+                onClick={() => navigate(-1)}
+                aria-label="Volver a la página anterior"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 text-sm font-medium text-gray-300 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 hover:text-white transition-all duration-300"
+              >
+                <span aria-hidden="true">←</span> Volver
+              </button>
+            )}
+          </div>
 
           {/* BOTÓN HAMBURGUESA ANIMADO (Móvil) */}
           <button
