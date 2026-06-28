@@ -28,7 +28,7 @@ const fetchCryptoPrices = async () => {
   }
 };
 
-const UserBalances = ({ userId }) => {
+const UserBalances = ({ userId, onSelectCoin }) => {
   const [cryptoMarketData, setCryptoMarketData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -128,6 +128,15 @@ const UserBalances = ({ userId }) => {
     }
     setIsSwapping(true);
   };
+
+  const handleSelectCoin = useCallback(
+    (coinId) => {
+      if (!onSelectCoin) return;
+      const fullCoin = cryptoMarketData.find((c) => c.id === coinId);
+      if (fullCoin) onSelectCoin(fullCoin);
+    },
+    [onSelectCoin, cryptoMarketData]
+  );
 
   const handleDeposit = () => alert("🟢 Simulación: Depositar...");
   const handleSend = () => alert("🔴 Simulación: Enviar...");
@@ -316,7 +325,11 @@ const UserBalances = ({ userId }) => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
             {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
+              <tr
+                key={item.id}
+                onClick={() => handleSelectCoin(item.id)}
+                className="hover:bg-gray-50 cursor-pointer"
+              >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center">
                   <img
                     src={item.image}
@@ -362,7 +375,7 @@ const UserBalances = ({ userId }) => {
       {/* WIDGET TOP MOVERS (Footer) */}
       {cryptoMarketData.length > 0 && (
         <div className="mt-8">
-          <TopMovers coins={cryptoMarketData} />
+          <TopMovers coins={cryptoMarketData} onSelectCoin={onSelectCoin} />
         </div>
       )}
     </div>
