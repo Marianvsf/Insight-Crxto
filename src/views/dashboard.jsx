@@ -8,7 +8,6 @@ import MarketOverview from "../components/MarketOverview.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
-// Se recomienda usar variables de entorno, o mejor aún, hacer esta petición desde tu propio backend
 const API_KEY_PARAM = import.meta.env.VITE_CG_API_KEY
   ? `&x_cg_demo_api_key=${import.meta.env.VITE_CG_API_KEY}`
   : "";
@@ -19,7 +18,7 @@ export default function Dashboard() {
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [filteredCoins, setFilteredCoins] = useState([]);
   const [lastUpdated, setLastUpdated] = useState(new Date());
-  const [currentSlide, setCurrentSlide] = useState(0); // Añadido el setter
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [showBalances, setShowBalances] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -129,7 +128,13 @@ export default function Dashboard() {
           >
             ← Volver al Tablero
           </button>
-          <UserBalances userId={currentUserId} />
+          <UserBalances
+            userId={currentUserId}
+            onSelectCoin={(coin) => {
+              setSelectedCoin(coin);
+              setShowBalances(false);
+            }}
+          />
         </div>
       </div>
     );
@@ -263,7 +268,8 @@ export default function Dashboard() {
                           return (
                             <tr
                               key={coin.id}
-                              className="hover:bg-gray-50/70 transition duration-150"
+                              onClick={() => setSelectedCoin(coin)}
+                              className="hover:bg-gray-50/70 transition duration-150 cursor-pointer"
                             >
                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {coin.market_cap_rank}
