@@ -1,21 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { TERMS_SECTIONS, PRIVACY_SECTIONS } from "../data/legalContent.js";
 
 const Terms = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center p-4 sm:p-8 font-sans">
-      <div className="w-full max-w-3xl">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-4 inline-flex items-center gap-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-100 transition duration-150 font-medium"
-          aria-label="Volver a la página anterior"
-        >
-          ← Volver
-        </button>
-      </div>
-
       <div className="w-full max-w-3xl bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden">
         {/* Encabezado */}
         <div className="relative px-8 py-10 bg-slate-900 text-white overflow-hidden">
