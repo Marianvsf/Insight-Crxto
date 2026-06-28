@@ -1,6 +1,6 @@
 import React from "react";
 
-const TopMovers = ({ coins }) => {
+const TopMovers = ({ coins, onSelectCoin }) => {
   // Ordenar para ganadores (Mayor a menor porcentaje)
   const gainers = [...coins]
     .sort(
@@ -16,7 +16,10 @@ const TopMovers = ({ coins }) => {
     .slice(0, 3);
 
   const CoinRow = ({ coin, isGainer }) => (
-    <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors px-2 rounded-lg cursor-pointer">
+    <div
+      onClick={() => onSelectCoin && onSelectCoin(coin)}
+      className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors px-2 rounded-lg cursor-pointer"
+    >
       <div className="flex items-center gap-3">
         <img
           src={coin.image}
