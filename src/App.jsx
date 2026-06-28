@@ -14,11 +14,13 @@ import ProtectedRoute from "./components/protectedRoute.jsx";
 function AppContent() {
   const location = useLocation();
   const showChatBot = ["/", "/dashboard"].includes(location.pathname);
+  const fullBleedRoutes = ["/", "/login", "/register"];
+  const isFullBleed = fullBleedRoutes.includes(location.pathname);
 
   return (
     <div className="flex flex-col min-h-screen w-full">
       <Navbar />
-      <main className="flex-1 w-full">
+      <main className={`flex-1 w-full ${isFullBleed ? "" : "pt-20"}`}>
         <Routes>
           <Route path="/login" element={<LoginView />} />
           <Route path="/" element={<Home />} />
