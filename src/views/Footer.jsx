@@ -1,4 +1,4 @@
-import githubLogo from "../public/github.png";
+import githubLogo from "../assets/github.png";
 
 export const Footer = () => {
   return (
