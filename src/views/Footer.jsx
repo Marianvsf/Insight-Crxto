@@ -1,3 +1,5 @@
+import githubLogo from "../assets/github.png";
+
 export const Footer = () => {
   return (
     <footer className="w-full py-16 mt-auto bg-transparent flex flex-col items-center justify-center relative overflow-hidden">
@@ -21,7 +23,7 @@ export const Footer = () => {
           <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm group-hover:border-teal-300 transition-colors duration-300 bg-gray-300 shrink-0">
             <img
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              src="/github.png"
+              src={githubLogo}
               alt="Avatar de Marian Suárez"
               width={48}
               height={48}
