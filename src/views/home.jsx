@@ -4,6 +4,7 @@ import HeaderContent from "../components/headerContent.jsx";
 import CryptoTicker from "../components/cryptoticker.jsx";
 import HowItWorks from "../components/howItWorks.jsx";
 import TopMovers from "../components/TopMovers.jsx";
+import { PricingPlans } from "../components/pricingPlans.jsx";
 
 const URL_BASE = "https://api.coingecko.com/api/v3";
 const API_KEY =
@@ -13,6 +14,7 @@ function Home() {
   const [coins, setCoins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPlans, setShowPlans] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -132,13 +134,40 @@ function Home() {
             Desde traders que recién empiezan hasta equipos profesionales,
             tenemos un plan pensado para cada necesidad.
           </p>
-          <Link
-            to="/sales"
+          <button
+            type="button"
+            onClick={() => setShowPlans((prev) => !prev)}
+            aria-expanded={showPlans}
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold transition-all duration-300 shadow-lg shadow-teal-500/20 hover:-translate-y-0.5"
           >
-            Ver planes y precios
-            <span aria-hidden="true">→</span>
-          </Link>
+            {showPlans ? "Ocultar planes y precios" : "Ver planes y precios"}
+            <svg
+              className={`w-5 h-5 transition-transform duration-300 ${showPlans ? "rotate-180" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <div
+            className={`grid transition-all duration-500 ease-in-out ${
+              showPlans
+                ? "grid-rows-[1fr] opacity-100 mt-10"
+                : "grid-rows-[0fr] opacity-0 mt-0"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <PricingPlans />
+            </div>
+          </div>
         </div>
       </section>
 
