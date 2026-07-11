@@ -119,6 +119,29 @@ function Home() {
       {/* Características / Cómo funciona */}
       <HowItWorks />
 
+      {/* Planes y Precios */}
+      <section className="py-16 bg-white border-y border-gray-100">
+        <div className="container mx-auto px-4 lg:px-8 max-w-[1400px] text-center">
+          <span className="text-xs font-semibold tracking-wider text-teal-600 uppercase bg-teal-50 px-3 py-1 rounded-full">
+            Planes
+          </span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mt-2 mb-3 tracking-tight">
+            Encuentra el plan ideal para ti
+          </h2>
+          <p className="text-gray-500 max-w-2xl mx-auto text-base md:text-lg mb-8">
+            Desde traders que recién empiezan hasta equipos profesionales,
+            tenemos un plan pensado para cada necesidad.
+          </p>
+          <Link
+            to="/sales"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold transition-all duration-300 shadow-lg shadow-teal-500/20 hover:-translate-y-0.5"
+          >
+            Ver planes y precios
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </section>
+
       <section className="py-20 bg-slate-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.16),transparent_30%)]" />
         <div className="relative container mx-auto px-4 lg:px-8 max-w-[1400px]">
