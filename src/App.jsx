@@ -6,7 +6,6 @@ import Home from "./views/home.jsx";
 import Navbar from "./views/navbar.jsx";
 import Dashboard from "./views/dashboard.jsx";
 import { Footer } from "./views/Footer.jsx";
-import Contact from "./views/contact.jsx";
 import Terms from "./views/terms.jsx";
 import Sales from "./views/sales.jsx";
 import ChatBot from "./components/chatBot.jsx";
@@ -34,7 +33,6 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sales" element={<Sales />} />
         </Routes>
