@@ -41,7 +41,7 @@ export const PLANS = [
       "Gestor de cuenta dedicado",
       "Integraciones personalizadas",
     ],
-    cta: { label: "Hablar con Ventas", to: "/" },
+    cta: { label: "Hablar con Ventas", action: "chat" },
     highlighted: false,
   },
 ];
@@ -103,16 +103,32 @@ export function PricingPlans() {
             ))}
           </ul>
 
-          <Link
-            to={plan.cta.to}
-            className={`text-center px-6 py-3 rounded-full font-bold transition-all duration-300 ${
-              plan.highlighted
-                ? "bg-teal-500 hover:bg-teal-400 text-white shadow-lg shadow-teal-500/30"
-                : "bg-teal-600 hover:bg-teal-500 text-white"
-            }`}
-          >
-            {plan.cta.label}
-          </Link>
+          {plan.cta.action === "chat" ? (
+            <button
+              type="button"
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent("open-support-chat"))
+              }
+              className={`text-center px-6 py-3 rounded-full font-bold transition-all duration-300 ${
+                plan.highlighted
+                  ? "bg-teal-500 hover:bg-teal-400 text-white shadow-lg shadow-teal-500/30"
+                  : "bg-teal-600 hover:bg-teal-500 text-white"
+              }`}
+            >
+              {plan.cta.label}
+            </button>
+          ) : (
+            <Link
+              to={plan.cta.to}
+              className={`text-center px-6 py-3 rounded-full font-bold transition-all duration-300 ${
+                plan.highlighted
+                  ? "bg-teal-500 hover:bg-teal-400 text-white shadow-lg shadow-teal-500/30"
+                  : "bg-teal-600 hover:bg-teal-500 text-white"
+              }`}
+            >
+              {plan.cta.label}
+            </Link>
+          )}
         </div>
       ))}
     </div>
