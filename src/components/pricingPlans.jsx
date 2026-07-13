@@ -41,7 +41,7 @@ export const PLANS = [
       "Gestor de cuenta dedicado",
       "Integraciones personalizadas",
     ],
-    cta: { label: "Hablar con Ventas", to: "/contact" },
+    cta: { label: "Hablar con Ventas", to: "/" },
     highlighted: false,
   },
 ];
