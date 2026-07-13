@@ -39,7 +39,7 @@ const Sales = () => {
             necesidades.
           </p>
           <Link
-            to="/contact"
+            to="/"
             className="inline-flex items-center gap-2 font-bold text-teal-600 hover:text-teal-700 group transition-colors text-lg"
           >
             Contactar a un asesor
