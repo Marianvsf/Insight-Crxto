@@ -55,9 +55,9 @@ export default function Dashboard() {
 
   const itemsPerPage = 10;
   const galleryImages = [
-    "/assets/img1.jpg",
-    "/assets/img2.jpg",
-    "/assets/img3.jpg",
+    `${import.meta.env.BASE_URL}assets/img1.jpg`,
+    `${import.meta.env.BASE_URL}assets/img2.jpg`,
+    `${import.meta.env.BASE_URL}assets/img3.jpg`,
   ];
 
   const { user } = useAuthStore();
