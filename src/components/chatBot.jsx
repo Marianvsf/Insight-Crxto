@@ -131,6 +131,15 @@ function ChatBot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping, isOpen]);
 
+  // Permite abrir el chat desde cualquier parte de la app (ej. botón "Hablar con Ventas")
+  useEffect(() => {
+    function handleOpenChat() {
+      setIsOpen(true);
+    }
+    window.addEventListener("open-support-chat", handleOpenChat);
+    return () => window.removeEventListener("open-support-chat", handleOpenChat);
+  }, []);
+
   const sendMessage = (text) => {
     const trimmed = text.trim();
     if (!trimmed) return;
