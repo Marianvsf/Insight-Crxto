@@ -52,7 +52,7 @@ const KNOWLEDGE_BASE = [
   {
     keywords: ["soporte", "ayuda", "contacto", "humano", "asesor"],
     answer:
-      "Si necesitas ayuda personalizada, visita nuestro centro de soporte desde la página de Contacto y un asesor te responderá lo antes posible.",
+      "Si necesitas ayuda personalizada, abre la sección de soporte (botón «Contactar soporte») al final del inicio o en tu panel, y un asesor te responderá lo antes posible.",
   },
 ];
 
@@ -69,7 +69,7 @@ const WELCOME_MESSAGE = {
 };
 
 const FALLBACK_ANSWER =
-  "No estoy seguro de eso 🤔. Prueba preguntando sobre Bitcoin, Ethereum, wallets, seguridad o cómo comprar cripto. Para ayuda personalizada visita la página de Contacto.";
+  "No estoy seguro de eso 🤔. Prueba preguntando sobre Bitcoin, Ethereum, wallets, seguridad o cómo comprar cripto. Para ayuda personalizada abre la sección de soporte en el inicio o en tu panel.";
 
 // Normaliza texto: minúsculas y sin acentos, para comparar palabras clave.
 function normalize(text) {
