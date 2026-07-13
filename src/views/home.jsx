@@ -15,6 +15,37 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showPlans, setShowPlans] = useState(false);
+  const [showSupport, setShowSupport] = useState(false);
+  const [supportForm, setSupportForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [supportStatus, setSupportStatus] = useState(null);
+
+  const handleSupportChange = (e) => {
+    setSupportForm({ ...supportForm, [e.target.name]: e.target.value });
+  };
+
+  const handleSupportSubmit = (e) => {
+    e.preventDefault();
+
+    if (!supportForm.name || !supportForm.email || !supportForm.message) {
+      setSupportStatus({
+        type: "error",
+        msg: "Por favor, completa los campos obligatorios.",
+      });
+      return;
+    }
+
+    console.log("Enviando soporte:", supportForm);
+    setSupportStatus({
+      type: "success",
+      msg: "¡Mensaje enviado con éxito! Te responderemos pronto.",
+    });
+    setSupportForm({ name: "", email: "", subject: "", message: "" });
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -191,13 +222,168 @@ function Home() {
               </div>
 
               <div className="shrink-0">
-                <Link
-                  to="/contact"
+                <button
+                  type="button"
+                  onClick={() => setShowSupport((prev) => !prev)}
+                  aria-expanded={showSupport}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-bold transition-all duration-300 shadow-lg shadow-teal-500/20 hover:-translate-y-0.5"
                 >
-                  Ir a soporte
-                  <span aria-hidden="true">→</span>
-                </Link>
+                  {showSupport ? "Cerrar soporte" : "Contactar soporte"}
+                  <svg
+                    className={`w-5 h-5 transition-transform duration-300 ${showSupport ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Formulario de soporte desplegable */}
+            <div
+              className={`grid transition-all duration-500 ease-in-out ${
+                showSupport
+                  ? "grid-rows-[1fr] opacity-100 mt-8"
+                  : "grid-rows-[0fr] opacity-0 mt-0"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="border-t border-white/10 pt-8">
+                  {supportStatus && (
+                    <div
+                      className={`flex items-center gap-3 mb-6 p-4 rounded-2xl text-sm font-medium ${
+                        supportStatus.type === "error"
+                          ? "bg-red-500/10 text-red-300 border border-red-400/20"
+                          : "bg-teal-500/10 text-teal-300 border border-teal-400/20"
+                      }`}
+                    >
+                      {supportStatus.type === "error" ? (
+                        <svg
+                          className="w-5 h-5 shrink-0"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="w-5 h-5 shrink-0"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      )}
+                      {supportStatus.msg}
+                    </div>
+                  )}
+
+                  <form
+                    onSubmit={handleSupportSubmit}
+                    className="space-y-5 text-left"
+                  >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      <div className="space-y-1.5">
+                        <label className="text-sm font-semibold text-slate-200">
+                          Nombre *
+                        </label>
+                        <input
+                          name="name"
+                          type="text"
+                          placeholder="Ej. Ana Pérez"
+                          value={supportForm.name}
+                          onChange={handleSupportChange}
+                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all duration-300"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-sm font-semibold text-slate-200">
+                          Email *
+                        </label>
+                        <input
+                          name="email"
+                          type="email"
+                          placeholder="ana@ejemplo.com"
+                          value={supportForm.email}
+                          onChange={handleSupportChange}
+                          className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all duration-300"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-semibold text-slate-200">
+                        Asunto{" "}
+                        <span className="text-slate-400 font-normal">
+                          (Opcional)
+                        </span>
+                      </label>
+                      <input
+                        name="subject"
+                        type="text"
+                        placeholder="¿Cómo podemos ayudarte?"
+                        value={supportForm.subject}
+                        onChange={handleSupportChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all duration-300"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-semibold text-slate-200">
+                        Mensaje *
+                      </label>
+                      <textarea
+                        name="message"
+                        placeholder="Escribe los detalles aquí..."
+                        value={supportForm.message}
+                        onChange={handleSupportChange}
+                        rows={4}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-400 transition-all duration-300 resize-none"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-end gap-3 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSupportForm({
+                            name: "",
+                            email: "",
+                            subject: "",
+                            message: "",
+                          });
+                          setSupportStatus(null);
+                        }}
+                        className="px-6 py-3 text-sm font-medium text-slate-200 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all duration-200"
+                      >
+                        Limpiar
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-8 py-3 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-500 rounded-xl shadow-lg shadow-teal-500/30 hover:-translate-y-0.5 transition-all duration-300"
+                      >
+                        Enviar mensaje
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
