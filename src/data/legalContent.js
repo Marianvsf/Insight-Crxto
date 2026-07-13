@@ -56,7 +56,7 @@ export const PRIVACY_SECTIONS = [
   },
   {
     title: "6. Tus derechos",
-    body: "Puedes acceder, rectificar, suprimir u oponerte al tratamiento de tus datos, así como solicitar su portabilidad, escribiéndonos desde la página de Contacto.",
+    body: "Puedes acceder, rectificar, suprimir u oponerte al tratamiento de tus datos, así como solicitar su portabilidad, escribiéndonos desde la sección de soporte.",
   },
   {
     title: "7. Conservación",
