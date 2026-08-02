@@ -5,6 +5,7 @@ import RegisterView from "./views/register.jsx";
 import Home from "./views/home.jsx";
 import Navbar from "./views/navbar.jsx";
 import Dashboard from "./views/dashboard.jsx";
+import MiniDashboard from "./views/miniDashboard.jsx";
 import { Footer } from "./views/Footer.jsx";
 import Terms from "./views/terms.jsx";
 import Sales from "./views/sales.jsx";
@@ -13,7 +14,9 @@ import ProtectedRoute from "./components/protectedRoute.jsx";
 
 function AppContent() {
   const location = useLocation();
-  const showChatBot = ["/", "/dashboard"].includes(location.pathname);
+  const showChatBot = ["/", "/dashboard", "/mercado"].includes(
+    location.pathname,
+  );
   const fullBleedRoutes = ["/", "/login", "/register"];
   const isFullBleed = fullBleedRoutes.includes(location.pathname);
 
@@ -33,6 +36,8 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          {/* Mini dashboard público: no requiere sesión */}
+          <Route path="/mercado" element={<MiniDashboard />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sales" element={<Sales />} />
         </Routes>
