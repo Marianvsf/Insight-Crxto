@@ -52,8 +52,13 @@ export default function FilterSort({
 
   useEffect(() => {
     setFilteredCoins(calculatedCoins);
+  }, [calculatedCoins, setFilteredCoins]);
+
+  // La paginación solo se reinicia cuando el usuario cambia el criterio,
+  // no en cada refresco de precios (cada 30s).
+  useEffect(() => {
     onFilterSortChange();
-  }, [calculatedCoins, setFilteredCoins, onFilterSortChange]);
+  }, [searchTerm, sortBy, sortOrder, onFilterSortChange]);
 
   const handleSortByChange = (e) => {
     setSortBy(e.target.value);
