@@ -4,7 +4,13 @@ import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
 
 // 1. EXTRAER CONSTANTES: Evita que se re-creen en cada render
-const TOP_LEVEL_ROUTES = ["/", "/login", "/register", "/dashboard"];
+const TOP_LEVEL_ROUTES = [
+  "/",
+  "/login",
+  "/register",
+  "/dashboard",
+  "/mercado",
+];
 const PUBLIC_ROUTES = ["/", "/login", "/register"];
 
 const Navbar = () => {
@@ -168,6 +174,20 @@ const Navbar = () => {
 
           {/* MENÚ DESKTOP */}
           <div className="hidden md:flex items-center gap-8">
+            <Link
+              to="/mercado"
+              className="text-sm font-medium text-gray-200 hover:text-white transition-colors"
+            >
+              Mercado
+            </Link>
+            {isAuthenticated && (
+              <Link
+                to="/dashboard"
+                className="text-sm font-medium text-gray-200 hover:text-white transition-colors"
+              >
+                Dashboard
+              </Link>
+            )}
             <div className="flex items-center gap-4 border-l border-white/10 pl-8 ml-2">
               <AuthLinks isMobile={false} />
             </div>
@@ -187,6 +207,25 @@ const Navbar = () => {
         id="mobile-menu"
         className={`md:hidden fixed top-[80px] inset-x-4 z-40 bg-[#131c2f]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col gap-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isMenuOpen ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-8 scale-95 pointer-events-none"}`}
       >
+        <div className="flex flex-col gap-3">
+          <Link
+            to="/mercado"
+            onClick={closeMenu}
+            className="w-full text-center px-6 py-3.5 text-base rounded-xl font-medium text-gray-200 bg-white/5 hover:bg-white/10 transition-colors"
+          >
+            Mercado
+          </Link>
+          {isAuthenticated && (
+            <Link
+              to="/dashboard"
+              onClick={closeMenu}
+              className="w-full text-center px-6 py-3.5 text-base rounded-xl font-medium text-gray-200 bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              Dashboard
+            </Link>
+          )}
+        </div>
+
         <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
           <AuthLinks isMobile={true} />
         </div>

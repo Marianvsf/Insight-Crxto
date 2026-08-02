@@ -137,10 +137,10 @@ function Home() {
           {/* Call To Action Secundario */}
           <div className="mt-12 text-center">
             <Link
-              to="/dashboard"
+              to="/mercado"
               className="inline-flex items-center gap-2 font-bold text-teal-600 hover:text-teal-700 group transition-colors text-lg"
             >
-              Ver mercado completo en el Dashboard
+              Ver el resumen del mercado
               <span className="transform group-hover:translate-x-1 transition-transform">
                 →
               </span>
