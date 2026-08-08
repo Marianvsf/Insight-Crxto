@@ -4,13 +4,7 @@ import { useAuthStore } from "../store/authStore.js";
 import logo from "../assets/logo.png";
 
 // 1. EXTRAER CONSTANTES: Evita que se re-creen en cada render
-const TOP_LEVEL_ROUTES = [
-  "/",
-  "/login",
-  "/register",
-  "/dashboard",
-  "/mercado",
-];
+const TOP_LEVEL_ROUTES = ["/", "/login", "/register", "/dashboard", "/mercado"];
 const PUBLIC_ROUTES = ["/", "/login", "/register"];
 // Rutas de autenticación: sin enlaces de navegación que distraigan del formulario.
 const AUTH_ROUTES = ["/login", "/register"];
@@ -179,12 +173,6 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-8">
             {!isAuthPage && (
               <>
-                <Link
-                  to="/mercado"
-                  className="text-sm font-medium text-gray-200 hover:text-white transition-colors"
-                >
-                  Mercado
-                </Link>
                 {isAuthenticated && (
                   <Link
                     to="/dashboard"
