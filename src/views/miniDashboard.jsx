@@ -38,8 +38,6 @@ export default function MiniDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50/50">
-      <CryptoTicker />
-
       <main className="container mx-auto px-4 py-6 lg:py-8 lg:px-8 max-w-[1400px] space-y-8">
         {/* ENCABEZADO */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 pb-5">
@@ -52,36 +50,13 @@ export default function MiniDashboard() {
             </h1>
             <p className="text-sm text-gray-500 mt-1">
               Última actualización:{" "}
-              {dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString() : "—"}{" "}
+              {dataUpdatedAt
+                ? new Date(dataUpdatedAt).toLocaleTimeString()
+                : "—"}{" "}
               🔄 <span className="hidden sm:inline">(cada 30 segundos)</span>
             </p>
           </div>
-
-          {isAuthenticated ? (
-            <Link
-              to="/dashboard"
-              className="w-full sm:w-auto text-center py-2.5 px-5 rounded-xl shadow-md text-sm font-bold text-white uppercase bg-teal-600 hover:bg-teal-700 transition duration-150"
-            >
-              Ir a mi dashboard →
-            </Link>
-          ) : (
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <Link
-                to="/login"
-                className="text-center py-2.5 px-5 rounded-xl border border-gray-300 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition duration-150"
-              >
-                Iniciar sesión
-              </Link>
-              <Link
-                to="/register"
-                className="text-center py-2.5 px-5 rounded-xl shadow-md text-sm font-bold text-white uppercase bg-teal-600 hover:bg-teal-700 transition duration-150"
-              >
-                Crear cuenta gratis
-              </Link>
-            </div>
-          )}
         </div>
-
         {isError && (
           <div className="text-sm text-red-800 bg-red-100 border border-red-200 p-3 rounded-lg font-medium">
             ⚠️ Fallo al cargar los datos de las criptomonedas.
@@ -114,14 +89,16 @@ export default function MiniDashboard() {
                 <table className="min-w-full divide-y divide-gray-200 table-auto">
                   <thead className="bg-gray-50">
                     <tr>
-                      {["#", "Moneda", "Precio", "Cambio (24h)"].map((label) => (
-                        <th
-                          key={label}
-                          className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-left"
-                        >
-                          {label}
-                        </th>
-                      ))}
+                      {["#", "Moneda", "Precio", "Cambio (24h)"].map(
+                        (label) => (
+                          <th
+                            key={label}
+                            className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-left"
+                          >
+                            {label}
+                          </th>
+                        ),
+                      )}
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
