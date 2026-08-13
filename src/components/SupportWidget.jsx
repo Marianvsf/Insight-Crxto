@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 const EMPTY_FORM = { name: "", email: "", subject: "", message: "" };
 
@@ -9,6 +9,23 @@ function SupportWidget() {
   const [showSupport, setShowSupport] = useState(false);
   const [supportForm, setSupportForm] = useState(EMPTY_FORM);
   const [supportStatus, setSupportStatus] = useState(null);
+  const widgetRef = useRef(null);
+
+  // Cierra el formulario al hacer clic fuera del widget
+  useEffect(() => {
+    if (!showSupport) return;
+
+    function handleClickOutside(event) {
+      if (widgetRef.current && !widgetRef.current.contains(event.target)) {
+        setShowSupport(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSupport]);
 
   const handleSupportChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +52,10 @@ function SupportWidget() {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-200">
+    <div
+      ref={widgetRef}
+      className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-200"
+    >
       <div className="flex items-center gap-2 mb-3">
         <div className="p-2 bg-teal-50 rounded-lg text-teal-600">
           <span className="text-lg">🛡️</span>
